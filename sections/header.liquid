@@ -1,0 +1,994 @@
+<!-- ManyChat -->
+<script src="//widget.manychat.com/1745176718838431.js" async="async"></script>
+{% comment %}
+** Header - default view **
+- Static section
+{% endcomment %}
+<div id="fsb_placeholder"></div>
+{% comment %}Mobile navigation{% endcomment %}
+<div class="sticky-header main_nav_wrapper sticky_nav">
+  <div class="main_nav clearfix menu-position--block logo-align--left">
+    <div class="main_nav clearfix menu-position--{{ section.settings.menu_position }} logo-align--{{ section.settings.logo_position }}">
+      {% capture logo %}
+        <div class="home-logo-bar animated fadeIn">
+          <div class="logo home-logo text-align--{{ section.settings.logo_alignment }}">
+            <a href="{{ shop.url }}" title="{{ shop.name }}">
+              {% if section.settings.logo_home != nil %}
+                <img src="{{ section.settings.logo_home | img_url: '1024x' }}" alt="{{ shop.name | escape }}" />
+              {% endif %}
+            </a>
+          </div>
+          <div class="search_container" data-autocomplete-{{ settings.enable_autocomplete }}>
+            <form action="/search" class="search_form">
+              {% if settings.search_option != 'everything' %}
+                <input type="hidden" name="type" value="product" />
+              {% endif %}
+              <span class="icon-search search-submit">Search</span>
+              <input type="text" name="q" placeholder="What are you looking for?" value="{% if search and search.results.first.price %}{{ search.terms | replace: '*', '' }}{% endif %}" autocapitalize="off" autocomplete="off" autocorrect="off" />
+            </form>
+            <a class="close"></a>
+          </div>
+        </div>
+      {% endcapture %}
+
+      {% assign vertical_menu = section.settings.vertical_menu %}
+
+      {% capture menu_left %}
+        {% if vertical_menu %}
+          {% include 'vertical-menu' with section.settings.main_linklist1 %}
+        {% else %}
+          {% include 'menu' with section.settings.main_linklist1 %}
+        {% endif %}
+        <div class="vertical-menu">
+          <li class="sublink"><a data-no-instant href="{{ link.url }}" class="dropdown_link--vertical {% if link.active %}active{% endif %}" data-dropdown-rel="{{ link.handle }}"> More <span class="icon-down-arrow"></span></a>
+            <ul class="vertical-menu_submenu">
+              {% for link in linklists[section.settings.main_linklist3].links %}
+                {% if linklists[link.handle] == empty %}
+                  <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                {% else %}
+                  <li class="sublink"><a data-no-instant href="{{ link.url }}">{{ link.title }} <span class="right icon-down-arrow"></span></a>
+                    <ul class="vertical-menu_sub-submenu">
+                      {% for link in linklists[link.handle].links %}
+                        <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                      {% endfor %}
+                    </ul>
+                  </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </li>
+        </div>
+        
+      {% endcapture %}
+
+      {% capture menu_right %}
+        <ul class="menu right">
+          <li>
+            <a class="search-btn" title="{{ 'layout.customer.my_account' | t }} {% if customer %}({{ customer.email }}){% endif %}"> 
+              {% include 'icon-pack' with icon: 'search' %}
+            </a>
+          </li>
+          {% if shop.customer_accounts_enabled %}
+            <li>
+              <a href="/account" title="{{ 'layout.customer.my_account' | t }} {% if customer %}({{ customer.email }}){% endif %}"> 
+                {% include 'icon-pack' with icon: 'user' %}
+              </a>
+            </li>
+          {% endif %}
+        </ul>
+        {% if section.settings.show_cart %}
+          <div class="cart_container">
+            <a href="/cart" class="mini_cart dropdown_link" data-no-instant>
+              {% include 'icon-pack' with icon: 'cart' %}
+            </a>
+            {% unless settings.cart_action == 'ajax' and template contains 'cart' %}
+                  <div class="cart_content animated fadeIn">
+                    <div class="js-empty-cart__message {% if cart.item_count > 0 %}hidden{% endif %}">
+                      <p class="empty_cart">{{ 'layout.general.empty_cart' | t }}</p>
+                    </div>
+                    <form action="/checkout" method="post" data-money-format="{{ shop.money_format }}" data-shop-currency="{{ shop.currency }}" data-shop-name="{{ shop.name | escape }}" class="js-cart_content__form {% if cart.item_count == 0 %}hidden{% endif %}">
+                      <a class="cart_content__continue-shopping secondary_button">
+                        {{ 'cart.general.continue_shopping_link_html' | t }}
+                      </a>
+                      <ul class="cart_items js-cart_items clearfix">
+                        {% assign total_saving = 0 %}
+                        {% for item in cart.items %}
+                          {% if item.variant.compare_at_price > item.variant.price %}
+                            {% assign saving = item.variant.compare_at_price | minus: item.variant.price | times: item.quantity %}
+                            {% assign total_saving = saving | plus: total_saving %}
+                          {% endif %}
+
+                          <li class="cart_item clearfix">
+                            <a href="{{ item.url }}">
+                              {% if item.image %}
+                                <div class="cart_image">
+                                  <img src="{{ item | img_url: '320x' }}" alt="{{ item.title | escape }}" />
+                                </div>
+                              {% endif %}
+
+                              <div class="cart_item__title">
+                                <div class="item_title">
+                                  {{ item.product.title }}
+                                  {% unless item.product.has_only_default_variant or item.variant.title contains "Title" %}
+                                    -
+                                    {% for option in item.product.options %}
+                                      {{ item.variant.options[forloop.index0] }} {% unless forloop.last %}/{% endunless %}
+                                    {% endfor %}
+                                  {% endunless %}
+                                  {% if item.properties %}
+                                    {% for p in item.properties %}
+                                      {% if p.last != blank %}
+                                        <div class="line-item">
+                                          {{ p.first }}: {{ p.last }}
+                                        </div>
+                                      {% endif %}
+                                    {% endfor %}
+                                  {% endif %}
+                                </div>
+                              </a>
+                              <div class="left product-quantity-box">
+                                <span class="ss-icon product-minus js-change-quantity" data-func="minus"><span class="icon-minus"></span></span>
+                                <input type="number" min="0" size="2" class="quantity" name="updates[]" id="updates_{{ item.id }}" value="{{ item.quantity }}" data-line-id="{{ forloop.index }}" />
+                                <span class="ss-icon product-plus js-change-quantity" data-func="plus"><span class="icon-plus"></span></span>
+                              </div>
+                            </div>
+
+                            <strong class="right price">
+                              {% if item.price < item.variant.compare_at_price %}
+                                <span class="money was_price">{{ item.variant.compare_at_price | money }}</span>
+                              {% endif %}
+
+                              <span class="money">{{ item.price | money }}</span>
+                            </strong>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                      <hr />
+                      <ul>
+                        <li class="cart_subtotal js-cart_subtotal">
+                          <span class="right">
+                            <span class="money">{{ cart.total_price | money }}</span>
+                          </span>
+                          <span>{{ 'layout.general.subtotal' | t }}</span>
+                        </li>
+                        {% if settings.display_savings %}
+                          <li class="cart_savings sale js-cart_savings">
+                            {% if total_saving > 0 %}
+                              <span class="right">
+                                <span class="money">{{ total_saving | money }}</span>
+                              </span>
+                              <span>{{ 'layout.general.savings' | t }}</span>
+                            {% endif %}
+                          </li>
+                        {% endif %}
+                        <li>
+                          {% if settings.display_special_instructions and settings.go_to_checkout %}
+                            <textarea id="note" name="note" rows="2" placeholder="{{ 'layout.general.cart_note' | t }}" class="clearfix">{{ cart.note }}</textarea>
+                          {% endif %}
+
+                          {% if settings.display_tos_checkbox and settings.go_to_checkout %}
+                            <p class="tos">
+                              <input type="checkbox" class="tos_agree" id="sliding_agree" required />
+                                <label class="tos_label">
+                                  {{ 'cart.general.agree_to_terms_html' | t }}
+                                </label>
+                                {% if settings.tos_page != blank %}
+                                  <a href="{{ pages[settings.tos_page].url }}" target="_blank" class="tos_icon">{{ 'cart.general.view_terms' | t }}</a>
+                                {% endif %}
+                            </p>
+                          {% endif %}
+
+                          {% if settings.cart_message != blank %}
+                            <div class="cart_text">
+                              {{ settings.cart_message }}
+                            </div>
+                          {% endif %}
+
+                          <input type="submit" class="action_button" value="{% if settings.go_to_checkout %}{{ 'layout.general.checkout' | t }}{% else %}{{ 'layout.general.go_to_cart' | t }}{% endif %}" />
+                        </li>
+                      </ul>
+                    </form>
+                  </div>
+                {% endunless %}
+          </div>
+        {% endif %}
+      {% endcapture %}
+
+      {% if section.settings.logo_position == "left" or section.settings.menu_position == "block" %}
+        {{ logo }}
+        <div class="nav">
+          <div class="menu {{ section.settings.menu_alignment }} flex-align">
+            <div class="right-menu-bar">{{ menu_left }}</div>
+            <div class="left-menu-bar">{{ menu_right }}</div>
+          </div>
+        </div>
+      {% else %}
+        <div class="nav">
+          <ul class="menu {{ section.settings.menu_alignment }} clearfix">
+            {{ menu_left }}
+          </ul>
+        </div>
+        {{ logo }}
+        <div class="nav">
+          <ul class="menu {% if section.settings.menu_alignment == 'align_left' %}align_right{% elsif section.settings.menu_alignment == 'align_right' %}align_left{% else %}{{ section.settings.menu_alignment }}{% endif %} clearfix">
+            {{ menu_right }}
+          </ul>
+        </div>
+      {% endif %}
+      {% if section.settings.search_enabled %}
+        <div class="dropdown_container center" data-dropdown="search">
+          <div class="dropdown" data-autocomplete-{{ settings.enable_autocomplete }}>
+            <form action="/search" class="header_search_form">
+              {% if settings.search_option != 'everything' %}
+                <input type="hidden" name="type" value="product" />
+              {% endif %}
+              <span class="icon-search search-submit"></span>
+              <input type="text" name="q" placeholder="{{ 'general.search.title' | t: shop_name: shop.name }}" autocapitalize="off" autocomplete="off" autocorrect="off" class="search-terms" />
+            </form>
+          </div>
+        </div>
+      {% endif %}
+      {% include 'sub-menu' with section.settings.main_linklist %}
+      {% include 'sub-menu' with section.settings.main_linklist2 %}
+    </div>
+  </div>
+</div>
+<header id="header" class="mobile_nav-fixed--{{ section.settings.fixed_header }}">
+  {% if section.settings.promo_text != blank %}
+    <div class="promo_banner">
+      <div class="promo_banner__content">
+        {{ section.settings.promo_text }}
+      </div>
+      <div class="promo_banner-close"></div>
+    </div>
+  {% endif %}
+  <div class="top_bar clearfix">
+    <div class="top_menu_bar">
+      <a class="mobile_nav dropdown_link" data-dropdown-rel="menu" data-no-instant="true">
+        <div>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <span class="menu_title">{{ 'layout.general.menu' | t }}</span>
+      </a>
+      <a href="{{ shop.url }}" title="{{ shop.name | escape }}" class="mobile_logo logo">
+        {% if section.settings.logo_mobile != nil %}
+          <img src="{{ section.settings.logo_mobile | img_url: '410x' }}" alt="{{ shop.name | escape }}" />
+        {% elsif section.settings.logo != nil %}
+          <img src="{{ section.settings.logo | img_url: '410x' }}" alt="{{ shop.name | escape }}" />
+        {% else %}
+          {{ shop.name }}
+        {% endif %}
+      </a>
+      <div class="top_bar--right">
+        <!-- {% if section.settings.search_enabled %}
+          <a href="/search" class="icon-search dropdown_link" title="{{ 'general.search.title' | t | escape }}" data-dropdown-rel="search"></a>
+        {% endif %} -->
+        {% if shop.customer_accounts_enabled %}
+          <a href="/account"> 
+            {% include 'icon-pack' with icon: 'user' %}
+          </a>
+        </li>
+        {% endif %}
+        {% if section.settings.show_cart %}
+          <div class="cart_container">
+            <a href="/cart" class="mini_cart dropdown_link" title="{{ 'layout.general.cart' | t | escape }}" data-no-instant>
+              {% include 'icon-pack' with icon: 'cart' %}
+            </a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="top_search_bar">
+      <div class="search_container" data-autocomplete-{{ settings.enable_autocomplete }}>
+        <form action="/search" class="search_form">
+          {% if settings.search_option != 'everything' %}
+            <input type="hidden" name="type" value="product" />
+          {% endif %}
+          <span class="icon-search search-submit"></span>
+          <input type="text" name="q" placeholder="What are you looking for?" value="{% if search and search.results.first.price %}{{ search.terms | replace: '*', '' }}{% endif %}" autocapitalize="off" autocomplete="off" autocorrect="off" />
+        </form>
+      </div>
+    </div>
+  </div>
+  {% if section.settings.search_enabled %}
+    <div class="dropdown_container center" data-dropdown="search">
+      <div class="dropdown">
+        <form action="/search" class="header_search_form">
+          {% if settings.search_option != 'everything' %}
+            <input type="hidden" name="type" value="product" />
+          {% endif %}
+          <span class="icon-search search-submit"></span>
+          <input type="text" name="q" placeholder="{{ 'general.search.title' | t: shop_name: shop.name }}" autocapitalize="off" autocomplete="off" autocorrect="off" class="search-terms" />
+        </form>
+      </div>
+    </div>
+  {% endif %}
+  <div class="dropdown_container" data-dropdown="menu">
+    <div class="dropdown">
+      <ul class="heading">
+        <a class="close"></a>
+        {% if settings.show_multiple_currencies %}
+          <li class="currency-link">
+            {% include 'currencies-switcher' %}
+          </li>
+        {% endif %}
+        <li>
+          <a class="cart-link">
+            {% include 'icon-pack' with icon: 'cart' %}
+            <span class="cart-count">{{cart.item_count }}</span>
+            Cart
+          </a>
+        </li>
+      </ul>
+      <ul class="menu" id="mobile_menu">
+        {% include 'mobile-menu' with section.settings.mobile_main_menu %}
+        {% if section.settings.phone_number != blank %}
+          <li><a href="tel:+{{ section.settings.phone_number | replace: ' ', '' | replace: '+', '' | replace: '-', '' }}">{{ section.settings.phone_number }}</a></li>
+        {% endif %}
+
+        {% if shop.customer_accounts_enabled %}
+          {% if customer %}
+            <li>
+              <a href="/account" data-no-instant>{{ customer.name }}</a>
+            </li>
+            <li data-no-instant>
+              {{ 'layout.customer.log_out' | t | customer_logout_link }}
+            </li>
+          {% else %}
+            <li data-no-instant>
+              {{ 'layout.customer.log_in' | t | customer_login_link }}
+            </li>
+          {% endif %}
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</header>
+
+{% if template contains "index" %}
+  {% assign feature_image = true %}
+{% elsif template contains "collection" %}
+  {% assign feature_image = true %}
+{% elsif template contains "blog" %}
+  {% assign feature_image = true %}
+{% elsif template contains "article" %}
+  {% assign feature_image = true %}
+{% elsif template contains "contact" %}
+  {% assign feature_image = true %}
+{% elsif template contains "details" %}
+  {% assign feature_image = true %}
+{% else %}
+  {% assign feature_image = false %}
+{% endif %}
+
+{% comment %}Main navigation{% endcomment %}
+<header class="{% if feature_image %}feature_image{% endif %} {% if section.settings.logo_home != nil %}secondary_logo--true{% endif %}">
+  <div class="header {% if feature_image and settings.header_background == false %}is-absolute {% endif %} header-fixed--{{ section.settings.fixed_header }} {% if settings.header_background %}header-background--solid{% endif %}">
+    {% if section.settings.promo_text != blank %}
+      <div class="promo_banner">
+        <div class="promo_banner__content">
+          {{ section.settings.promo_text }}
+        </div>
+        <div class="promo_banner-close"></div>
+      </div>
+    {% endif %}
+    <div class="top_bar clearfix">
+      {% if section.settings.social_icons_header %}
+        {% include 'social-icons' %}
+      {% endif %}
+      <ul class="menu left">
+        {% if section.settings.phone_number != blank %}
+          <li><a href="tel:+{{ section.settings.phone_number | replace: ' ', '' | replace: '+', '' | replace: '-', '' }}">{{ section.settings.phone_number }}</a></li>
+        {% endif %}
+        {% if section.settings.top_bar_menu != blank %}
+          {% for link in linklists[section.settings.top_bar_menu].links %}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {% endfor %}
+        {% endif %}
+      </ul>
+    </div>
+
+    <div class="main_nav_wrapper">
+      <div class="main_nav clearfix menu-position--{{ section.settings.menu_position }} logo-align--{{ section.settings.logo_position }}">
+        {% capture logo %}
+        <div class="home-logo-bar">
+          <div class="logo home-logo text-align--{{ section.settings.logo_alignment }}">
+            <a href="{{ shop.url }}" title="{{ shop.name }}">
+              {% if section.settings.logo_home != nil %}
+                <img src="{{ section.settings.logo_home | img_url: '410x' }}" class="secondary_logo" alt="{{ shop.name | escape }}" />
+              {% endif %}
+              {% if section.settings.logo != nil %}
+                <img src="{{ section.settings.logo | img_url: '410x' }}" class="primary_logo" alt="{{ shop.name | escape }}" />
+              {% else %}
+                {{ shop.name }}
+              {% endif %}
+            </a>
+            <div class="stencil-title">
+              <img src="{{ "stencil.png" | asset_url }}" class="primary_logo" alt="stencil-title" />
+            </div>
+          </div>
+          <div class="search_container" data-autocomplete-{{ settings.enable_autocomplete }}>
+            <form action="/search" class="search_form">
+              {% if settings.search_option != 'everything' %}
+                <input type="hidden" name="type" value="product" />
+              {% endif %}
+              <span class="icon-search search-submit">Search</span>
+              <input type="text" name="q" placeholder="What are you looking for?" value="{% if search and search.results.first.price %}{{ search.terms | replace: '*', '' }}{% endif %}" autocapitalize="off" autocomplete="off" autocorrect="off" />
+            </form>
+          </div>
+          <div class="home-logo-right-menu">
+            <ul class="menu right">
+              {% if settings.show_multiple_currencies %}
+                <li>
+                  {% include 'currencies-switcher' %}
+                </li>
+              {% endif %}
+              {% if shop.customer_accounts_enabled %}
+                <li>
+                  <a href="/account" class="icon-user" title="{{ 'layout.customer.my_account' | t }} {% if customer %}({{ customer.email }}){% endif %}"> 
+                    <svg width="24px" height="24px" viewbox="0 0 24 24" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+                      <defs>
+                        <path d="M12 0C5.4 0 0 5.4 0 12C0 18.6 5.4 24 12 24C18.6 24 24 18.6 24 12C24 5.4 18.6 0 12 0Z" id="path_1" />
+                        <path d="M4.8 0C7.52 0 9.6 2.08 9.6 4.8C9.6 7.52 7.52 9.6 4.8 9.6C2.08 9.6 0 7.52 0 4.8C0 2.08 2.08 0 4.8 0Z" transform="translate(7.2001953 3.5996094)" id="path_2" />
+                        <path d="M0 6C0 2.12903 4.8 0 7.2 0C9.6 0 14.4 2.12903 14.4 6" transform="translate(4.7998047 14.400391)" id="path_3" />
+                        <clipPath id="clip_1">
+                          <use xlink:href="#path_1" />
+                        </clipPath>
+                        <clipPath id="clip_2">
+                          <use xlink:href="#path_2" />
+                        </clipPath>
+                        <clipPath id="clip_3">
+                          <use xlink:href="#path_3" />
+                        </clipPath>
+                      </defs>
+                      <g id="brisi">
+                        <g id="Path">
+                          <g clip-path="url(#clip_1)">
+                            <use xlink:href="#path_1" fill="none" stroke="#32373B" stroke-width="2.6" stroke-linejoin="round" />
+                          </g>
+                        </g>
+                        <g id="Path">
+                          <g clip-path="url(#clip_2)">
+                            <use xlink:href="#path_2" fill="none" stroke="#32373B" stroke-width="2.6" stroke-linejoin="round" />
+                          </g>
+                        </g>
+                        <g id="Path">
+                          <g clip-path="url(#clip_3)">
+                            <use xlink:href="#path_3" fill="none" stroke="#32373B" stroke-width="2.6" stroke-linejoin="round" />
+                          </g>
+                        </g>
+                      </g>
+                    </svg>
+                  </a>
+                </li>
+              {% endif %}
+            </ul>
+            {% if section.settings.show_cart %}
+              <div class="cart_container">
+                <a href="/cart" class="{% if section.settings.cart_icon == "cart" %}icon-cart{% else %}icon-bag{% endif %} mini_cart dropdown_link" data-no-instant>
+                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="23.566" height="22.787" viewBox="0 0 23.566 22.787">
+                    <defs>
+                      <path id="path-1" fill-rule="evenodd" d="M7.465377 17.07105737c-1.57852768 0-2.85805447 1.27952675-2.85805447 2.85784922 0 1.57852767 1.2795268 2.85805447 2.85805447 2.85805447 1.57832246 0 2.85784921-1.2795268 2.85784921-2.85805447-.00164173-1.5777068-1.2801424-2.85620748-2.85784921-2.85784922z"/>
+                      <mask id="mask-2" x="0" y="0" maskContentUnits="userSpaceOnUse" maskUnits="userSpaceOnUse">
+                        <rect width="23.566" height="22.787" x="0" y="0" fill="black"/>
+                        <use fill="white" xlink:href="#path-1"/>
+                      </mask>
+                      <path id="path-3" fill-rule="evenodd" d="M0 0l1.37638913.25821468c.86847752.1643981 1.54836079.89059946 1.70227342 1.81802405l1.85967467 11.20625304c.219582 1.34083115 1.3103093 2.31867119 2.58470569 2.31742667H18.5554984c1.15906452.00387489 2.18268595-.80649826 2.5165737-1.99213758l2.46916861-8.74247313c.05191984-.17031644.02236862-.35685353-.07880325-.49955112-.0999406-.1402864-.2552897-.22314303-.42028402-.22445824H5.69178545"/>
+                      <mask id="mask-4" x="0" y="0" maskContentUnits="userSpaceOnUse" maskUnits="userSpaceOnUse">
+                        <rect width="23.566" height="22.787" x="0" y="0" fill="black"/>
+                        <use fill="white" xlink:href="#path-3"/>
+                      </mask>
+                      <path id="path-5" fill-rule="evenodd" d="M18.49783249 17.07105737c-1.57852767 0-2.85805447 1.27952675-2.85805447 2.85784922 0 1.57852767 1.2795268 2.85805447 2.85805447 2.85805447 1.57832247 0 2.85784921-1.2795268 2.85784921-2.85805447-.00164173-1.5777068-1.2801424-2.85620748-2.85784921-2.85784922z"/>
+                      <mask id="mask-6" x="0" y="0" maskContentUnits="userSpaceOnUse" maskUnits="userSpaceOnUse">
+                        <rect width="23.566" height="22.787" x="0" y="0" fill="black"/>
+                        <use fill="white" xlink:href="#path-5"/>
+                      </mask>
+                      <path id="path-7" fill-rule="evenodd" d="M7.465377 17.07105737c-1.57852768 0-2.85805447 1.27952675-2.85805447 2.85784922 0 1.57852767 1.2795268 2.85805447 2.85805447 2.85805447 1.57832246 0 2.85784921-1.2795268 2.85784921-2.85805447-.00164173-1.5777068-1.2801424-2.85620748-2.85784921-2.85784922z"/>
+                      <mask id="mask-8" x="0" y="0" maskContentUnits="userSpaceOnUse" maskUnits="userSpaceOnUse">
+                        <rect width="23.566" height="22.787" x="0" y="0" fill="black"/>
+                        <use fill="white" xlink:href="#path-7"/>
+                      </mask>
+                      <path id="path-9" fill-rule="evenodd" d="M0 0l1.37638913.25821468c.86847752.1643981 1.54836079.89059946 1.70227342 1.81802405l1.85967467 11.20625304c.219582 1.34083115 1.3103093 2.31867119 2.58470569 2.31742667H18.5554984c1.15906452.00387489 2.18268595-.80649826 2.5165737-1.99213758l2.46916861-8.74247313c.05191984-.17031644.02236862-.35685353-.07880325-.49955112-.0999406-.1402864-.2552897-.22314303-.42028402-.22445824H5.69178545"/>
+                      <mask id="mask-10" x="0" y="0" maskContentUnits="userSpaceOnUse" maskUnits="userSpaceOnUse">
+                        <rect width="23.566" height="22.787" x="0" y="0" fill="black"/>
+                        <use fill="white" xlink:href="#path-9"/>
+                      </mask>
+                      <path id="path-11" fill-rule="evenodd" d="M18.49783249 17.07105737c-1.57852767 0-2.85805447 1.27952675-2.85805447 2.85784922 0 1.57852767 1.2795268 2.85805447 2.85805447 2.85805447 1.57832247 0 2.85784921-1.2795268 2.85784921-2.85805447-.00164173-1.5777068-1.2801424-2.85620748-2.85784921-2.85784922z"/>
+                      <mask id="mask-12" x="0" y="0" maskContentUnits="userSpaceOnUse" maskUnits="userSpaceOnUse">
+                        <rect width="23.566" height="22.787" x="0" y="0" fill="black"/>
+                        <use fill="white" xlink:href="#path-11"/>
+                      </mask>
+                    </defs>
+                    <g>
+                      <use fill-opacity="0" stroke="rgb(50,55,59)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6" mask="url(#mask-2)" xlink:href="#path-1"/>
+                      <use fill-opacity="0" stroke="rgb(50,55,59)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6" mask="url(#mask-4)" xlink:href="#path-3"/>
+                      <use fill-opacity="0" stroke="rgb(50,55,59)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6" mask="url(#mask-6)" xlink:href="#path-5"/>
+                      <use fill-opacity="0" stroke="rgb(50,55,59)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6" mask="url(#mask-8)" xlink:href="#path-7"/>
+                      <use fill-opacity="0" stroke="rgb(50,55,59)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6" mask="url(#mask-10)" xlink:href="#path-9"/>
+                      <use fill-opacity="0" stroke="rgb(50,55,59)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6" mask="url(#mask-12)" xlink:href="#path-11"/>
+                    </g>
+                  </svg>
+                </a>
+                {% unless settings.cart_action == 'ajax' and template contains 'cart' %}
+                  <div class="cart_content animated fadeIn">
+                    <div class="js-empty-cart__message {% if cart.item_count > 0 %}hidden{% endif %}">
+                      <p class="empty_cart">{{ 'layout.general.empty_cart' | t }}</p>
+                    </div>
+                    <form action="/checkout" method="post" data-money-format="{{ shop.money_format }}" data-shop-currency="{{ shop.currency }}" data-shop-name="{{ shop.name | escape }}" class="js-cart_content__form {% if cart.item_count == 0 %}hidden{% endif %}">
+                      <a class="cart_content__continue-shopping secondary_button">
+                        {{ 'cart.general.continue_shopping_link_html' | t }}
+                      </a>
+                      <ul class="cart_items js-cart_items clearfix">
+                        {% assign total_saving = 0 %}
+                        {% for item in cart.items %}
+                          {% if item.variant.compare_at_price > item.variant.price %}
+                            {% assign saving = item.variant.compare_at_price | minus: item.variant.price | times: item.quantity %}
+                            {% assign total_saving = saving | plus: total_saving %}
+                          {% endif %}
+
+                          <li class="cart_item clearfix">
+                            <a href="{{ item.url }}">
+                              {% if item.image %}
+                                <div class="cart_image">
+                                  <img src="{{ item | img_url: '320x' }}" alt="{{ item.title | escape }}" />
+                                </div>
+                              {% endif %}
+
+                              <div class="cart_item__title">
+                                <div class="item_title">
+                                  {{ item.product.title }}
+                                  {% unless item.product.has_only_default_variant or item.variant.title contains "Title" %}
+                                    -
+                                    {% for option in item.product.options %}
+                                      {{ item.variant.options[forloop.index0] }} {% unless forloop.last %}/{% endunless %}
+                                    {% endfor %}
+                                  {% endunless %}
+                                  {% if item.properties %}
+                                    {% for p in item.properties %}
+                                      {% if p.last != blank %}
+                                        <div class="line-item">
+                                          {{ p.first }}: {{ p.last }}
+                                        </div>
+                                      {% endif %}
+                                    {% endfor %}
+                                  {% endif %}
+                                </div>
+                              </a>
+                              <div class="left product-quantity-box">
+                                <span class="ss-icon product-minus js-change-quantity" data-func="minus"><span class="icon-minus"></span></span>
+                                <input type="number" min="0" size="2" class="quantity" name="updates[]" id="updates_{{ item.id }}" value="{{ item.quantity }}" data-line-id="{{ forloop.index }}" />
+                                <span class="ss-icon product-plus js-change-quantity" data-func="plus"><span class="icon-plus"></span></span>
+                              </div>
+                            </div>
+
+                            <strong class="right price">
+                              {% if item.price < item.variant.compare_at_price %}
+                                <span class="money was_price">{{ item.variant.compare_at_price | money }}</span>
+                              {% endif %}
+
+                              <span class="money">{{ item.price | money }}</span>
+                            </strong>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                      <hr />
+                      <ul>
+                        <li class="cart_subtotal js-cart_subtotal">
+                          <span class="right">
+                            <span class="money">{{ cart.total_price | money }}</span>
+                          </span>
+                          <span>{{ 'layout.general.subtotal' | t }}</span>
+                        </li>
+                        {% if settings.display_savings %}
+                          <li class="cart_savings sale js-cart_savings">
+                            {% if total_saving > 0 %}
+                              <span class="right">
+                                <span class="money">{{ total_saving | money }}</span>
+                              </span>
+                              <span>{{ 'layout.general.savings' | t }}</span>
+                            {% endif %}
+                          </li>
+                        {% endif %}
+                        <li>
+                          {% if settings.display_special_instructions and settings.go_to_checkout %}
+                            <textarea id="note" name="note" rows="2" placeholder="{{ 'layout.general.cart_note' | t }}" class="clearfix">{{ cart.note }}</textarea>
+                          {% endif %}
+
+                          {% if settings.display_tos_checkbox and settings.go_to_checkout %}
+                            <p class="tos">
+                              <input type="checkbox" class="tos_agree" id="sliding_agree" required />
+                                <label class="tos_label">
+                                  {{ 'cart.general.agree_to_terms_html' | t }}
+                                </label>
+                                {% if settings.tos_page != blank %}
+                                  <a href="{{ pages[settings.tos_page].url }}" target="_blank" class="tos_icon">{{ 'cart.general.view_terms' | t }}</a>
+                                {% endif %}
+                            </p>
+                          {% endif %}
+
+                          {% if settings.cart_message != blank %}
+                            <div class="cart_text">
+                              {{ settings.cart_message }}
+                            </div>
+                          {% endif %}
+
+                          <input type="submit" class="action_button" value="{% if settings.go_to_checkout %}{{ 'layout.general.checkout' | t }}{% else %}{{ 'layout.general.go_to_cart' | t }}{% endif %}" />
+                        </li>
+                      </ul>
+                    </form>
+                  </div>
+                {% endunless %}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+        {% endcapture %}
+
+        {% assign vertical_menu = section.settings.vertical_menu %}
+
+        {% capture menu_left %}
+          {% if vertical_menu %}
+            {% include 'vertical-menu' with section.settings.main_linklist1 %}
+          {% else %}
+            {% include 'menu' with section.settings.main_linklist1 %}
+          {% endif %}
+        {% endcapture %}
+
+        {% capture menu_right %}
+          {% include 'vertical-menu' with section.settings.main_linklist3 %}
+          <!-- {% if vertical_menu %}
+            {% include 'vertical-menu' with section.settings.main_linklist2 %}
+          {% else %}
+            {% include 'menu' with section.settings.main_linklist2 %}
+          {% endif %} -->
+          <!-- {% if section.settings.search_enabled %}
+            <li class="search_container" data-autocomplete-{{ settings.enable_autocomplete }}>
+              <form action="/search" class="search_form">
+                {% if settings.search_option != 'everything' %}
+                  <input type="hidden" name="type" value="product" />
+                {% endif %}
+                <span class="icon-search search-submit"></span>
+                <input type="text" name="q" placeholder="{{ 'general.search.title' | t: shop_name: shop.name }}" value="{% if search and search.results.first.price %}{{ search.terms | replace: '*', '' }}{% endif %}" autocapitalize="off" autocomplete="off" autocorrect="off" />
+              </form>
+            </li>
+            <li class="search_link">
+              <a href="/search" class="icon-search dropdown_link" title="{{ 'general.search.title' | t | escape }}" data-dropdown-rel="search"></a>
+            </li>
+          {% endif %} -->
+        {% endcapture %}
+
+        {% if section.settings.logo_position == "left" or section.settings.menu_position == "block" %}
+          {{ logo }}
+          <div class="nav">
+            <div class="menu {{ section.settings.menu_alignment }} flex-align">
+              <div class="right-menu-bar">{{ menu_left }}</div>
+              <div class="left-menu-bar">{{ menu_right }}</div>
+            </div>
+          </div>
+        {% else %}
+          <div class="nav">
+            <ul class="menu {{ section.settings.menu_alignment }} clearfix">
+              {{ menu_left }}
+            </ul>
+          </div>
+          {{ logo }}
+          <div class="nav">
+            <ul class="menu {% if section.settings.menu_alignment == 'align_left' %}align_right{% elsif section.settings.menu_alignment == 'align_right' %}align_left{% else %}{{ section.settings.menu_alignment }}{% endif %} clearfix">
+              {{ menu_right }}
+            </ul>
+          </div>
+        {% endif %}
+        {% if section.settings.search_enabled %}
+          <div class="dropdown_container center" data-dropdown="search">
+            <div class="dropdown" data-autocomplete-{{ settings.enable_autocomplete }}>
+              <form action="/search" class="header_search_form">
+                {% if settings.search_option != 'everything' %}
+                  <input type="hidden" name="type" value="product" />
+                {% endif %}
+                <span class="icon-search search-submit"></span>
+                <input type="text" name="q" placeholder="{{ 'general.search.title' | t: shop_name: shop.name }}" autocapitalize="off" autocomplete="off" autocorrect="off" class="search-terms" />
+              </form>
+            </div>
+          </div>
+        {% endif %}
+        {% include 'sub-menu' with section.settings.main_linklist %}
+        {% include 'sub-menu' with section.settings.main_linklist2 %}
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  .main_nav div.logo a {
+    padding-top: {{ section.settings.logo_top_padding }}px;
+    padding-bottom: {{ section.settings.logo_top_padding }}px;
+  }
+
+  div.logo img {
+    max-width: {{ section.settings.logo_display_width }}px;
+  }
+
+  .nav {
+    {% if section.settings.menu_position == "block" %}
+      width: 100%;
+      clear: both;
+    {% elsif section.settings.logo_position == "left" %}
+      width: 84%;
+      float: left;
+    {% else %}
+      width: 42%;
+      float: left;
+    {% endif %}
+  }
+
+  {% if section.settings.menu_top_padding %}
+    .nav ul.menu {
+      padding-top: {{ section.settings.menu_top_padding }}px;
+      padding-bottom: {{ section.settings.menu_top_padding }}px;
+    }
+
+    .sticky_nav ul.menu, .sticky_nav .mini_cart {
+      padding-top: {{ section.settings.menu_top_padding | divided_by: 2 }}px;
+      padding-bottom: {{ section.settings.menu_top_padding | divided_by: 2 }}px;
+    }
+  {% endif %}
+
+  {% unless section.settings.show_cart %}
+    #header .top_bar .icon-search {
+      right: 15px;
+    }
+  {% endunless %}
+
+  {% if section.settings.fixed_header == false %}
+    @media only screen and (max-width: 991px) {
+      .header-section {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+      }
+    }
+  {% endif %}
+
+</style>
+
+{% schema %}
+
+{
+  "name": "Header",
+  "class": "header-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Announcement bar"
+    },
+    {
+      "type": "richtext",
+      "id": "promo_text",
+      "label": "Text",
+      "info": "Maximum character limit is 170"
+    },
+    {
+     "type": "header",
+     "content": "Top bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "social_icons_header",
+      "label": "Show social media header icons",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "phone_number",
+      "label": "Phone number",
+      "info": "1-800-555-5555"
+    },
+    {
+      "type": "link_list",
+      "id": "top_bar_menu",
+      "label": "Top bar menu",
+      "info": "This menu won't show drop-down items"
+    },
+    {
+      "type": "select",
+      "id": "cart_icon",
+      "label": "Cart icon",
+      "options": [
+        {
+          "value": "cart",
+          "label": "Cart"
+        },
+        {
+          "value": "bag",
+          "label": "Bag"
+        }
+      ],
+      "default": "cart"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cart",
+      "label": "Show cart",
+      "default": true
+    },
+    {
+     "type": "header",
+     "content": "Logos"
+    },
+    {
+      "type": "range",
+      "id": "logo_display_width",
+      "label": "Logo display width",
+      "step": 5,
+      "min": 105,
+      "max": 205,
+      "default": 205,
+      "unit": "px"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo",
+      "info": "400 x 100px recommended"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_home",
+      "label": "Secondary logo over content (optional)",
+      "info": "400 x 100px recommended"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_mobile",
+      "label": "Mobile logo",
+      "info": "100 x 50px recommended"
+    },
+    {
+     "type": "header",
+     "content": "Menus"
+    },
+    {
+      "type": "link_list",
+      "id": "main_linklist",
+      "label": "Main menu"
+    },
+    {
+      "type": "link_list",
+      "id": "main_linklist2",
+      "label": "Secondary menu"
+    },
+    {
+      "type": "link_list",
+      "id": "main_linklist1",
+      "label": "Home Stencil Menu"
+    },
+    {
+      "type": "link_list",
+      "id": "main_linklist3",
+      "label": "Home Stencil Right Menu"
+    },
+    {
+      "type": "link_list",
+      "id": "mobile_main_menu",
+      "label": "Mobile main menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "vertical_menu",
+      "label": "Enable vertical menus",
+      "default": false
+    },
+    {
+     "type": "header",
+     "content": "Search"
+    },
+    {
+      "type": "checkbox",
+      "id": "search_enabled",
+      "label": "Show search",
+      "default": true
+    },
+    {
+     "type": "header",
+     "content": "Layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "fixed_header",
+      "label": "Fixed ('sticky') header",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "logo_position",
+      "label": "Logo position",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "logo_alignment",
+      "label": "Logo alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "menu_position",
+      "label": "Menu position",
+      "options": [
+        {
+          "value": "inline",
+          "label": "Inline with logo"
+        },
+        {
+          "value": "block",
+          "label": "Under logo"
+        }
+      ],
+      "default": "inline"
+    },
+    {
+      "type": "select",
+      "id": "menu_alignment",
+      "label": "Menu alignment",
+      "options": [
+        {
+          "value": "align_left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "align_right",
+          "label": "Right"
+        }
+      ],
+      "default": "align_left"
+    },
+    {
+      "type": "range",
+      "id": "logo_top_padding",
+      "label": "Logo top padding ([?](https:\/\/help.outofthesandbox.com\/hc\/en-us\/articles\/115006910627))",
+      "min": 0,
+      "max": 30,
+      "default": 10,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "menu_top_padding",
+      "label": "Main menu top padding ([?](https:\/\/help.outofthesandbox.com\/hc\/en-us\/articles\/115006910627))",
+      "min": 0,
+      "max": 30,
+      "default": 0,
+      "unit": "px"
+    }
+  ]
+}
+
+{% endschema %}

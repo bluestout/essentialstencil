@@ -1,0 +1,66 @@
+{% for block in section.blocks %}
+  {% if block.type == 'last_for_years' %}
+    {% assign sub_title = block.settings.sub_title %}
+    {% assign title = block.settings.title %}
+    {% assign comments = block.settings.comment %}
+    {% assign material_image = block.settings.material_image %}
+    {% assign material_title = block.settings.material_title %}
+    {% assign material_content = block.settings.material_content %}
+    
+    {% assign reusable_image = block.settings.reusable_image %}
+    {% assign reusable_title = block.settings.reusable_title %}
+    {% assign reusable_content = block.settings.reusable_content %}
+
+    {% assign gorgeous_image = block.settings.gorgeous_image %}
+    {% assign gorgeous_title = block.settings.gorgeous_title %}
+    {% assign gorgeous_content = block.settings.gorgeous_content %}
+    
+    <div class="last-for-years-container">
+      <div class="stencil-action-inspired-title">
+        {{ sub_title }}
+      </div>
+      <div class="stencil-action-main-title">
+        {{ title }}
+      </div>
+      <div class="stencil-action-by-title">
+        {{ comments }}
+      </div>
+      <div class="small-divider"></div>
+      <div class="last-for-years-content">
+        <div class="quality-material-block">
+          <img  src="{{ material_image | img_url: '1500x' }}"
+            alt="{{ material_image.alt }}"
+            style="max-width: 714px;"
+            class="stencil-action-image"
+          />
+          <div class="title-wrap">
+            <div class="title">{{material_title}}</div>
+            <div class="contents">{{material_content}}</div>
+          </div>
+        </div>
+        <div class="quality-material-block">
+          <img  src="{{ reusable_image | img_url: '1500x' }}"
+            alt="{{ reusable_image.alt }}"
+            style="max-width: 714px;"
+            class="stencil-action-image"
+          />
+          <div class="title-wrap">
+            <div class="title">{{reusable_title}}</div>
+            <div class="contents">{{reusable_content}}</div>
+          </div>
+        </div>
+        <div class="quality-material-block">
+          <img  src="{{ gorgeous_image | img_url: '1500x' }}"
+            alt="{{ gorgeous_image.alt }}"
+            style="max-width: 714px;"
+            class="stencil-action-image"
+          />
+          <div class="title-wrap">
+            <div class="title">{{gorgeous_title}}</div>
+            <div class="contents">{{gorgeous_content}}</div>
+          </div>
+        </div>
+      </div>
+    </div>  
+  {% endif%}
+{% endfor %} 

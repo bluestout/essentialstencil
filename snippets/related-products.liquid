@@ -1,0 +1,51 @@
+{% if collection and collection.all_products_count > 1 %}
+  {% assign col = collection.handle %}
+{% else %}
+  {% assign col = product.collections.last.handle %}
+{% endif %}
+<div class="related-product-block">
+  {% for tag in product.tags %}
+    {% if tag contains 'meta-related-collection-' %}
+      {% assign related_collection_handle = tag | remove: 'meta-related-collection-' %}
+      {% if collections[related_collection_handle].all_products_count > 0 %}
+        {% assign col = related_collection_handle %}
+        {% assign collection = collections[col] %}
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+
+  {% if col %}
+    {% if collections[col].all_products_count != 1 or collections[col].products.first.id != product.id %}
+      {% assign skip_product = product %}
+      {% assign products = collections[col].products %}
+
+      <div class="related-products__title {% unless section.settings.related_products_style == 'slider' %}{% if sidebar %}twelve columns{% else %}sixteen columns{% endif %}{% endunless %}">
+        <div class="stencil-action-inspired-title">Related Products</div>
+        <div class="stencil-action-main-title"> You might love these too </div>
+        <div class="stencil-action-by-title"> Find the Perfect Design </div>
+      </div>
+      <div class="clear"></div>
+
+
+      {% if section.settings.related_products_style == 'slider' %}
+        {% assign limit = section.settings.related_products_limit %}
+        <div class="related-products related-products--slider js-related-products-slider">
+          {% if col and collections[col].all_products_count > 0 %}
+            {% include 'product-slider', related_products: true %}
+          {% endif %}
+        </div>
+
+      {% else %}
+        {% assign limit = section.settings.related_products_limit | plus: 1 %}
+        {% assign products_per_row = section.settings.products_per %}
+        {% if col and collections[col].all_products_count > 0 %}
+          {% unless sidebar %}<div class="related-products--grid">{% endunless %}
+              {% include 'product-loop', related_products: true %}
+              <a href="{{collection.url}}" class="loade-more_buttom hide medium-down--show">Explore All</a>
+          {% unless sidebar %}</div>{% endunless %}
+        {% endif %}
+      {% endif %}
+
+    {% endif %}
+  {% endif %}
+</div>

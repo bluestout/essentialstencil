@@ -1,0 +1,141 @@
+{% comment %}Check for related products and increase limit by one (to offset the currently selected product that is removed from the product loop){% endcomment %}
+{% if related_products == true %}
+  {% assign limit = limit | plus: 0 %}
+  {% assign loop_limit = limit | plus: 1 %}
+{% else %}
+  {% assign limit = limit | plus: 0 %}
+  {% assign loop_limit = limit | plus: 0 %}
+{% endif %}
+
+{% if per_slide != blank %}
+  {% assign visible_products = per_slide %}
+{% else %}
+  {% if section.settings.products_per != blank %}
+    {% assign visible_products = section.settings.products_per | plus: 0 %}
+  {% else %}
+    {% assign visible_products = block.settings.products_per | plus: 0 %}
+  {% endif %}
+{% endif %}
+
+
+{% if template contains 'product' %}
+  {% if limit <= visible_products %}
+    {% assign products_length = limit %}
+  {% else %}
+    {% assign products_length = products.length | minus: 1 %}
+  {% endif %}
+{% elsif featured_collection %}
+  {% assign products_length = collections[featured_collection].products.length %}
+{% else %}
+  {% assign products_length = products.length %}
+{% endif %}
+
+  {% assign default = '1400x' %}
+  {% assign size1 = '100x' %}
+  {% assign size2 = '200x' %}
+  {% assign size3 = '300x' %}
+  {% assign size4 = '400x' %}
+  {% assign size5 = '500x' %}
+  {% assign size6 = '600x' %}
+  {% assign size7 = '700x' %}
+  {% assign size8 = '800x' %}
+  {% assign size9 = '900x' %}
+  {% assign size10 = '1000x' %}
+
+<div class="new-arrival-product-slider products-slider slider-gallery products-length-{{ products_length }} {% if settings.slideshow_button_style != true %}light-button{% endif %}"
+      data-products-per-slide="{{ visible_products }}"
+      data-products-limit="{{ limit }}"
+      data-products-available="{{ products_length }}">
+      {% assign i = 0 %}
+  {% for product in products limit: loop_limit %}
+    
+    {% if settings.align_height %}
+      {% assign collection_height = settings.collection_height | plus: 0 %}
+      {% assign product_aspect_ratio = product.featured_image.aspect_ratio | plus: 0 %}
+      {% assign product_set_width = product_aspect_ratio | times: collection_height %}
+
+      {% if product.featured_image.width >= product.featured_image.height %}
+        {% assign align_height_value = 'width: 100%; height: auto;' %}
+      {% else %}
+        {% assign align_height_value = 'width: 100%;' %}
+      {% endif %}
+  
+    {% endif %}
+
+    {% if product.id != skip_product.id %}
+      {% assign feature_image = product.featured_image %}
+      {% assign devider = i | modulo: 4 %}
+      {% if devider == 0 %}
+      <div class="gallery-cell thumbnail visible-1">
+      {% endif %}
+      
+        <div class="product-wrap">
+          <div class="relative product_image swap-{{ settings.collection_secondary_image }}">
+            <a href="{{ product.url | within: collection }}" itemprop="url">
+              <div class="image__container" style="{% if settings.align_height %} max-width: 255.5px; {% else %} max-width: {{- product.featured_image.width -}}px; {% endif %}">
+                <img  src="{{ feature_image | product_img_url: '500x' }}"
+                  alt="{{ product.title | escape }}"
+                  style="{{ align_height_value }} max-width: {{- product.featured_image.width -}}px;"
+                />
+                <div class="banner_holder">
+                  {% if settings.sale_banner_enabled and product.compare_at_price_max > product.price %}
+                    <div class="sale_banner_product">{{ 'collections.general.sale' | t }}</div>
+                  {% endif %}
+                  {% if collection_handles contains 'new' %}
+                    <div class="new_banner_product">{{ 'collections.general.new' | t }}</div>
+                  {% endif %}
+                  {% if collection_handles contains 'pre-order' %}
+                    <div class="preorder_banner_product">{{ 'collections.general.pre_order' | t }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              </a>
+          </div>
+            <div class="product-details">
+              <span class="title" itemprop="name">{{ product.title }}</span>
+              {% if collection_handles contains 'coming-soon' %}
+                <span class="modal_price">{{ 'collections.general.coming_soon' | t }}</span>
+              {% else %}
+                <span class="price {% if product.compare_at_price_max > product.price %}sale{% endif %}">
+                  {% if product.available %}
+                    {% if product.price_varies and product.price_min > 0 %}
+                      <small><em>{{ 'products.general.from' | t }}</em></small>
+                    {% endif %}
+                      {% if product.price_min > 0 %}
+                        <span class="money">{{ product.price_min | money }}</span>
+                      {% else %}
+                        {{ settings.free_price_text }}
+                      {% endif %}
+                  {% else %}
+                    <span class="sold_out">{{ 'products.product.sold_out' | t }}</span>
+                  {% endif %}
+                  {% if product.compare_at_price_max > product.price %}
+                    <span class="was_price">
+                      <span class="money">{{ product.compare_at_price_max | money }}</span>
+                    </span>
+                  {% endif %}
+                  {% if settings.enable_shopify_collection_badges and settings.enable_shopify_review_comments %}
+                    <span class=" stamped-product-reviews-badge" data-product-sku="{{ product.handle }}" data-id="{{ product.id }}" style="display:block;">{{ product.metafields.stamped.badge }}</span>
+                  {% endif %}
+                </span>
+              {% endif %}
+              {% if settings.display_vendor %}
+                <span itemprop="brand" class="brand">{{ product.vendor }}</span>
+              {% endif %}
+            
+            </div>
+          </a>
+          {% include 'quick-shop-button' %}
+        </div>
+        {% include 'collection-swatch' %}
+      {% if devider == 3 %}
+      </div>
+      {% elsif forloop.last == true %}
+        </div>
+      {% endif %}
+      
+      {% assign i = i | plus: 1 %}
+    {% endif %}
+
+  {% endfor %}
+</div>

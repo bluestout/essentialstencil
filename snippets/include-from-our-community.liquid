@@ -1,0 +1,24 @@
+{% for block in section.blocks %}
+  {% if block.type == 'from_our_community' %}
+    {% assign sub_title = block.settings.sub_title %}
+    {% assign title = block.settings.title %}
+    {% assign comments = block.settings.comment %}
+    {% assign community_bg = block.settings.community_background %}
+    
+    <div class="from-our-community-container" style="background-image: url({{ community_bg | img_url: '2880x'}})">
+      <div class="stencil-action-inspired-title">
+        {{ sub_title }}
+      </div>
+      <div class="stencil-action-main-title">
+        {{ title }}
+      </div>
+      <div class="stencil-action-by-title">
+        {{ comments }}
+      </div>
+      <div class="small-divider"></div>
+      <div class="from-our-community-content">
+        <div id="stamped-reviews-widget" data-widget-type="visual-gallery" data-feed-type="carousel" data-product-ids="{{product.id}}" date-height="400" data-with-photos="true"></div>
+      </div>
+    </div>  
+  {% endif%}
+{% endfor %} 

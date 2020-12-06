@@ -1,0 +1,60 @@
+<ul class="social_icons">
+  {% if settings.facebook_link != '' %}
+    <li><a href="{{ settings.facebook_link }}" title="{{ shop.name }} on Facebook" rel="me" target="_blank" class="icon-facebook"></a></li>
+  {% endif %}
+
+  {% if settings.twitter_link != '' %}
+    <li><a href="{{ settings.twitter_link }}" title="{{ shop.name }} on Twitter" rel="me" target="_blank" class="icon-twitter"></a></li>
+  {% endif %}
+
+  {% if settings.google_link != '' %}
+    <li><a href="{{ settings.google_link }}" title="{{ shop.name }} on Google+" rel="publisher" target="_blank" class="icon-gplus"></a></li>
+  {% endif %}
+
+  {% if settings.youtube_link != '' %}
+    <li><a href="{{ settings.youtube_link }}" title="{{ shop.name }} on YouTube" rel="me" target="_blank" class="icon-youtube"></a></li>
+  {% endif %}
+
+  {% if settings.vimeo_link != '' %}
+    <li><a href="{{ settings.vimeo_link }}" title="{{ shop.name }} on Vimeo" rel="me" target="_blank" class="icon-vimeo"></a></li>
+  {% endif %}
+
+  {% if settings.pinterest_link != '' %}
+    <li><a href="{{ settings.pinterest_link }}" title="{{ shop.name }} on Pinterest" rel="me" target="_blank" class="icon-pinterest"></a></li>
+  {% endif %}
+
+  {% if settings.tumblr_link != '' %}
+    <li><a href="{{ settings.tumblr_link }}" title="{{ shop.name }} on Tumblr" rel="me" target="_blank" class="icon-tumblr"></a></li>
+  {% endif %}
+
+  {% if settings.instagram_link != '' %}
+    <li><a href="{{ settings.instagram_link }}" title="{{ shop.name }} on Instagram" rel="me" target="_blank" class="icon-instagram"></a></li>
+  {% endif %}
+
+  {% if settings.snapchat_link != '' %}
+    <li><a href="{{ settings.snapchat_link }}" title="{{ shop.name }} on Snapchat" rel="me" target="_blank" class="icon-snapchat"></a></li>
+  {% endif %}
+
+  {% if settings.houzz_link != '' %}
+    <li><a href="{{ settings.houzz_link }}" title="{{ shop.name }} on Houzz" rel="me" target="_blank" class="icon-houzz"></a></li>
+  {% endif %}
+
+  {% if settings.linkedin_link != '' %}
+    <li><a href="{{ settings.linkedin_link }}" title="{{ shop.name }} on LinkedIn" rel="me" target="_blank" class="icon-linkedin"></a></li>
+  {% endif %}
+
+  {% if settings.email_link != '' %}
+    <li><a href="mailto:{{ settings.email_link }}" title="Email {{ shop.name }}" target="_blank" class="icon-mail">
+      <svg width="21px" height="15px" viewBox="0 0 21 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <title>A0F0132B-F9C1-4E65-969D-82B2F6A0AE78</title>
+        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.800000012">
+            <g id="home4" transform="translate(-1436.000000, -7682.000000)" fill="#000000">
+                <g id="footer" transform="translate(41.052942, 7202.000000)">
+                    <path d="M1395.38945,481.171974 C1395.14669,481.557811 1395,482.010795 1395,482.499935 L1395,492.500194 C1395,492.938199 1395.12241,493.344697 1395.32127,493.702642 L1401.63516,486.635676 L1395.38945,481.171974 Z M1407.42323,487.459518 L1405.41089,489.221353 C1405.29364,489.323623 1405.14695,489.374758 1404.99974,489.374758 C1404.85253,489.374758 1404.70636,489.323623 1404.58911,489.221353 L1402.57625,487.459518 L1396.18179,494.615325 C1396.56504,494.856021 1397.01441,494.999613 1397.49994,494.999613 L1412.50006,494.999613 C1412.98559,494.999613 1413.43547,494.856021 1413.81821,494.615325 L1407.42323,487.459518 Z M1404.99974,487.919733 L1413.69167,480.315075 C1413.33475,480.119832 1412.93342,480 1412.50006,480 L1397.49994,480 C1397.06606,480 1396.66421,480.119832 1396.30937,480.315075 L1404.99974,487.919733 Z M1415,492.499677 C1415,492.938199 1414.87655,493.344697 1414.67924,493.702125 L1408.36432,486.637225 L1414.61055,481.171974 C1414.85383,481.557811 1415,482.010795 1415,482.499935 L1415,492.499677 Z" id="icon-email"></path>
+                </g>
+            </g>
+        </g>
+    </svg>
+    </a></li>
+  {% endif %}
+</ul>

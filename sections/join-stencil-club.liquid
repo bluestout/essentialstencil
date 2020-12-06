@@ -1,0 +1,203 @@
+{% comment %}
+** Image with text (half and half view) - homepage partial **
+- Draggable section
+- Uses blocks
+{% endcomment %}
+  {% assign background_img = section.settings.background %}
+  <div class="container">
+    <div class="sixteen columns" style="background-image: url({{ background_img | img_url: '1440x'}})">
+      <div class="featured_collections
+                  clearfix across-{{section.settings.featured_links_per_row}} image-align--{{ section.settings.frontpage_image_position }}">
+        {% if section.blocks.size > 0 %}
+          {% for block in section.blocks %}
+            <section class="featured-link--section featured-link--image section-{{ forloop.index }}" {{ block.shopify_attributes }}>
+              <div class="featured-link--half featured-link--image featured-link--margin">
+                <div class="featured-link--wrap" style="background-image: url({{ block.settings.club_stencil_bg | img_url: '1024x'}})">
+                  <div class="featured-time-block">               
+                    <div class="featured-time-block-title">
+                      {{ block.settings.image_title }}
+                    </div>
+                    <div class="featured-time-block-content">
+                      <span class="featured-time-days"></span>
+                      <span>:</span>
+                      <span class="featured-time-hours"></span>
+                      <span>:</span>
+                      <span class="featured-time-mins"></span>
+                      <span>:</span>
+                      <span class="featured-time-seconds"></span>
+                    </div>
+                    <div class="featured-time-block-description" data-date="{{block.settings.date}}">
+                      <span>Days</span>
+                      <span>Hours</span>
+                      <span>Mins</span>
+                      <span>Secs</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="featured-link--half">
+                <div class="flex-wrap-align info text-align--{{section.settings.frontpage_text_align}}">
+                  <div class="join-stencil-title">
+                    <a  target="_blank" {% if block.settings.link != blank %}href="{{ block.settings.link }}"{% endif %}>
+                      {{ block.settings.title }}
+                    </a>
+                  </div>
+                  {% if block.settings.text != blank %}
+                    <div class="description">{{ block.settings.text }}</div>
+                  {% endif %}
+                  {% if block.settings.button_label != blank %}
+                    <a  target="_blank" {% if block.settings.link != blank %}href="{{ block.settings.link }}"{% endif %} class="button">
+                      {{ block.settings.button_label }}
+                    </a>
+                  {% endif %}
+                </div>
+              </div>
+            </section>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+
+{% schema %}
+{
+  "name": "Join Stencil Club",
+  "class": "join-stencil-club-section",
+  "max_blocks": 16,
+  "settings": [
+    {
+      "type": "select",
+      "id": "featured_links_per_row",
+      "label": "Images per row",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "frontpage_text_align",
+      "label": "Text alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "frontpage_image_position",
+      "label": "First image position",
+      "info": "Subsequent images will appear staggered",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "frontpage_grid_style",
+      "label": "Wide display"
+    },
+    {
+      "type": "image_picker",
+      "id": "background",
+      "label": "Background image"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image with text",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "club_stencil_bg",
+          "label": "Club Stencil Background"
+        },
+        {
+          "type": "header",
+          "content": "image content"
+        },
+        {
+          "type": "image_picker",
+          "id": "headline_accent_img",
+          "label": "Headline Accent Stencil Club"
+        },
+        {
+          "type": "text",
+          "id": "image_title",
+          "label": "Image title"
+        },
+        {
+          "type": "text",
+          "id": "date",
+          "label": "End Date"
+        },
+        {
+          "type": "header",
+          "content": "info content"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Your headline"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Promotion description appears here.</p>"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "View all"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Button link"
+        }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "Join Stencil Club",
+    "category": "Image",
+    "settings": {
+      "featured_links_per_row": "1",
+      "frontpage_text_align": "left"
+    },
+    "blocks": [
+      {
+        "type": "image"
+      }
+    ]
+  }]
+}
+{% endschema %}

@@ -1,0 +1,40 @@
+{% assign image = section.settings.image %}
+{% assign subImage0 = section.settings.subImage0 %}
+{% assign subImage1 = section.settings.subImage1 %}
+{% assign subImage2 = section.settings.subImage2 %}
+{% assign subImage3 = section.settings.subImage3 %}
+{% assign title = section.settings.title %}
+{% assign subtitle = section.settings.subtitle %}
+
+<div class="container">
+  <div class="homepage_content section {{ text_alignment }} clearfix">
+    <div class="faceboox-signup-wrap">
+      <div class="faceboox-signup-left-content">
+        <div class="title">
+          <span class="head-title1">{{title}}</span>
+          <div class="small-divider"></div>
+        </div>
+        <div class="sub-title">
+          {{subtitle}}
+        </div>
+        <div class="klaviyo-form-RUkmDr"></div>
+      </div>
+      <div class="faceboox-signup-right-content">
+        <img  src="{{ image.src | img_url: '1400x' }}"
+          alt="{{ image.alt }}"
+          class="faceboox-signup-right-image"
+        />
+        <!-- <img  src="{{ subImage1.src | img_url: '1400x' }}"
+          alt="{{ subImage1.alt }}"
+          style="max-width: 169px;"
+          class="faceboox-signup-right-image1"
+        />
+        <img  src="{{ subImage2.src | img_url: '1400x' }}"
+          alt="{{ subImage2.alt }}"
+          style="max-width: 240px;"
+          class="faceboox-signup-right-image2"
+        /> -->
+      </div>
+    </div>
+  </div>
+</div>

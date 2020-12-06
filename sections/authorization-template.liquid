@@ -1,0 +1,72 @@
+{% include 'include-autorization-content' %}
+
+{% schema %}
+  {
+    "name": "autorize section",
+    "class": "authorization-content-section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Talk about your brand"
+      },
+      {
+        "type": "richtext",
+        "id": "content",
+        "label": "Text",
+        "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+      },
+      {
+        "type": "html",
+        "id": "icon_1",
+        "label": "Icon 1"
+      },
+      {
+        "type": "text",
+        "id": "icon_1_title",
+        "label": "Icon 1 title",
+        "default": "Top Quality"
+      },
+      {
+        "type": "html",
+        "id": "icon_2",
+        "label": "Icon 2"
+      },
+      {
+        "type": "text",
+        "id": "icon_2_title",
+        "label": "Icon 2 title",
+        "default": "Affordable "
+      },
+      {
+        "type": "html",
+        "id": "icon_3",
+        "label": "Icon 3"
+      },
+      {
+        "type": "text",
+        "id": "icon_3_title",
+        "label": "Icon 3 title",
+        "default": "On-trend"
+      },
+      {
+        "type": "html",
+        "id": "icon_4",
+        "label": "Icon 4"
+      },
+      {
+        "type": "text",
+        "id": "icon_4_title",
+        "label": "Icon 4 title",
+        "default": "Free Live Tutorials"
+      }
+    ],
+    "presets": [
+      {
+        "name": "autorize section",
+        "category": "Text"
+      }
+    ]
+  }
+{% endschema %}

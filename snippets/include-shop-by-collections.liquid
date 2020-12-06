@@ -1,0 +1,233 @@
+{% assign sub_title = section.settings.sub_title %}
+{% assign title = section.settings.title %}
+{% assign comments = section.settings.comment %}
+{% assign vertical = section.settings.vertical %}
+{% assign signs = section.settings.signs %}
+{% assign valentine = section.settings.valentine %}
+{% assign patriotic = section.settings.patriotic %}
+{% assign summer = section.settings.summer %}
+{% assign fall = section.settings.fall %}
+{% assign vertical1 = section.settings.vertical1 %}
+{% assign signs1 = section.settings.signs1 %}
+{% assign valentine1 = section.settings.valentine1 %}
+{% assign patriotic1 = section.settings.patriotic1 %}
+{% assign summer1 = section.settings.summer1 %}
+{% assign fall1 = section.settings.fall1 %}
+{% assign vertical_url = section.settings.vertical_url %}
+{% assign signs_url = section.settings.signs_url %}
+{% assign valentines_url = section.settings.valentines_url %}
+{% assign patriotic_url = section.settings.patriotic_url %}
+{% assign summer_url = section.settings.summer_url %}
+{% assign fall_url = section.settings.fall_url %}
+
+
+<div class="stencil-collection-container">
+  <div class="stencil-collection-wrap">
+    <div class="stencil-collection-title-wrap">
+      <div class="stencil-action-inspired-title">
+        {{ sub_title }}
+      </div>
+      <div class="stencil-action-main-title">
+        {{ title }}
+      </div>
+      <div class="stencil-action-by-title">
+        {{ comments }}
+      </div>
+      <div class="small-divider"></div>
+    </div>
+    <div class="stencil-collection-content desktop-visible">
+      <div class="vertical-container">
+        <img  src="{{ vertical | img_url: '350x' }}"
+          alt="{{ vertical.alt }}"
+          style="max-width: 500px;"
+          class="head-sub-image1"
+        />
+        <a class="vertical-collection-link" href="{{vertical_url}}">
+          <span class="flex-align">Vertical
+            <img  src="{{ "collections-allow.png" | asset_url }}"
+            alt="{{ signs.alt }}"
+            style="max-width: 23px; margin-top: 3px; margin-left: 15px;"
+            class="button-arrow-icon"
+          />
+          </span>
+        </a>
+      </div>
+      <div class="signs-valentine-container flex-align-column-between">
+        <div class="signs-image-container">
+          <img  src="{{ signs | img_url: '350x' }}"
+            alt="{{ signs.alt }}"
+            style="max-width: 500px;"
+            class="head-sub-image1"
+          />
+          <a class="signs-collection-link" href="{{signs_url}}">
+            <span class="flex-align">Signs
+              <img  src="{{ "collections-allow.png" | asset_url }}"
+                alt="{{ signs.alt }}"
+                style="max-width: 23px; margin-top: 3px; margin-left: 15px;"
+                class="button-arrow-icon"
+              />
+            </span></a>
+        </div>
+        <div class="valentine-image-container">
+          <img  src="{{ valentine | img_url: '350x' }}"
+            alt="{{ valentine.alt }}"
+            style="max-width: 500px;"
+            class="head-sub-image1"
+          />
+          <a class="valentine-collection-link" href="{{valentines_url}}">
+            <span class="flex-align">Valentine's
+              <img  src="{{ "collections-allow.png" | asset_url }}"
+                alt="{{ signs.alt }}"
+                style="max-width: 23px; margin-top: 3px; margin-left: 15px;"
+                class="button-arrow-icon"
+              />
+            </span></a>
+        </div>
+      </div>
+      <div class="patriotic-container">
+        <img  src="{{ patriotic | img_url: '350x' }}"
+          alt="{{ patriotic.alt }}"
+          style="max-width: 500px;"
+          class="head-sub-image1"
+        />
+        <a class="patriotic-collection-link" href="{{patriotic_url}}">
+          <span class="flex-align">Patriotic
+            <img  src="{{ "collections-allow.png" | asset_url }}"
+              alt="{{ signs.alt }}"
+              style="max-width: 23px; margin-top: 3px; margin-left: 15px;"
+              class="button-arrow-icon"
+            />
+          </span></a>
+      </div>
+      <div class="summar-fall-container  flex-align-column-between">
+        <div class="summer-image-container">
+          <img  src="{{ summer | img_url: '350x' }}"
+            alt="{{ summer.alt }}"
+            style="max-width: 500px;"
+            class="head-sub-image1"
+          />
+          <a class="summer-collection-link" href="{{summer_url}}">
+            <span class="flex-align">Summer
+              <img  src="{{ "collections-allow.png" | asset_url }}"
+                alt="{{ signs.alt }}"
+                style="max-width: 23px; margin-top: 3px; margin-left: 15px;"
+                class="button-arrow-icon"
+              />
+            </span></a>
+        </div>
+        <div class="fall-image-container">
+          <img  src="{{ fall | img_url: '350x' }}"
+            alt="{{ fall.alt }}"
+            style="max-width: 500px;"
+            class="head-sub-image1"
+          />
+          <a class="fall-collection-link" href="{{fall_url}}">
+            <span class="flex-align">Fall
+              <img  src="{{ "collections-allow.png" | asset_url }}"
+                alt="{{ signs.alt }}"
+                style="max-width: 23px; margin-top: 3px; margin-left: 15px;"
+                class="button-arrow-icon"
+              />
+            </span></a>
+        </div>
+      </div>
+    </div>
+    <div class="stencil-collection-content mobile-visible">
+      <div class="vertical-container">
+        <img  src="{{ vertical1 | img_url: '350x' }}"
+          alt="{{ vertical1.alt }}"
+          class="head-sub-image1"
+        />
+        <a class="vertical-collection-link" href="{{vertical_url}}">
+          <span class="flex-align">Vertical
+            <img  src="{{ "collections-allow.png" | asset_url }}"
+            alt="{{ vertical1.alt }}"
+            style="max-width: 23px; margin-top: 3px; margin-left: 15px;"
+            class="button-arrow-icon"
+          />
+          </span>
+        </a>
+      </div>
+      <div class="signs-valentine-container flex-align-column-between">
+        <div class="signs-image-container">
+          <img  src="{{ signs1 | img_url: '350x' }}"
+            alt="{{ signs1.alt }}"
+            class="head-sub-image1"
+          />
+          <a class="signs-collection-link" href="{{signs_url}}">
+            <span class="flex-align">Signs
+              <img  src="{{ "collections-allow.png" | asset_url }}"
+                alt="{{ signs1.alt }}"
+                style="max-width: 23px; margin-top: 3px; margin-left: 15px;"
+                class="button-arrow-icon"
+              />
+            </span></a>
+        </div>
+        <div class="valentine-image-container">
+          <img  src="{{ valentine1 | img_url: '350x' }}"
+            alt="{{ valentine1.alt }}"
+            class="head-sub-image1"
+          />
+          <a class="valentine-collection-link" href="{{valentines_url}}">
+            <span class="flex-align">Valentine's
+              <img  src="{{ "collections-allow.png" | asset_url }}"
+                alt="{{ valentine1.alt }}"
+                style="max-width: 23px; margin-top: 3px; margin-left: 15px;"
+                class="button-arrow-icon"
+              />
+            </span></a>
+        </div>
+      </div>
+      <div class="patriotic-container">
+        <img  src="{{ patriotic1 | img_url: '350x' }}"
+          alt="{{ patriotic1.alt }}"
+          class="head-sub-image1"
+        />
+        <a class="patriotic-collection-link" href="{{patriotic_url}}">
+          <span class="flex-align">Patriotic
+            <img  src="{{ "collections-allow.png" | asset_url }}"
+              alt="{{ patriotic1.alt }}"
+              style="max-width: 23px; margin-top: 3px; margin-left: 15px;"
+              class="button-arrow-icon"
+            />
+          </span></a>
+      </div>
+      <div class="summar-fall-container  flex-align-column-between">
+        <div class="summer-image-container">
+          <img  src="{{ summer1 | img_url: '350x' }}"
+            alt="{{ summer1.alt }}"
+            class="head-sub-image1"
+          />
+          <a class="summer-collection-link" href="{{summer_url}}">
+            <span class="flex-align">Summer
+              <img  src="{{ "collections-allow.png" | asset_url }}"
+                alt="{{ summer1.alt }}"
+                style="max-width: 23px; margin-top: 3px; margin-left: 15px;"
+                class="button-arrow-icon"
+              />
+            </span></a>
+        </div>
+        <div class="fall-image-container">
+          <img  src="{{ fall1 | img_url: '350x' }}"
+            alt="{{ fall1.alt }}"
+            class="head-sub-image1"
+          />
+          <a class="fall-collection-link" href="{{fall_url}}">
+            <span class="flex-align">Fall
+              <img  src="{{ "collections-allow.png" | asset_url }}"
+                alt="{{ fall1.alt }}"
+                style="max-width: 23px; margin-top: 3px; margin-left: 15px;"
+                class="button-arrow-icon"
+              />
+            </span></a>
+        </div>
+      </div>
+      <a href="{{ collections[settingCollection].url }}" class="explore-all-collections">
+        <img  src="{{ "explore_all.png" | asset_url }}"
+          alt="explore all"
+          style="width: 102px;height: 19px;"
+        />         
+      </a>
+    </div>
+  </div>
+</div>

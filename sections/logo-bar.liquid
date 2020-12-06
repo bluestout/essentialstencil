@@ -1,0 +1,136 @@
+{% comment %}
+** Logos - homepage partial **
+- Draggable section
+- Uses blocks
+{% endcomment %}
+
+{% assign default = '1400x' %}
+{% assign size1 = '480x' %}
+{% assign size2 = '765x' %}
+{% assign size3 = '900x' %}
+{% assign size4 = '1000x' %}
+{% assign size5 = '1100x' %}
+{% assign size6 = '1300x' %}
+{% assign size7 = '1500x' %}
+{% assign size8 = '1700x' %}
+{% assign size9 = '1900x' %}
+{% assign size10 = '2000x' %}
+{% assign logo_content = section.settings.abc_content %}
+
+<div class="logo-bar-section container">
+    <div class="section clearfix">
+    {% if section.settings.title != blank %}
+        <span class="title center">{{ section.settings.title | escape }}</span>
+    {% endif %}
+
+    {% if section.blocks.size > 0 %}
+      <div class="logo-bar">
+        {% for block in section.blocks %}
+          <div class="logo-bar__item" {{ block.shopify_attributes }}>
+              <a href="#carousel-{{block.id}}" class="logo-bar__link">
+                {{block.settings.image}}
+              </a>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    <div class="logo-content">
+      {% for block in section.blocks %}
+        <div class="logo-item" id="carousel-{{block.id}}">
+          <svg width="37px" height="31px" viewBox="0 0 37 31" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>1E1C84B6-F09E-43DE-B150-1410772DE9FB@1x</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.5">
+                <g id="home4" transform="translate(-344.000000, -4797.000000)" fill="#15ADEF" fill-rule="nonzero">
+                    <path d="M372.518042,4827.4756 C376.84357,4827.4756 380.116942,4824.31913 380.116942,4820.46123 C380.116942,4816.0188 376.960476,4813.32995 373.102573,4813.32995 C371.933512,4813.32995 371.115169,4813.68067 370.76445,4813.91449 C370.881356,4809.12133 374.388541,4803.74365 379.532411,4802.57459 L379.532411,4797.08 C372.985667,4797.78144 363.983894,4803.74365 363.983894,4817.53858 C363.983894,4824.20223 367.958703,4827.4756 372.518042,4827.4756 Z M352.527091,4827.4756 C356.852618,4827.4756 360.125991,4824.31913 360.125991,4820.46123 C360.125991,4816.0188 356.969525,4813.32995 353.111622,4813.32995 C351.94256,4813.32995 351.124217,4813.68067 350.773499,4813.91449 C350.890405,4809.12133 354.397589,4803.74365 359.54146,4802.57459 L359.54146,4797.08 C352.994716,4797.78144 343.992942,4803.74365 343.992942,4817.53858 C343.992942,4824.20223 347.967751,4827.4756 352.527091,4827.4756 Z" id="quote"></path>
+                </g>
+            </g>
+          </svg>
+          <span class="logo-content-text">{{ block.settings.title }}</span>
+        </div>
+      {% endfor %}
+      </div>  
+    </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Logo list",
+    "class": "logo-list-section",
+    "max_blocks": 20,
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Logo list"
+      },
+      {
+        "type": "text",
+        "id": "abc_content",
+        "label": "ABC Content"
+      },
+      {
+        "type": "text",
+        "id": "nbc_content",
+        "label": "NBC Content"
+      },
+      {
+        "type": "text",
+        "id": "cbs_content",
+        "label": "CBS Content"
+      },
+      {
+        "type": "text",
+        "id": "fox_content",
+        "label": "FOX Content"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "logo_image",
+        "name": "Logo",
+        "settings": [
+          {
+            "type": "html",
+            "id": "image",
+            "label": "label"
+          },
+          {
+            "type": "url",
+            "id": "link",
+            "label": "Link"
+          },
+          {
+            "type": "header",
+            "content": "content"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Logo list",
+        "category": "Image",
+        "blocks": [
+          {
+            "type": "logo_image"
+          },
+          {
+            "type": "logo_image"
+          },
+          {
+            "type": "logo_image"
+          },
+          {
+            "type": "logo_image"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

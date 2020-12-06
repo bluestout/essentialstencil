@@ -1,0 +1,48 @@
+{% assign title = section.settings.pre_title %}
+{% assign headline = section.settings.title %}
+{% assign sub_title = section.settings.sub_title %}
+{% assign background_img = section.settings.cust_love_bg %}
+{% assign review_url = section.settings.all_review_url %}
+
+<div class="container">
+  <div class="customer-love-header">
+    <div class="customer-love-header-title">
+      <div class="stencil-collection-title-wrap">
+        <div class="stencil-action-inspired-title">
+          {{title}}
+        </div>
+        <div class="stencil-action-main-title">
+          {{headline}}
+        </div>
+        <div class="stencil-action-by-title">
+          {{ sub_title }}
+        </div>
+        <div class="small-divider"></div>
+      </div>
+    </div>
+  </div>
+  <div class="customer-love-content">
+    <div class="all-review-img-wrap desktop-visible">
+      <a href="{{review_url}}">
+        All Reviews
+      </a>
+    </div>
+    <div id="stamped-reviews-widget" class="desktop-visible" data-widget-type="carousel" data-limit-words="30" data-min-rating="4" data-fill-empty="true" data-random="true" data-auto-play="false" data-auto-play-speed="0" data-style-color-title="#1baff0" data-style-color-link="#1baff0"></div>
+    <div id="stamped-reviews-widget" class="mobile-visible" data-widget-type="full-page" data-product-image="false" data-take="2" data-limit-words="30"></div>
+    <div class="all-review-img-wrap mobile-visible">
+      <a href="{{review_url}}">
+        <img  src="{{ "all-review-img.png" | asset_url }}"
+          alt="all-review-img"
+          style="max-width: 104px;max-height: 19px"
+          class="all-review-img"
+        />
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .customer-love-section{
+    background-image: url({{ background_img | img_url: '1440x'}})
+  }
+</style>

@@ -1,0 +1,43 @@
+{% assign quality_title = section.settings.quality_title %}
+{% assign quality_image = section.settings.quality_image %}
+{% assign affordable_title = section.settings.affordable_title %}
+{% assign affordable_image = section.settings.affordable_image %}
+{% assign trend_title = section.settings.trend_title %}
+{% assign trend_image = section.settings.trend_image %}
+{% assign tutorial_title = section.settings.tutorial_title %}
+{% assign tutorial_image = section.settings.tutorial_image %}
+
+<div class="authorization-container">
+  <div class="brands-block">
+    <div class="brands-item">
+      <img  src="{{ quality_image | img_url: '350x' }}"
+        alt="{{ quality_image.alt }}"
+        class="authorization-image"
+      />
+      <span>{{quality_title}}</span>
+    </div>
+    <div class="brands-item">
+      <img  src="{{ affordable_image | img_url: '350x' }}"
+        alt="{{ affordable_image.alt }}"
+        class="authorization-image"
+      />
+      <span>{{affordable_title}}</span>
+    </div>
+  </div>
+  <div class="brands-block">
+    <div class="brands-item">
+      <img  src="{{ trend_image | img_url: '350x' }}"
+        alt="{{ trend_image.alt }}"
+        class="authorization-image"
+      />
+      <span>{{trend_title}}</span>
+    </div>
+    <div class="brands-item">
+      <img  src="{{ tutorial_image | img_url: '350x' }}"
+        alt="{{ tutorial_image.alt }}"
+        class="authorization-image"
+      />
+      <span>{{tutorial_title}}</span>
+    </div>
+  </div>
+</div>

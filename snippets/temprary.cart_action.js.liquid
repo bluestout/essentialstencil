@@ -1,0 +1,81 @@
+if (Shopify.theme_settings.cart_action == 'ajax'){
+    $(document).on('click', '.ajax-submit', function(e) {
+      e.preventDefault();
+      var $addToCartForm = $(this).closest('form');
+      var $addToCartBtn = $addToCartForm.find('.add_to_cart');
+      $.ajax({
+        url: '/cart/add.js',
+        dataType: 'json',
+        cache: false,
+        type: 'post',
+        data: $addToCartForm.serialize(),
+        beforeSend: function() {
+          $addToCartBtn.attr('disabled', 'disabled').addClass('disabled');
+          $addToCartBtn.find('span').removeClass("fadeInDown").addClass('animated zoomOut');
+        },
+        success: function(itemData) {
+          $addToCartBtn.find('.checkmark').addClass('checkmark-active');
+
+          window.setTimeout(function(){
+            $addToCartBtn.removeAttr('disabled').removeClass('disabled');
+            $addToCartBtn.find('.checkmark').removeClass('checkmark-active');
+            $addToCartBtn.find('span').removeClass('zoomOut').addClass('fadeInDown');
+          }, 1000);
+
+          $.ajax({
+            url: '/cart.js',
+            dataType: "json",
+            cache: false,
+            success: function(cart) {
+              $(".warning").fadeOut('slow');
+              setTimeout(function() {
+
+                refreshCart(cart);
+                // if($('body').hasClass('fancybox-active')) {
+                //   $.fancybox.close();
+                // }
+
+                if($('#header').is(':visible')) {
+                  $('#header .cart_container').addClass('active_link');
+                } else if ($('.sticky_nav--stick').length) {
+                  $('.sticky_nav .cart_container').addClass('active_link');
+                } else {
+                  $('.top_bar .cart_container').addClass('active_link');
+                }
+
+                //block scrolling on mobile
+                if ($(window).width() <= 798) {
+                  var $cart_container = $(this).parent();
+                  if($cart_container.hasClass('active_link')) {
+                    $('body').scrollTop(0);
+                  } else {
+                    $('body').scrollTop(0);
+                  }
+                }
+
+                //Refresh page on quick shop add to cart if on cart page
+                if($('body').hasClass('cart')) {
+                  $addToCartForm.submit();
+                }
+              }, 500)
+            }
+          });
+        },
+        error: function(XMLHttpRequest) {
+          var response = eval('(' + XMLHttpRequest.responseText + ')');
+          response = response.description;
+          $('.warning').remove();
+
+          var warning = '<p class="warning animated bounceIn">' + response.replace('All 1 ', 'All ') + '</p>';
+          $addToCartForm.parent().after(warning);
+          setTimeout(function(){
+              $(".warning").fadeOut('slow');
+           }, 3000);
+          $addToCartBtn.removeAttr('disabled').removeClass('disabled');
+          $addToCartBtn.find('span').text(Shopify.translation.add_to_cart).removeClass('zoomOut').addClass('zoomIn');
+        }
+      });
+
+      return false;
+    });
+  }

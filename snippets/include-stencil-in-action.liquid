@@ -1,0 +1,88 @@
+{% assign stencil_action_bg = section.settings.stencil_action_bg %}
+{% assign getInspired = section.settings.getInspired %}
+{% assign stencil_action_title = section.settings.stencil_action_title %}
+{% assign by_stencil_action = section.settings.by_stencil_action %}
+
+{% assign tab_link_str = '' %}
+{% assign tab_content_str = '' %}
+
+{% if product.metafields.product.stencil_tab_1 != blank %}
+  {% assign tab_array = product.metafields.product.stencil_tab_1 | split: ' : ' %}
+  {% assign tab_link_str = tab_link_str | append: ',' | append: tab_array[0] %}
+  {% assign tab_content_str = tab_content_str | append: ',' | append: tab_array[1] %}
+{% endif %}
+
+{% if product.metafields.product.stencil_tab_2 != blank %}
+  {% assign tab_array = product.metafields.product.stencil_tab_2 | split: ' : ' %}
+  {% assign tab_link_str = tab_link_str | append: ',' | append: tab_array[0] %}
+  {% assign tab_content_str = tab_content_str | append: ',' | append: tab_array[1] %}
+{% endif %}
+
+{% if product.metafields.product.stencil_tab_3 != blank %}
+  {% assign tab_array = product.metafields.product.stencil_tab_3 | split: ' : ' %}
+  {% assign tab_link_str = tab_link_str | append: ',' | append: tab_array[0] %}
+  {% assign tab_content_str = tab_content_str | append: ',' | append: tab_array[1] %}
+{% endif %}
+
+{% if product.metafields.product.stencil_tab_4 != blank %}
+  {% assign tab_array = product.metafields.product.stencil_tab_4 | split: ' : ' %}
+  {% assign tab_link_str = tab_link_str | append: ',' | append: tab_array[0] %}
+  {% assign tab_content_str = tab_content_str | append: ',' | append: tab_array[1] %}
+{% endif %}
+
+{% if product.metafields.product.stencil_tab_5 != blank %}
+  {% assign tab_array = product.metafields.product.stencil_tab_5 | split: ' : ' %}
+  {% assign tab_link_str = tab_link_str | append: ',' | append: tab_array[0] %}
+  {% assign tab_content_str = tab_content_str | append: ',' | append: tab_array[1] %}
+{% endif %}
+
+{% if product.metafields.product.stencil_tab_6 != blank %}
+  {% assign tab_array = product.metafields.product.stencil_tab_6 | split: ' : ' %}
+  {% assign tab_link_str = tab_link_str | append: ',' | append: tab_array[0] %}
+  {% assign tab_content_str = tab_content_str | append: ',' | append: tab_array[1] %}
+{% endif %}
+
+{% assign tab_links_array = tab_link_str | remove_first: ',' | split: ',' %}
+{% assign tab_contents_array = tab_content_str | remove_first: ',' | split: ',' %}
+
+<div class="stencil-action--wrap" style="background-image: url({{ stencil_action_bg | img_url: '2048x'}})">
+  <div class="stencil-action-container">
+    <div class="stencil-action-inspired-title">
+      {{ getInspired }}
+    </div>
+    <div class="stencil-action-main-title">
+      {{ stencil_action_title }}
+    </div>
+    <div class="stencil-action-by-title">
+      {{ by_stencil_action }}
+    </div>
+    <div class="small-divider"></div>
+    <div class="stencil-action-content tabs">
+      <div class="tab-content">
+        {% assign status = true %}
+        {% for block in tab_contents_array %}
+            {% assign num = forloop.index | minus: 1 %}
+            <div id="block-{{tab_links_array[num] | handle }}-{{forloop.index}}" class="tab-pane animated fadeIn {% if status %} active {% endif %}">
+              {% if block contains 'youtu' %}
+                {% include 'include-video-stencil' source: block %}
+              {% else %}
+                <img  src="{{ block | file_img_url: '1024x768' }}"
+                  alt="{{ block }}"
+                  style="max-width: 714px;"
+                  class="stencil-action-image"
+                />
+              {% endif %}
+            </div>
+            {% assign status = false %}
+        {% endfor %}
+      </div>
+      <div class="tab-links">
+        {% assign status = true %}
+        {% for block in tab_links_array %}
+            <a href="#block-{{block | handle }}-{{forloop.index}}" class="tab-btn {%if status %}active{%endif%}">{{block}}</a>
+            {% assign status = false %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>  
+</div>  

@@ -1,0 +1,35 @@
+{% assign icon_1_title = section.settings.icon_1_title %}
+{% assign icon_2_title = section.settings.icon_2_title %}
+{% assign icon_3_title = section.settings.icon_3_title %}
+{% assign icon_4_title = section.settings.icon_4_title %}
+{% assign icon_1 = section.settings.icon_1 %}
+{% assign icon_2 = section.settings.icon_2 %}
+{% assign icon_3 = section.settings.icon_3 %}
+{% assign icon_4 = section.settings.icon_4 %}
+{% assign content = section.settings.content %}
+
+<div class="container">
+  <div class="homepage_content section {{ text_alignment }} clearfix">
+    <div class="authorization-content-text">
+      {{ content }}
+    </div>
+    <div class="authorization-content-brand flex-align-around">
+      <div class="authorization-content-brand-image-block flex-align-column-center">
+        {{ icon_1 }}
+        <p>{{ icon_1_title }}</p>
+      </div>
+      <div class="authorization-content-brand-image-block flex-align-column-center">
+        {{ icon_2 }}
+        <p>{{ icon_2_title }}</p>
+      </div>
+      <div class="authorization-content-brand-image-block flex-align-column-center">
+        {{ icon_3 }}
+        <p>{{ icon_3_title }}</p>
+      </div>
+      <div class="authorization-content-brand-image-block flex-align-column-center">
+        {{ icon_4 }}
+        <p>{{ icon_4_title }}</p>
+      </div>
+    </div>
+  </div>
+</div>

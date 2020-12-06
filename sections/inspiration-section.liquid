@@ -1,0 +1,67 @@
+{% assign inspiration_img1 = section.settings.inspiration_img1 %}
+{% assign inspiration_img2 = section.settings.inspiration_img2 %}
+{% assign inspiration_img3 = section.settings.inspiration_img3 %}
+{% assign inspiration_img4 = section.settings.inspiration_img4 %}
+{% assign inspiration_img5 = section.settings.inspiration_img5 %}
+{% assign inspiration_img6 = section.settings.inspiration_img6 %}
+{% assign inspiration_img7 = section.settings.inspiration_img7 %}
+{% assign inspiration_img8 = section.settings.inspiration_img8 %}
+{% assign inspiration_img9 = section.settings.inspiration_img9 %}
+{% assign headline-accent-inspiration = section.settings.headline-accent-inspiration %}
+{% assign title = section.settings.title %}
+{% assign description = section.settings.description %}
+{% assign essential_stencil = section.settings.essential_stencil %}
+{% assign inspiration_button = section.settings.inspiration_button %}
+{% assign button_url = section.settings.url %}
+
+<div class="container">
+  <div class="essentical-inspiration-wrap">
+    <div class="inspiration-block">
+      <div class="heading">
+        <div class="inspiration-pre-title">
+          {{ section.settings.pre_title }}
+        </div>
+        <div class="inspiration-main-title">
+          {{ section.settings.main_title }}
+        </div>
+        <div class="inspiration-sub-title">
+          {{ section.settings.sub_title }}
+        </div>
+      </div>
+      <div class="content">
+        <div id="stamped-reviews-widget" data-widget-type="visual-gallery" data-feed-type="carousel" data-auto-play="false" data-auto-play-speed="30000"data-with-photos="true"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Become an Ambassador",
+  "class": "inspiration-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "pre_title",
+      "label": "Pre Heading",
+      "default": "Inspiration"
+    },
+    {
+      "type": "text",
+      "id": "main_title",
+      "label": "Tilte",
+      "default": "From Our Community"
+    },
+    {
+      "type": "text",
+      "id": "sub_title",
+      "label": "Sub title",
+      "default": "Learn & Share your works"
+    }
+  ],
+  "presets": [{
+    "name": "Stencil Inspiration",
+    "category": "Image"
+  }]
+}
+{% endschema %}

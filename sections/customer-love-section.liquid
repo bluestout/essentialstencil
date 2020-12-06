@@ -1,0 +1,46 @@
+{% include 'include-customer-love' %}
+
+{% schema %}
+{
+  "name": "Customer Love Section",
+  "class": "customer-love-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "pre_title",
+      "label": "Pre title",
+      "default": "REVIEWS"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "sub_title",
+      "label": "Sub title",
+      "default": "FROM REAL PEOPLE"
+    },
+    {
+      "type": "image_picker",
+      "id": "headline_accent_cust_love",
+      "label": "Headline Accent Cust Love"
+    },
+    {
+      "type": "image_picker",
+      "id": "cust_love_bg",
+      "label": "Cust Love Background"
+    },
+    {
+      "type": "url",
+      "id": "all_review_url",
+      "label": "All review url"
+    }
+  ],
+  "presets": [{
+    "name": "Customer Love Section",
+    "category": "review"
+  }]
+}
+{% endschema %}
