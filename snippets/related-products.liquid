@@ -32,6 +32,9 @@
         <div class="related-products related-products--slider js-related-products-slider">
           {% if col and collections[col].all_products_count > 0 %}
             {% include 'product-slider', related_products: true %}
+            <a href="{{ collections[col].url }}" class="explore-all-mobile">
+              <div class="explore-more">Explore more</div>
+            </a>
           {% endif %}
         </div>
 
@@ -41,7 +44,9 @@
         {% if col and collections[col].all_products_count > 0 %}
           {% unless sidebar %}<div class="related-products--grid">{% endunless %}
               {% include 'product-loop', related_products: true %}
-              <a href="{{collection.url}}" class="loade-more_buttom hide medium-down--show">Explore All</a>
+              <a href="{{ collections[col].url }}" class="explore-all-mobile">
+                <div class="explore-more">Explore more</div>
+              </a>
           {% unless sidebar %}</div>{% endunless %}
         {% endif %}
       {% endif %}

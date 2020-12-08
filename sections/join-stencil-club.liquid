@@ -14,7 +14,7 @@
               <div class="featured-link--half featured-link--image featured-link--margin">
                 <div class="featured-link--wrap" style="background-image: url({{ block.settings.club_stencil_bg | img_url: '1024x'}})">
                   <div class="featured-time-block">               
-                    <div class="featured-time-block-title">
+                    <div class="featured-time-block-title medium-down--hide">
                       {{ block.settings.image_title }}
                     </div>
                     <div class="featured-time-block-content">
@@ -31,6 +31,9 @@
                       <span>Hours</span>
                       <span>Mins</span>
                       <span>Secs</span>
+                    </div>
+                    <div class="featured-time-block-title hide medium-down--show">
+                      {{ block.settings.mobile_image_title }}
                     </div>
                   </div>
                 </div>
@@ -150,6 +153,12 @@
           "type": "text",
           "id": "image_title",
           "label": "Image title"
+        },
+        {
+          "type": "text",
+          "id": "mobile_image_title",
+          "label": "Mobile image title ",
+          "default": "until November stencil is sent"
         },
         {
           "type": "text",

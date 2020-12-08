@@ -44,7 +44,7 @@
 
 {% assign tab_links_array = tab_link_str | remove_first: ',' | split: ',' %}
 {% assign tab_contents_array = tab_content_str | remove_first: ',' | split: ',' %}
-
+{% if tab_contents_array != blank %}
 <div class="stencil-action--wrap" style="background-image: url({{ stencil_action_bg | img_url: '2048x'}})">
   <div class="stencil-action-container">
     <div class="stencil-action-inspired-title">
@@ -86,3 +86,4 @@
     </div>
   </div>  
 </div>  
+{% endif %}

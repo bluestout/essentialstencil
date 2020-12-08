@@ -36,6 +36,7 @@ var imageFunctions = {
     //EVENT - update carousel based on gallery index
     $gallery.on( 'select.flickity', function() {
       var galleryData = $(this).data('flickity');
+
       if (galleryData){
         $carousel.find('.is-nav-selected').removeClass('is-nav-selected');
         $carousel.find('.gallery-cell:nth-child(' + (galleryData.selectedIndex + 1) + ')').addClass('is-nav-selected');
@@ -924,9 +925,6 @@ var productPage = {
     var prevNextButtons = true;
     var autoplay = $('.product_gallery').data('autoplay');
 
-    setTimeout(function(){
-     imageFunctions.linkGalleryAndCarousel($('.js-product-page-gallery .product_gallery'), $('.js-product-page-gallery .product_gallery_nav'));
-    }, 1000);
     imageFunctions.zoom('.product_gallery', false);
 
     if($('.js-full-width-product-images').length){
@@ -946,13 +944,20 @@ var productPage = {
       "contain": true,
       "imagesLoaded": true,
       "lazyLoad": 2,
-      "pageDots": usePageDots,
-      "prevNextButtons": prevNextButtons,
+      "pageDots": false,
+      "prevNextButtons": true,
       "autoPlay": autoplay ? 6000 : false,
       "selectedAttraction": 0.01,
       "friction": 0.15,
-      "arrowShape": arrowSize
+      "arrowShape": arrowSize,
+
     });
+
+    setTimeout(function(){
+      imageFunctions.linkGalleryAndCarousel($('.js-product-page-gallery .product_gallery'), $('.js-product-page-gallery .product_gallery_nav'));
+    }, 1000);
+ 
+    
 
     $(".js-product_section .product_form_options").each(function() {
      new Shopify.OptionSelectors($(this).data("select-id"), { product: $(this).data("product"), onVariantSelected: selectCallback, enableHistoryState: $(this).data("enable-state") });
@@ -1131,7 +1136,8 @@ var productPage = {
 
     $('body').on('click', '.js-change-quantity', function() {
         var $this = $(this),
-            $input = $(this).siblings('input'),
+            $input = $(this).siblings('.num'),
+            $show  = $(this).siblings('.text'),
             val = parseInt($input.val()),
             valMax = 100000000000000000000000000000,
             valMin = $input.attr('min') || 0;
@@ -1142,16 +1148,18 @@ var productPage = {
 
         if(isNaN(val) || val < valMin) {
             $input.val(valMin);
+            $show.val(`${valMin} Pcs`);
             return false;
         } else if (val > valMax) {
             $input.val(valMax);
+            $show.val(`${valMax} Pcs`);
             return false;
         }
 
         if($this.data('func') == 'plus') {
-            if(val < valMax) $input.val(val + 1);
+            if(val < valMax) {$input.val(val + 1); $show.val(`${val + 1} Pcs`);}
         } else {
-            if(val > valMin) $input.val(val - 1);
+            if(val > valMin){ $input.val(val - 1); $show.val(`${val - 1} Pcs`);}
             if($this.parents(".cart_item").length) {
               if (val - 1 == 0) {
                 $this.closest('.cart_item').addClass('animated fadeOutUp')
@@ -3210,7 +3218,6 @@ $(function() {
       e.preventDefault();
       var $addToCartForm = $(this);
       var $addToCartBtn = $addToCartForm.find('.add_to_cart');
-
       $.ajax({
         url: '/cart/add.js',
         dataType: 'json',
@@ -3862,6 +3869,7 @@ $( "#fsb_placeholder" ).on( "fsb_fully_loaded", function(event, p1) {
   if ((p1=='inserted' || p1=='inserted_sticky') && !fsb_adjusted ){
     fsb_adjusted = true;
     var fsb_height = $("#fsb_bar").outerHeight();
+    
     $("<div />", {html: '<style>' + '.header.is-absolute,#header.mobile_nav-fixed--true,.sticky_nav{top:' + fsb_height + 'px!important;}' + '@media(max-width: 768px){div.breadcrumb-collection{padding-top:' + fsb_height + 'px;}}' + '</style>'}).appendTo("body");
     $("<div />", {html: '<style>' + '#fsb_background{top:0;z-index:9000!important;}#fsb_background a{display: block;}' + '</style>'}).appendTo("body")
   }

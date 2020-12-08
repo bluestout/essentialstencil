@@ -9,15 +9,11 @@
 <div class="container">
   <div class="homepage_content section {{ text_alignment }} clearfix">
     <div class="faceboox-signup-wrap">
-      <div class="faceboox-signup-left-content">
+      <div class="faceboox-signup-left-content medium-down--show hide">
         <div class="title">
           <span class="head-title1">{{title}}</span>
           <div class="small-divider"></div>
         </div>
-        <div class="sub-title">
-          {{subtitle}}
-        </div>
-        <div class="klaviyo-form-RUkmDr"></div>
       </div>
       <div class="faceboox-signup-right-content">
         <img  src="{{ image.src | img_url: '1400x' }}"
@@ -34,6 +30,16 @@
           style="max-width: 240px;"
           class="faceboox-signup-right-image2"
         /> -->
+      </div>
+      <div class="faceboox-signup-left-content">
+        <div class="title medium-down--hide">
+          <span class="head-title1">{{title}}</span>
+          <div class="small-divider"></div>
+        </div>
+        <div class="sub-title">
+          {{subtitle}}
+        </div>
+        <div class="klaviyo-form-RUkmDr"></div>
       </div>
     </div>
   </div>

@@ -46,12 +46,10 @@ var customize = {
           var limit_time = new Date(limit_year, limit_month-1, limit_day, time, min, 0, 0);
         
           var Difference_In_Time = limit_time.getTime() - current_date.getTime(); 
-          console.log(Difference_In_Time);
           var left_Days = parseInt(Difference_In_Time / (1000 * 3600 * 24));
           var left_time = parseInt(Difference_In_Time / (1000 * 3600) - left_Days * 24);
           var left_min = parseInt(Difference_In_Time / (1000 * 60) - left_Days * 24 * 60 - left_time * 60);
           var left_sec = parseInt(Difference_In_Time / 1000 - left_Days * 24 * 3600 - left_time * 3600 - left_min * 60);
-          console.log(left_Days);
           $("body .featured-time-block-content .featured-time-days").text(left_Days);
           $("body .featured-time-block-content .featured-time-hours").text(left_time);
           $("body .featured-time-block-content .featured-time-mins").text(left_min);
@@ -97,21 +95,19 @@ var featuredProducts = {
       $carousel.flickity('destroy');
       var $jsSlider = $('.js-recently-viewed .js-rv-slider').flickity();
       $jsSlider.flickity('destroy');
+      $('input[type="text"].quantity_show').val($('input[type="number"].quantity').val() + ' pcs');
+      $('input[type="number"].quantity').on('change', function () {
+        console.log($('input[type="number"].quantity').val());
+        $('input[type="text"].quantity_show').val($('input[type="number"].quantity').val() + ' pcs');
+      })
     }
   }
 }
 
-var loadProductDescription = function() {
-  $('<div class="feature_divider"></div><div class="tab-detail-demension tab-open"><span>Details & Dimensions</span><svg class="tab-down" width="13px" height="7px" viewBox="0 0 13 7" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>22969407-800A-49F1-BB07-BE7DAF4CB9DF</title><g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.400000006"><g id="product7" transform="translate(-1357.000000, -933.000000)" stroke="#32373B"><polyline id="angle-down" points="1357.65803 933.525988 1363.53107 939.399031 1369.40412 933.525988"></polyline></g></g></svg><svg class="tab-up" width="13px" height="7px" viewBox="0 0 13 7" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>2B8F1E06-59E4-4439-A41A-C4DD14DB6811</title><g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.400000006"><g id="product7" transform="translate(-1357.000000, -716.000000)" stroke="#32373B"><polyline id="angle-up" transform="translate(1363.531074, 719.462509) scale(1, -1) translate(-1363.531074, -719.462509) " points="1357.65803 716.525988 1363.53107 722.399031 1369.40412 716.525988"></polyline></g></g></svg></div>').insertBefore(".tabs-content #tab1");
-  $('<div class="feature_divider"></div><div class="tab-reusable tab-close"><span>Reusable</span><svg class="tab-down"width="13px" height="7px" viewBox="0 0 13 7" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>22969407-800A-49F1-BB07-BE7DAF4CB9DF</title><g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.400000006"><g id="product7" transform="translate(-1357.000000, -933.000000)" stroke="#32373B"><polyline id="angle-down" points="1357.65803 933.525988 1363.53107 939.399031 1369.40412 933.525988"></polyline></g></g></svg><svg class="tab-up" width="13px" height="7px" viewBox="0 0 13 7" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>2B8F1E06-59E4-4439-A41A-C4DD14DB6811</title><g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.400000006"><g id="product7" transform="translate(-1357.000000, -716.000000)" stroke="#32373B"><polyline id="angle-up" transform="translate(1363.531074, 719.462509) scale(1, -1) translate(-1363.531074, -719.462509) " points="1357.65803 716.525988 1363.53107 722.399031 1369.40412 716.525988"></polyline></g></g></svg></div>').insertBefore(".tabs-content #tab2");
-  $('<div class="feature_divider"></div><div class="tab-shipping-warranty tab-close"><span>Shipping & Warranty</span><svg class="tab-down"width="13px" height="7px" viewBox="0 0 13 7" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>22969407-800A-49F1-BB07-BE7DAF4CB9DF</title><g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.400000006"><g id="product7" transform="translate(-1357.000000, -933.000000)" stroke="#32373B"><polyline id="angle-down" points="1357.65803 933.525988 1363.53107 939.399031 1369.40412 933.525988"></polyline></g></g></svg><svg class="tab-up" width="13px" height="7px" viewBox="0 0 13 7" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>2B8F1E06-59E4-4439-A41A-C4DD14DB6811</title><g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.400000006"><g id="product7" transform="translate(-1357.000000, -716.000000)" stroke="#32373B"><polyline id="angle-up" transform="translate(1363.531074, 719.462509) scale(1, -1) translate(-1363.531074, -719.462509) " points="1357.65803 716.525988 1363.53107 722.399031 1369.40412 716.525988"></polyline></g></g></svg></div>').insertBefore(".tabs-content #tab3");
-  $('<div class="feature_divider"></div>').insertAfter(".tabs-content #tab3");
-}  
 
 $(function() {
   LogoCarousel();
   LogoTitleCarousel();
-  loadProductDescription();
   customize.init();
   featuredProducts.init();
 
@@ -162,6 +158,15 @@ $(function() {
       $("#tab3").addClass("active");
     }
   });
+});
+
+
+$(window).on('load', function () {
+  if ($('.stamped-review-header').length) {
+    var review_header = `<div class="stamped-review-header">${$('.stamped-review-header').html()}</div>`;
+    $('.stamped-review-header-title').after(review_header);
+  }
+
 });
 
 

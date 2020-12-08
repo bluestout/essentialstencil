@@ -27,14 +27,12 @@
             <div class="featured-link--half featured-link--image featured-link--margin">
               <div class="featured-link--wrap">
                 <div class="featured-image-block flex-align">               
-                  <img  src="{{ block.settings.club_stencil_bg | img_url: '1000x' }}"
+                  <img  src="{{ block.settings.club_stencil_bg | img_url: '2048x' }}"
                     alt="{% if block.settings.club_stencil_bg.alt != blank %}{{ block.settings.club_stencil_bg.alt | escape }}{% else %}{{ block.settings.title | escape }}{% endif %}"
-                    style="max-width: 540px;max-height: 540px"
                     class="stencil-club-img1 medium-down--hide"
                   />
-                  <img  src="{{ block.settings.club_stencil_bg_mobile | img_url: '1000x' }}"
+                  <img  src="{{ block.settings.club_stencil_bg_mobile | img_url: '1024x' }}"
                     alt="{% if block.settings.club_stencil_bg_mobile.alt != blank %}{{ block.settings.club_stencil_bg.alt | escape }}{% else %}{{ block.settings.title | escape }}{% endif %}"
-                    style="max-width: 540px;max-height: 540px"
                     class="stencil-club-img1 hide medium-down--show"
                   />
                 </div>

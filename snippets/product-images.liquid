@@ -19,7 +19,7 @@
               "
       data-zoom="{{ section.settings.activate_zoom }}"
       data-autoplay="{{ section.settings.activate_autoplay }}">
-
+      
       {% for image_item in image_list %}
         {% assign image = image_item | split: "`~`" %}
         {% capture image_id %}{{ image[0] | strip }}{% endcapture %}

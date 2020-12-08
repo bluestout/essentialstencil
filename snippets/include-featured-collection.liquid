@@ -79,13 +79,13 @@
       </div>
     {% endif %}
   </div>
-  <a href="{{ collections[settingCollection].url }}" class="mobile-visible explore-all-mobile">
-    <img  src="{{ "explore_all.png" | asset_url }}"
-      alt="explore all"
-      style="width: 102px;height: 19px;"
-    />         
-  </a>
-{% else %}
+  <div class="mobile-visible">
+    <a href="{{ collections[settingCollection].url }}" class=" explore-all-mobile">
+      Explore more
+    </a>
+  </div>
+  
+{% else %} 
   {% if section_onboarding == false %}
     {% assign limit = products_limit %}
     {% assign collection = collections[settingCollection] %}

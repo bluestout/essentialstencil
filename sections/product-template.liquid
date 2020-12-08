@@ -26,13 +26,13 @@
           data-free-text="{{ settings.free_price_text }}"
           >
       <div class="section product_section clearfix js-product_section {% if section.settings.product_images_position == 'right' %}align_right--images{% endif %}" itemscope itemtype="http://schema.org/Product" data-rv-handle="{{ product.handle }}">
-{% if product.metafields.stamped.reviews_count and product.metafields.stamped.reviews_count != "0" %} 
-<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating"> 
-<span itemprop="itemReviewed" content="{{ product.title }}"></span> 
-<span itemprop="ratingValue" content="{{ product.metafields.stamped.reviews_average | round:2 }}"></span> 
-<span itemprop="ratingCount" content="{{ product.metafields.stamped.reviews_count }}"></span> 
-</div> 
-{% endif %}
+        {% if product.metafields.stamped.reviews_count and product.metafields.stamped.reviews_count != "0" %} 
+        <div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating"> 
+        <span itemprop="itemReviewed" content="{{ product.title }}"></span> 
+        <span itemprop="ratingValue" content="{{ product.metafields.stamped.reviews_average | round:2 }}"></span> 
+        <span itemprop="ratingCount" content="{{ product.metafields.stamped.reviews_count }}"></span> 
+        </div> 
+        {% endif %}
         <div class="product-images-mobile-view {% if sidebar %}seven{% else %}nine{% endif %} columns {% if section.settings.product_images_position == 'left' %}alpha{% else %}omega{% endif %}">
           {% include 'product-images' %}
         </div>
@@ -121,26 +121,23 @@
               <!-- <div class="feature_divider"></div>    -->
               {% include 'product-notify-me' %}
             {% endif %}
-            <div class="need_anyproject">
-              <input type="checkbox">
-              <img  src="{{ "Stencil_Brush_Set___Main_Redered.jpg" | asset_url}}"
-                alt="{% if block.settings.club_stencil_bg.alt != blank %}{{ block.settings.club_stencil_bg.alt | escape }}{% else %}{{ block.settings.title | escape }}{% endif %}"
-                class="need_anyproject_img"
-              />
-              <span class="need_anyproject_description" >Include Pure Natural Bristle Brushes - $15.87 <br/>(needed for any project)</span>
-              <svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                <title>28AA6CFD-A12F-4ADD-BB88-86B288100AC2</title>
-                <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.600000024">
-                    <g id="product7" transform="translate(-1336.000000, -440.000000)" fill="#32373B">
-                        <g id="help" transform="translate(1336.000000, 440.000000)">
-                            <path d="M8,1.33333333 C4.324,1.33333333 1.33333333,4.324 1.33333333,8 C1.33333333,11.676 4.324,14.6666667 8,14.6666667 C11.676,14.6666667 14.6666667,11.676 14.6666667,8 C14.6666667,4.324 11.676,1.33333333 8,1.33333333 M8,16 C3.58866667,16 0,12.4113333 0,8 C0,3.58866667 3.58866667,0 8,0 C12.4113333,0 16,3.58866667 16,8 C16,12.4113333 12.4113333,16 8,16" id="Fill-1" opacity="0.300000012"></path>
-                            <path d="M8,10.6666667 C7.63133333,10.6666667 7.33333333,10.3686667 7.33333333,10 L7.33333333,9.50466667 C7.33333333,8.50866667 7.83533333,7.61333333 8.644,7.16933333 C9.15133333,6.89 9.41333333,6.33466667 9.312,5.75333333 C9.22066667,5.22733333 8.77266667,4.77933333 8.24733333,4.688 C7.84066667,4.61933333 7.448,4.72066667 7.14133333,4.97866667 C6.84,5.232 6.66666667,5.604 6.66666667,6 C6.66666667,6.36866667 6.36866667,6.66666667 6,6.66666667 C5.63133333,6.66666667 5.33333333,6.36866667 5.33333333,6 C5.33333333,5.20933333 5.68,4.46533333 6.28266667,3.958 C6.88666667,3.45 7.68533333,3.236 8.47533333,3.37466667 C9.554,3.562 10.438,4.446 10.6253333,5.52466667 C10.8226667,6.658 10.2846667,7.78866667 9.286,8.33733333 C8.90933333,8.544 8.66666667,9.00266667 8.66666667,9.50466667 L8.66666667,10 C8.66666667,10.3686667 8.36866667,10.6666667 8,10.6666667" id="Fill-3" opacity="0.300000012"></path>
-                            <path d="M8.66666667,12 C8.66666667,12.368 8.368,12.6666667 8,12.6666667 C7.632,12.6666667 7.33333333,12.368 7.33333333,12 C7.33333333,11.632 7.632,11.3333333 8,11.3333333 C8.368,11.3333333 8.66666667,11.632 8.66666667,12" id="Fill-5" opacity="0.300000012"></path>
-                        </g>
-                    </g>
-                </g>
-              </svg>
-            </div>
+            {% if section.settings.upsell_product %}
+              {% assign u_product = all_products[section.settings.upsell_product] %}
+              <div class="need_anyproject">
+                <div class="checkbox">
+                  <input type="checkbox" id="upsell" name="upsell" value="{{u_product.first_available_variant.id}}">
+                  <label for="upsell"></label>
+                </div>
+                
+                <img  src="{{ u_product.featured_image | img_url: '480x' }}"
+                  alt="{{u_product.title}}"
+                  class="need_anyproject_img"
+                />
+                <span class="need_anyproject_description" >{{ u_product.title }} - {{ u_product.price | money }} <br/>(needed for any project)</span>
+                {% include 'icon-pack' with icon: 'question' %}
+              </div>
+            {% endif %}
+            
             {% if section.settings.product_description_position == "top" %}
               {% if product.description != blank %}
               <div class="description" itemprop="description">
@@ -206,18 +203,36 @@
                 </svg>
               </div>
             </div>
+            
             {% if section.settings.product_description_position == "bottom" %}
-              {% if product.description != blank %}
-              <div class="toggle-contents">
-                <h6> Description <span class="right icon-down-arrow"></span></h6>
-                <div class="toggle-content">
-                  <div class="description bottom" itemprop="description">
-                    {{ product.description | split: '<!-- split -->' | first }}
-                  </div>
-                </div>
+              <div class="description bottom" itemprop="description">
+                
+                {% if product.description != blank and product.description contains '<ul class="tabs">' %}
+                  {% assign description = product.description | split: '<!--Start tab labels-->' | last %}
+                  {% assign tab_link_content = description | split: '<!--Start tab content-->' | first %}
+                  {% assign tab_content = description | split: '<!--Start tab content-->' | last %}
+                  {% assign tabs_array = tab_link_content | remove_first: '<ul class="tabs">' | remove_first: '</ul>' | split: '">' %}
+                  {% for tab_str in tabs_array %}
+                    {% if forloop.index > 1 %}
+                      {% assign tab_description = tab_str | split: '</a>' | first %}
+                      {% assign tabs_str = tabs_str | append: ',' | append: tab_description %}
+                    {% endif %}
+                  {% endfor %}
+                  {% assign tabs_arr = tabs_str | remove_first: ',' | split: ',' %}
+                  {% assign tab_contents = tab_content | remove_first: '<ul class="tabs-content">' | remove_first: '</ul>' | split: '</li>' %}
+                  {% for tab in tabs_arr %}
+                    <div class="toggle-contents">
+                      <h6> {{ tab }} <span class="right icon-down-arrow"></span></h6>
+                      <div class="toggle-content">
+                        {% assign i = forloop.index | minus: 1 %}
+                        {{ tab_contents[i] | append: '</li>' }}
+                      </div>
+                    </div>
+                  {% endfor %}
+                {% else %}
+                {{product.description}}
+                {% endif %}
               </div>
-              
-              {% endif %}
             {% endif %}
 
             {% if settings.enable_shopify_review_comments and settings.review_position == "next_to_gallery" %}
@@ -405,6 +420,15 @@
           "label": "Below product form"
         }
       ]
+    },
+    {
+      "type": "header",
+      "content": "Upsell product"
+    },
+    {
+      "type": "product",
+      "id": "upsell_product",
+      "label": "Upsell product"
     },
     {
       "type": "header",

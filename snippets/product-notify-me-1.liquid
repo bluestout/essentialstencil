@@ -13,9 +13,9 @@
           {% endif %}
 
           {% if customer %}
-            <input type="hidden" name="contact[email]" class="notify_email" id="contact[email]" value="{{ customer.email }}" />
+            <input type="hidden" name="contact[email]" class="notify_email" value="{{ customer.email }}" />
           {% else %}
-            <input required type="email" class="notify_email" name="contact[email]" id="contact[email]" placeholder="{{ 'products.notify_form.email' | t }}" value="{{ contact.fields.email }}" />
+            <input required type="email" class="notify_email" name="contact[email]" placeholder="{{ 'products.notify_form.email' | t }}" value="{{ contact.fields.email }}" />
           {% endif %}
 
           <input type="hidden" name="challenge" value="false" />

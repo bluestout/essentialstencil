@@ -360,9 +360,7 @@ x.parentNode.insertBefore(s, x);
 window.onload = () => {
   const shouldStyle = checkPrice(afterpay_product, afterpay_cart_total_price)
   if(shouldStyle){
-      const afterpay_link = document.querySelector('.afterpay-link-inner');
-      afterpay_link.style.textDecorationLine = "underline";
-      afterpay_link.style.fontStyle = "italic";
+      $('.afterpay-link-inner').html(`{% include 'icon-pack' with icon: 'question' %}`);
     }
   }
 </script>
