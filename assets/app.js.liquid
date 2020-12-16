@@ -3865,7 +3865,16 @@ $(document)
     }
 });
 var fsb_adjusted = false;
+
+
+
 $( "#fsb_placeholder" ).on( "fsb_fully_loaded", function(event, p1) {
+  var fsb_height = $("#fsb_bar").outerHeight();
+  console.log(fsb_height)
+  if ($(window).innerWidth() < 768) {
+    $('#header').css('margin-top', fsb_height);
+  }
+  $('.sticky-header').css('margin-top', fsb_height);
   if ((p1=='inserted' || p1=='inserted_sticky') && !fsb_adjusted ){
     fsb_adjusted = true;
     var fsb_height = $("#fsb_bar").outerHeight();

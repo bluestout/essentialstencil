@@ -27,7 +27,7 @@
       <div class="logo-bar">
         {% for block in section.blocks %}
           <div class="logo-bar__item" {{ block.shopify_attributes }}>
-              <a href="#carousel-{{block.id}}" class="logo-bar__link">
+              <a href="{{ block.settings.link }}" class="logo-bar__link">
                 {{block.settings.image}}
               </a>
           </div>
@@ -35,7 +35,6 @@
       </div>
     {% endif %}
     <div class="logo-content">
-      {% for block in section.blocks %}
         <div class="logo-item" id="carousel-{{block.id}}">
           <svg width="37px" height="31px" viewBox="0 0 37 31" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <title>1E1C84B6-F09E-43DE-B150-1410772DE9FB@1x</title>
@@ -45,9 +44,8 @@
                 </g>
             </g>
           </svg>
-          <span class="logo-content-text">{{ block.settings.title }}</span>
+          <span class="logo-content-text">{{ section.settings.text }}</span>
         </div>
-      {% endfor %}
       </div>  
     </div>
 </div>
@@ -66,23 +64,8 @@
       },
       {
         "type": "text",
-        "id": "abc_content",
-        "label": "ABC Content"
-      },
-      {
-        "type": "text",
-        "id": "nbc_content",
-        "label": "NBC Content"
-      },
-      {
-        "type": "text",
-        "id": "cbs_content",
-        "label": "CBS Content"
-      },
-      {
-        "type": "text",
-        "id": "fox_content",
-        "label": "FOX Content"
+        "id": "text",
+        "label": "Content"
       }
     ],
     "blocks": [
@@ -103,11 +86,6 @@
           {
             "type": "header",
             "content": "content"
-          },
-          {
-            "type": "text",
-            "id": "title",
-            "label": "Title"
           }
         ]
       }

@@ -16,25 +16,28 @@
 {% assign patriotic_url = section.settings.patriotic_url %}
 {% assign summer_url = section.settings.summer_url %}
 {% assign fall_url = section.settings.fall_url %}
+{% assign sub_title = section.settings.sub_title %}
+{% assign title = section.settings.title %}
+{% assign comments = section.settings.comment %}
 
 
 <div class="stencil-collection-container">
   <div class="stencil-collection-wrap">
     <div class="stencil-collection-title-wrap">
       <div class="stencil-action-inspired-title">
-        COLLECTIONS
+        {{ sub_title }}
       </div>
-      <div class="stencil-action-main-title">
-        Shop by Collection
+      <div class="stencil-action-main-title {% if section.settings.bg_status %}bg-true{% endif %}" style="--bg-color: {{section.settings.bg_color}}">
+        {{ title }}
       </div>
       <div class="stencil-action-by-title">
-        LOOK IT UP THEMATICALLY
+        {{ comments }}
       </div>
       <div class="small-divider"></div>
     </div>
     <div class="stencil-collection-content desktop-visible">
       <div class="vertical-container">
-        <img  src="{{ vertical | img_url: '350x' }}"
+        <img  src="{{ vertical | img_url: '1024x' }}"
           alt="{{ vertical.alt }}"
           style="max-width: 500px;"
           class="head-sub-image1"
@@ -51,7 +54,7 @@
       </div>
       <div class="signs-valentine-container flex-align-column-between">
         <div class="signs-image-container">
-          <img  src="{{ signs | img_url: '350x' }}"
+          <img  src="{{ signs | img_url: '1024x' }}"
             alt="{{ signs.alt }}"
             style="max-width: 500px;"
             class="head-sub-image1"
@@ -66,7 +69,7 @@
             </span></a>
         </div>
         <div class="valentine-image-container">
-          <img  src="{{ valentine | img_url: '350x' }}"
+          <img  src="{{ valentine | img_url: '1024x' }}"
             alt="{{ valentine.alt }}"
             style="max-width: 500px;"
             class="head-sub-image1"
@@ -82,7 +85,7 @@
         </div>
       </div>
       <div class="patriotic-container">
-        <img  src="{{ patriotic | img_url: '350x' }}"
+        <img  src="{{ patriotic | img_url: '1024x' }}"
           alt="{{ patriotic.alt }}"
           style="max-width: 500px;"
           class="head-sub-image1"
@@ -98,7 +101,7 @@
       </div>
       <div class="summar-fall-container  flex-align-column-between">
         <div class="summer-image-container">
-          <img  src="{{ summer | img_url: '350x' }}"
+          <img  src="{{ summer | img_url: '1024x' }}"
             alt="{{ summer.alt }}"
             style="max-width: 500px;"
             class="head-sub-image1"
@@ -131,7 +134,7 @@
     </div>
     <div class="stencil-collection-content mobile-visible">
       <div class="vertical-container">
-        <img  src="{{ vertical1 | img_url: '350x' }}"
+        <img  src="{{ vertical1 | img_url: '1024x' }}"
           alt="{{ vertical1.alt }}"
           class="head-sub-image1"
         />
@@ -147,7 +150,7 @@
       </div>
       <div class="signs-valentine-container flex-align-column-between">
         <div class="signs-image-container">
-          <img  src="{{ signs1 | img_url: '350x' }}"
+          <img  src="{{ signs1 | img_url: '1024x' }}"
             alt="{{ signs1.alt }}"
             class="head-sub-image1"
           />
@@ -161,7 +164,7 @@
             </span></a>
         </div>
         <div class="valentine-image-container">
-          <img  src="{{ valentine1 | img_url: '350x' }}"
+          <img  src="{{ valentine1 | img_url: '1024x' }}"
             alt="{{ valentine1.alt }}"
             class="head-sub-image1"
           />
@@ -176,7 +179,7 @@
         </div>
       </div>
       <div class="patriotic-container">
-        <img  src="{{ patriotic1 | img_url: '350x' }}"
+        <img  src="{{ patriotic1 | img_url: '1024x' }}"
           alt="{{ patriotic1.alt }}"
           class="head-sub-image1"
         />
@@ -191,7 +194,7 @@
       </div>
       <div class="summar-fall-container  flex-align-column-between">
         <div class="summer-image-container">
-          <img  src="{{ summer1 | img_url: '350x' }}"
+          <img  src="{{ summer1 | img_url: '1024x' }}"
             alt="{{ summer1.alt }}"
             class="head-sub-image1"
           />
@@ -205,7 +208,7 @@
             </span></a>
         </div>
         <div class="fall-image-container">
-          <img  src="{{ fall1 | img_url: '350x' }}"
+          <img  src="{{ fall1 | img_url: '1024x' }}"
             alt="{{ fall1.alt }}"
             class="head-sub-image1"
           />

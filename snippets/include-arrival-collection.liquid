@@ -1,5 +1,7 @@
 {% if type == 'block' %}
   {% assign title = block.settings.title %}
+  {% assign pre_title = block.settings.pre_title %}
+  {% assign comment = block.settings.comment %}
   {% assign settingCollection = block.settings.collection %}
   {% assign collection_style = block.settings.collection_style %}
   {% assign collection_description = block.settings.collection_description %}
@@ -7,6 +9,8 @@
   {% assign products_limit = block.settings.products_limit %}
 {% else %}
   {% assign title = section.settings.title %}
+  {% assign pre_title = section.settings.pre_title %}
+  {% assign comment = section.settings.comment %}
   {% assign settingCollection = section.settings.collection %}
   {% assign collection_style = section.settings.collection_style %}
   {% assign collection_description = section.settings.collection_description %}
@@ -27,13 +31,13 @@
     {% if title != blank %}
       <div class="stencil-collection-title-wrap">
         <div class="stencil-action-inspired-title">
+          {{ pre_title }}
+        </div>
+        <div class="stencil-action-main-title  {% if section.settings.bg_status %}bg-true{% endif %}" style="--bg-color: {{section.settings.bg_color}}">
           {{ title }}
         </div>
-        <div class="stencil-action-main-title">
-          On Point Designs
-        </div>
         <div class="stencil-action-by-title">
-          ONLY ON ESSENTIALSTENCIL.COM
+         {{ comment }}
         </div>
         <div class="small-divider"></div>
       </div>

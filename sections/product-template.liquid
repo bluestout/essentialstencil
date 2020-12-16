@@ -134,7 +134,13 @@
                   class="need_anyproject_img"
                 />
                 <span class="need_anyproject_description" >{{ u_product.title }} - {{ u_product.price | money }} <br/>(needed for any project)</span>
-                {% include 'icon-pack' with icon: 'question' %}
+                <div class="tooltip-box">
+                  <a class="tooltip_btn">{% include 'icon-pack' with icon: 'question' %}</a>
+                  <div class="tooltip_content">
+                    {{ section.settings.upsell_info }}
+                  </div>
+                </div>
+                
               </div>
             {% endif %}
             
@@ -149,7 +155,12 @@
             {% unless collection_handles contains 'coming-soon' %}
               {% include 'product-form' with 'product' %}
             {% endunless %}
-
+            {% comment %}
+            <div class="info-text">
+              {% include 'icon-pack' with icon: 'order-info-text' %}
+              <p>{{section.settings.info_text}}</p>
+            </div>
+            {% endcomment %}
             <div class="shipping_guarantee">
               <div class="free_shipping_desc">
                 <svg width="22px" height="21px" viewBox="0 0 22 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -209,7 +220,7 @@
                 
                 {% if product.description != blank and product.description contains '<ul class="tabs">' %}
                   {% assign description = product.description | split: '<!--Start tab labels-->' | last %}
-                  {% assign tab_link_content = description | split: '<!--Start tab content-->' | first %}
+                  {% assign tab_link_content = description | split: '<ul class="tabs">' | last | split: '<!--Start tab content-->' | first %}
                   {% assign tab_content = description | split: '<!--Start tab content-->' | last %}
                   {% assign tabs_array = tab_link_content | remove_first: '<ul class="tabs">' | remove_first: '</ul>' | split: '">' %}
                   {% for tab_str in tabs_array %}
@@ -422,6 +433,12 @@
       ]
     },
     {
+      "type": "text",
+      "id": "info_text",
+      "label": "Info text",
+      "default": "Order within 2 days 20 hours 56 minutes 5 seconds to get it by November 2"
+    },
+    {
       "type": "header",
       "content": "Upsell product"
     },
@@ -429,6 +446,11 @@
       "type": "product",
       "id": "upsell_product",
       "label": "Upsell product"
+    },
+    {
+      "type": "richtext",
+      "id": "upsell_info",
+      "label": "Upsell info"
     },
     {
       "type": "header",
@@ -452,10 +474,15 @@
       "default": "See This Stencil in Action"
     },
     {
-      "type": "text",
-      "id": "by_stencil_action",
-      "label": "Sub title",
-      "default": "BY SHARON HANKINS"
+      "type": "checkbox",
+      "id": "bg_status",
+      "label": "Title background status"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Backgorund color",
+      "default": "#f7ebe5"
     },
     {
       "type": "select",
@@ -489,6 +516,17 @@
     {
       "type": "header",
       "content": "Related products"
+    },
+    {
+      "type": "checkbox",
+      "id": "r_bg_status",
+      "label": "Title background status"
+    },
+    {
+      "type": "color",
+      "id": "r_bg_color",
+      "label": "Backgorund color",
+      "default": "#f7ebe5"
     },
     {
       "type": "checkbox",
@@ -655,6 +693,17 @@
           "label": "Title"
         },
         {
+          "type": "checkbox",
+          "id": "bg_status",
+          "label": "Title background status"
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Backgorund color",
+          "default": "#f7ebe5"
+        },
+        {
           "type": "text",
           "id": "comment",
           "label": "comment"
@@ -722,6 +771,17 @@
           "label": "Title"
         },
         {
+          "type": "checkbox",
+          "id": "bg_status",
+          "label": "Title background status"
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Backgorund color",
+          "default": "#f7ebe5"
+        },
+        {
           "type": "text",
           "id": "comment",
           "label": "comment"
@@ -744,6 +804,17 @@
           "label": "Title"
         },
         {
+          "type": "checkbox",
+          "id": "bg_status",
+          "label": "Title background status"
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Backgorund color",
+          "default": "#f7ebe5"
+        },
+        {
           "type": "text",
           "id": "comment",
           "label": "comment"
@@ -764,6 +835,17 @@
           "type": "text",
           "id": "title",
           "label": "Title"
+        },
+        {
+          "type": "checkbox",
+          "id": "bg_status",
+          "label": "Title background status"
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Backgorund color",
+          "default": "#f7ebe5"
         },
         {
           "type": "text",

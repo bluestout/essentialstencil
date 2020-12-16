@@ -41,6 +41,11 @@
       {% endif %}
     {% endif %}
   {% endfor %}
+  {% if explore %}
+    <a href="{{ collections[col].url }}" class="explore-all-mobile hide medium-down--show">
+      <div class="explore-more">Explore All </div>
+    </a>
+  {% endif %}
   {% if template contains 'collection' %}
     {% if settings.pagination_type == 'load_more' or settings.pagination_type == 'infinite_scroll' %}
       {% if paginate.next.url %}

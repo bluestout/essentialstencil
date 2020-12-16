@@ -8,7 +8,7 @@
       <div class="stencil-action-inspired-title">
         {{ sub_title }}
       </div>
-      <div class="stencil-action-main-title">
+      <div class="stencil-action-main-title {% if block.settings.bg_status %}bg-true{% endif %}" style="--bg-color: {{block.settings.bg_color}}">
         {{ title }}
       </div>
       <div class="stencil-action-by-title">

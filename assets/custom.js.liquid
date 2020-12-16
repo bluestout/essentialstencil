@@ -44,16 +44,23 @@ var customize = {
           let current_date = new Date();
   
           var limit_time = new Date(limit_year, limit_month-1, limit_day, time, min, 0, 0);
-        
-          var Difference_In_Time = limit_time.getTime() - current_date.getTime(); 
-          var left_Days = parseInt(Difference_In_Time / (1000 * 3600 * 24));
-          var left_time = parseInt(Difference_In_Time / (1000 * 3600) - left_Days * 24);
-          var left_min = parseInt(Difference_In_Time / (1000 * 60) - left_Days * 24 * 60 - left_time * 60);
-          var left_sec = parseInt(Difference_In_Time / 1000 - left_Days * 24 * 3600 - left_time * 3600 - left_min * 60);
-          $("body .featured-time-block-content .featured-time-days").text(left_Days);
-          $("body .featured-time-block-content .featured-time-hours").text(left_time);
-          $("body .featured-time-block-content .featured-time-mins").text(left_min);
-          $("body .featured-time-block-content .featured-time-seconds").text(left_sec);
+          if (limit_time > current_date) {
+            var Difference_In_Time = limit_time.getTime() - current_date.getTime(); 
+            var left_Days = parseInt(Difference_In_Time / (1000 * 3600 * 24));
+            var left_time = parseInt(Difference_In_Time / (1000 * 3600) - left_Days * 24);
+            var left_min = parseInt(Difference_In_Time / (1000 * 60) - left_Days * 24 * 60 - left_time * 60);
+            var left_sec = parseInt(Difference_In_Time / 1000 - left_Days * 24 * 3600 - left_time * 3600 - left_min * 60);
+            $("body .featured-time-block-content .featured-time-days").text(left_Days);
+            $("body .featured-time-block-content .featured-time-hours").text(left_time);
+            $("body .featured-time-block-content .featured-time-mins").text(left_min);
+            $("body .featured-time-block-content .featured-time-seconds").text(left_sec);
+          } else {
+            $("body .featured-time-block-content .featured-time-days").text(0);
+            $("body .featured-time-block-content .featured-time-hours").text(0);
+            $("body .featured-time-block-content .featured-time-mins").text(0);
+            $("body .featured-time-block-content .featured-time-seconds").text(0);
+          }
+          
         }, 1000)   
       }
        
@@ -71,19 +78,7 @@ var LogoTitleCarousel = function () {
   });
 }
 
-var LogoCarousel = function () {
-  $('.logo-bar-section .logo-content').flickity({
-    adaptiveHeight: true,
-    wrapAround: true,
-    cellAlign: 'left',
-    imagesLoaded: true,
-    prevNextButtons: false,
-    draggable: true,
-    pageDots: false,
-    autoPlay: 3000,
-    hash: true
-  });
-}
+
 
 
 
@@ -106,7 +101,6 @@ var featuredProducts = {
 
 
 $(function() {
-  LogoCarousel();
   LogoTitleCarousel();
   customize.init();
   featuredProducts.init();
@@ -134,18 +128,24 @@ $(function() {
       $("#tab2").addClass("active");
     }
   });
-
-  $('.new-arrival-product-slider').flickity({
-    adaptiveHeight: true,
-    wrapAround: true,
-    cellAlign: 'left',
-    imagesLoaded: true,
-    prevNextButtons: true,
-    draggable: true,
-    pageDots: false,
-    autoPlay: 3000,
-    hash: true
-  });
+  $(window).on('load', function () {
+    $('.new-arrival-product-slider').flickity({
+      selectedAttraction: 0.2,
+      friction: 0.8,
+      adaptiveHeight: true,
+      wrapAround: false,
+      cellAlign: 'left',
+      imagesLoaded: true,
+      lazyLoad: 1,
+      prevNextButtons: true,
+      draggable: true,
+      pageDots: false,
+      autoPlay: 3000,
+      hash: true
+    });
+    $('.new-arrival-product-slider').show();
+  })
+  
 
   $( ".tab-shipping-warranty svg").click(function() {
     if($( ".tab-shipping-warranty").hasClass("tab-open")) {

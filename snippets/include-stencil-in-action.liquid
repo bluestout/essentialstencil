@@ -5,64 +5,73 @@
 
 {% assign tab_link_str = '' %}
 {% assign tab_content_str = '' %}
-
+{% assign tab_author_str = '' %}
 {% if product.metafields.product.stencil_tab_1 != blank %}
   {% assign tab_array = product.metafields.product.stencil_tab_1 | split: ' : ' %}
   {% assign tab_link_str = tab_link_str | append: ',' | append: tab_array[0] %}
   {% assign tab_content_str = tab_content_str | append: ',' | append: tab_array[1] %}
+  {% assign tab_author_str =  tab_author_str | append: ',' | append: tab_array[2] %}
 {% endif %}
 
 {% if product.metafields.product.stencil_tab_2 != blank %}
   {% assign tab_array = product.metafields.product.stencil_tab_2 | split: ' : ' %}
   {% assign tab_link_str = tab_link_str | append: ',' | append: tab_array[0] %}
   {% assign tab_content_str = tab_content_str | append: ',' | append: tab_array[1] %}
+  {% assign tab_author_str =  tab_author_str | append: ',' | append: tab_array[2] %}
 {% endif %}
 
 {% if product.metafields.product.stencil_tab_3 != blank %}
   {% assign tab_array = product.metafields.product.stencil_tab_3 | split: ' : ' %}
   {% assign tab_link_str = tab_link_str | append: ',' | append: tab_array[0] %}
   {% assign tab_content_str = tab_content_str | append: ',' | append: tab_array[1] %}
+  {% assign tab_author_str =  tab_author_str | append: ',' | append: tab_array[2] %}
 {% endif %}
 
 {% if product.metafields.product.stencil_tab_4 != blank %}
   {% assign tab_array = product.metafields.product.stencil_tab_4 | split: ' : ' %}
   {% assign tab_link_str = tab_link_str | append: ',' | append: tab_array[0] %}
   {% assign tab_content_str = tab_content_str | append: ',' | append: tab_array[1] %}
+  {% assign tab_author_str =  tab_author_str | append: ',' | append: tab_array[2] %}
 {% endif %}
 
 {% if product.metafields.product.stencil_tab_5 != blank %}
   {% assign tab_array = product.metafields.product.stencil_tab_5 | split: ' : ' %}
   {% assign tab_link_str = tab_link_str | append: ',' | append: tab_array[0] %}
   {% assign tab_content_str = tab_content_str | append: ',' | append: tab_array[1] %}
+  {% assign tab_author_str =  tab_author_str | append: ',' | append: tab_array[2] %}
 {% endif %}
 
 {% if product.metafields.product.stencil_tab_6 != blank %}
   {% assign tab_array = product.metafields.product.stencil_tab_6 | split: ' : ' %}
   {% assign tab_link_str = tab_link_str | append: ',' | append: tab_array[0] %}
   {% assign tab_content_str = tab_content_str | append: ',' | append: tab_array[1] %}
+  {% assign tab_author_str =  tab_author_str | append: ',' | append: tab_array[2] %}
 {% endif %}
 
 {% assign tab_links_array = tab_link_str | remove_first: ',' | split: ',' %}
 {% assign tab_contents_array = tab_content_str | remove_first: ',' | split: ',' %}
+{% assign tab_author_array = tab_author_str | remove_first: ',' | split: ',' %}
 {% if tab_contents_array != blank %}
 <div class="stencil-action--wrap" style="background-image: url({{ stencil_action_bg | img_url: '2048x'}})">
   <div class="stencil-action-container">
     <div class="stencil-action-inspired-title">
       {{ getInspired }}
     </div>
-    <div class="stencil-action-main-title">
+    <div class="stencil-action-main-title {% if section.settings.bg_status %}bg-true{% endif %}" style="--bg-color: {{section.settings.bg_color}}">
       {{ stencil_action_title }}
     </div>
-    <div class="stencil-action-by-title">
-      {{ by_stencil_action }}
-    </div>
-    <div class="small-divider"></div>
     <div class="stencil-action-content tabs">
       <div class="tab-content">
         {% assign status = true %}
         {% for block in tab_contents_array %}
             {% assign num = forloop.index | minus: 1 %}
             <div id="block-{{tab_links_array[num] | handle }}-{{forloop.index}}" class="tab-pane animated fadeIn {% if status %} active {% endif %}">
+              <div class="stencil-action-by-title">
+                {% if tab_author_array[num] != blank %}
+                  {{ tab_author_array[num] }}
+                {% endif %}
+              </div>
+              <div class="small-divider"></div>
               {% if block contains 'youtu' %}
                 {% include 'include-video-stencil' source: block %}
               {% else %}

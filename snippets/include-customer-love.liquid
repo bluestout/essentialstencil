@@ -1,6 +1,6 @@
-{% assign title = section.settings.pre_title %}
-{% assign headline = section.settings.title %}
 {% assign sub_title = section.settings.sub_title %}
+{% assign title = section.settings.title %}
+{% assign comments = section.settings.comment %}
 {% assign background_img = section.settings.cust_love_bg %}
 {% assign review_url = section.settings.all_review_url %}
 
@@ -9,13 +9,13 @@
     <div class="customer-love-header-title">
       <div class="stencil-collection-title-wrap">
         <div class="stencil-action-inspired-title">
-          {{title}}
+          {{ sub_title }}
         </div>
-        <div class="stencil-action-main-title">
-          {{headline}}
+        <div class="stencil-action-main-title {% if section.settings.bg_status %}bg-true{% endif %}" style="--bg-color: {{section.settings.bg_color}}">
+          {{ title }}
         </div>
         <div class="stencil-action-by-title">
-          {{ sub_title }}
+          {{ comments }}
         </div>
         <div class="small-divider"></div>
       </div>

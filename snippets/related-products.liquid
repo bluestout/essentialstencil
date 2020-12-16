@@ -21,7 +21,7 @@
 
       <div class="related-products__title {% unless section.settings.related_products_style == 'slider' %}{% if sidebar %}twelve columns{% else %}sixteen columns{% endif %}{% endunless %}">
         <div class="stencil-action-inspired-title">Related Products</div>
-        <div class="stencil-action-main-title"> You might love these too </div>
+        <div class="stencil-action-main-title {% if section.settings.r_bg_status %}bg-true{% endif %}" style="--bg-color: {{section.settings.r_bg_color}}"> You might love these too </div>
         <div class="stencil-action-by-title"> Find the Perfect Design </div>
       </div>
       <div class="clear"></div>
@@ -43,8 +43,8 @@
         {% assign products_per_row = section.settings.products_per %}
         {% if col and collections[col].all_products_count > 0 %}
           {% unless sidebar %}<div class="related-products--grid">{% endunless %}
-              {% include 'product-loop', related_products: true %}
-              <a href="{{ collections[col].url }}" class="explore-all-mobile">
+              {% include 'product-loop', related_products: true. explore: true %}
+              <a href="{{ collections[col].url }}" class="explore-all-mobile medium-down--hide">
                 <div class="explore-more">Explore more</div>
               </a>
           {% unless sidebar %}</div>{% endunless %}

@@ -5,13 +5,22 @@
   {% assign collection_description = block.settings.collection_description %}
   {% assign products_per = block.settings.products_per %}
   {% assign products_limit = block.settings.products_limit %}
+  {% assign bg_status = block.settings.bg_status %}
+  {% assign bg_color = block.settings.bg_color %}
+  {% assign sub_title = block.settings.sub_title %}
+  {% assign title = block.settings.title %}
+  {% assign comments = block.settings.comment %}
 {% else %}
+  {% assign sub_title = section.settings.sub_title %}
   {% assign title = section.settings.title %}
+  {% assign comments = section.settings.comment %}
   {% assign settingCollection = section.settings.collection %}
   {% assign collection_style = section.settings.collection_style %}
   {% assign collection_description = section.settings.collection_description %}
   {% assign products_per = section.settings.products_per %}
   {% assign products_limit = section.settings.products_limit %}
+  {% assign bg_status = section.settings.bg_status %}
+  {% assign bg_color = section.settings.bg_color %}
 {% endif %}
 
 {% if settingCollection == blank %}
@@ -28,13 +37,13 @@
       <!-- <a href="{{ collections[settingCollection].url }}"><h2 class="title">{{ title }}</h2></a> -->
       <div class="stencil-collection-title-wrap">
         <div class="stencil-action-inspired-title">
+          {{ sub_title }}
+        </div>
+        <div class="stencil-action-main-title {% if section.settings.bg_status %}bg-true{% endif %}" style="--bg-color: {{section.settings.bg_color}}">
           {{ title }}
         </div>
-        <div class="stencil-action-main-title">
-          Most Loved
-        </div>
         <div class="stencil-action-by-title">
-          ONLY ON ESSENTIALSTENCIL.COM
+          {{ comments }}
         </div>
         <div class="small-divider"></div>
       </div>
