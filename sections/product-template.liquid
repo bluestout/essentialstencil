@@ -262,10 +262,11 @@
     
     {% include 'include_last_for_years' %}
 
-    {% include 'include-from-our-community' %}
-
-    {% include 'customer-love-review' %}
-
+    {% if product.metafields.stamped.reviews_count != blank %}
+      {% include 'include-from-our-community' %}
+      {% include 'customer-love-review' %}
+    {% endif %}
+    
     {% if section.settings.display_related_products %}
       {% include 'related-products' %}
     {% endif %}
@@ -709,9 +710,9 @@
           "label": "comment"
         },
         {
-          "type": "image_picker",
+          "type": "html",
           "id": "material_image",
-          "label": "Quality Material Image"
+          "label": "Materal"
         },
         {
           "type": "text",
@@ -724,9 +725,9 @@
           "label": "Material Cotent"
         },
         {
-          "type": "image_picker",
+          "type": "html",
           "id": "reusable_image",
-          "label": "Quality Reusable Image"
+          "label": "Reusable"
         },
         {
           "type": "text",
@@ -739,9 +740,9 @@
           "label": "Reusable Cotent"
         },
         {
-          "type": "image_picker",
+          "type": "html",
           "id": "gorgeous_image",
-          "label": "Gorgeous Image"
+          "label": "Gorgeous"
         },
         {
           "type": "text",

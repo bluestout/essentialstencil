@@ -15,7 +15,7 @@
             <div class="featured-link--half hide medium-down--show">
               <div class="flex-wrap-align info text-align--center">
                 <div class="join-stencil-title">
-                  <a  target="_blank" {% if block.settings.link != blank %}href="{{ block.settings.link }}"{% endif %}>
+                  <a style="--bg-color: {{block.settings.title_bg}}" target="_blank" {% if block.settings.link != blank %}href="{{ block.settings.link }}"{% endif %}>
                     {{ block.settings.title }}
                   </a>
                 </div>
@@ -41,7 +41,7 @@
             <div class="featured-link--half">
               <div class="flex-wrap-align info text-align--{{section.settings.frontpage_text_align}}">
                 <div class="join-stencil-title medium-down--hide">
-                  <a  target="_blank" {% if block.settings.link != blank %}href="{{ block.settings.link }}"{% endif %}>
+                  <a style="--bg-color: {{block.settings.title_bg}}" target="_blank" {% if block.settings.link != blank %}href="{{ block.settings.link }}"{% endif %}>
                     {{ block.settings.title }}
                   </a>
                 </div>
@@ -151,6 +151,11 @@
           "id": "title",
           "label": "Heading",
           "default": "Your headline"
+        },
+        {
+          "type": "color",
+          "id": "title_bg",
+          "label": "Title background"
         },
         {
           "type": "richtext",

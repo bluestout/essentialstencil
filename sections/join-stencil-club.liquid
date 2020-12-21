@@ -41,7 +41,7 @@
               <div class="featured-link--half">
                 <div class="flex-wrap-align info text-align--{{section.settings.frontpage_text_align}}">
                   <div class="join-stencil-title">
-                    <a  target="_blank" {% if block.settings.link != blank %}href="{{ block.settings.link }}"{% endif %}>
+                    <a style="--bg-color: {{block.settings.title_bg}}" target="_blank" {% if block.settings.link != blank %}href="{{ block.settings.link }}"{% endif %}>
                       {{ block.settings.title }}
                     </a>
                   </div>
@@ -67,69 +67,14 @@
 {
   "name": "Join Stencil Club",
   "class": "join-stencil-club-section",
-  "max_blocks": 16,
   "settings": [
-    {
-      "type": "select",
-      "id": "featured_links_per_row",
-      "label": "Images per row",
-      "options": [
-        {
-          "value": "1",
-          "label": "1"
-        },
-        {
-          "value": "2",
-          "label": "2"
-        }
-      ]
-    },
-    {
-      "type": "select",
-      "id": "frontpage_text_align",
-      "label": "Text alignment",
-      "options": [
-        {
-          "value": "left",
-          "label": "Left"
-        },
-        {
-          "value": "center",
-          "label": "Center"
-        },
-        {
-          "value": "right",
-          "label": "Right"
-        }
-      ]
-    },
-    {
-      "type": "select",
-      "id": "frontpage_image_position",
-      "label": "First image position",
-      "info": "Subsequent images will appear staggered",
-      "options": [
-        {
-          "value": "left",
-          "label": "Left"
-        },
-        {
-          "value": "right",
-          "label": "Right"
-        }
-      ]
-    },
-    {
-      "type": "checkbox",
-      "id": "frontpage_grid_style",
-      "label": "Wide display"
-    },
     {
       "type": "image_picker",
       "id": "background",
       "label": "Background image"
     }
   ],
+  "max_blocks": 1,
   "blocks": [
     {
       "type": "image",
@@ -176,6 +121,11 @@
           "default": "Your headline"
         },
         {
+          "type": "color",
+          "id": "title_bg",
+          "label": "Title background"
+        },
+        {
           "type": "richtext",
           "id": "text",
           "label": "Text",
@@ -199,8 +149,6 @@
     "name": "Join Stencil Club",
     "category": "Image",
     "settings": {
-      "featured_links_per_row": "1",
-      "frontpage_text_align": "left"
     },
     "blocks": [
       {

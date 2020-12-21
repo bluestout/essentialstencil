@@ -140,12 +140,29 @@ $(function() {
       prevNextButtons: true,
       draggable: true,
       pageDots: false,
-      autoPlay: 3000,
+      autoPlay: false,
       hash: true
     });
     $('.new-arrival-product-slider').show();
   })
-  
+  var lastScrollTop = 0;
+  $(window).scroll(function(event){
+    var st = $(this).scrollTop();
+    if ($(window).width() < 768) {
+      if (st > 100) {
+        if (st > lastScrollTop){
+          $('.search_container').hide();
+        } else {
+          $('.search_container').show();
+        }
+      } else {
+        $('.search_container').show();
+      }
+    }
+    
+    
+    lastScrollTop = st;
+ });
 
   $( ".tab-shipping-warranty svg").click(function() {
     if($( ".tab-shipping-warranty").hasClass("tab-open")) {

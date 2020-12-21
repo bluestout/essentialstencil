@@ -1,5 +1,5 @@
 input{
-  border-radius: 5px!important;
+  border-radius: 5px;
 }
 .promo_banner {
   background-color: #DDF0F9;
@@ -51,12 +51,13 @@ input{
 
 #fsb_bar{
   font-family: 'Inter', sans-serif!important;
-  font-weight: 400!important;
+  font-weight: 500!important;
   font-size: 14px!important;
-  letter-spacing: 1.6px!important;
+  letter-spacing: normal;
   background-color: #E2EFEF!important;
   color: #32373B!important;
-  line-height: 18px!important;
+  line-height: 16px!important;
+  padding: 11px 20px!important;
 }
 
 .home-logo-bar {
@@ -164,7 +165,7 @@ input{
 }
 
 .home-logo .stencil-title {
-  margin-left: 13px;
+  margin-left: 10px;
 }
 
 .home-logo .stencil-title img {
@@ -180,7 +181,7 @@ input{
 .home-logo-bar .search_container .search_form input{
   width: 601px;
   height: 49px;
-  border-color: #DADCDD;
+  border: 1px solid rgba(218, 220, 221, 0.64);
 }
 
 .home-logo-bar .search_container .search_form input::placeholder {
@@ -199,11 +200,11 @@ input{
 
 .home-logo-bar .search_container .search_form span{
   width: 72px;
-  height: 38px;
+  height: 39px;
   font-size: 14px;
   color: #FFF;
   background-color: #21B4F2;
-  border-radius: 5px;
+  border-radius: 3px;
   text-align: center;
   padding-top: 5px;
 }
@@ -281,7 +282,9 @@ input{
 }
 
 .footer {
-  font-family: Montserrat, sans-serif;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  border-top: none;
 }
 .container {
   max-width: 1410px;
@@ -371,6 +374,7 @@ input{
     padding: 0 30px;
     @media screen and (max-width: 991px){
       flex-wrap: wrap;
+      padding: 0 20px;
     }
     .columns{
       max-width: 205px;
@@ -385,20 +389,33 @@ input{
       @media screen and (max-width: 768px){
         max-width: initial;
         width: 100%;
+        margin: 0!important;
         &:first-child{
           order: -1;
         }
+        .logo{
+          margin: auto;
+          display: table;
+        }
       }
       .footer_menu {
+        max-width: 120px;
+        @media screen and (max-width: 768px ) {
+          max-width: initial;
+        }
         h6{
-          font-family: Montserrat, sans-serif;
-          font-weight: 600;
+          font-family: 'Inter', sans-serif;
+          font-weight: 500;
           color: #32373B;
+          height: 70px;
+          position: relative;
           font-size: 14px;
           @media screen and (max-width: 768px ) {
+            font-family: Montserrat, sans-serif;
             padding: 20px!important;
             font-size: 17px;
             font-weight: 500;
+            height: auto;
           }
           &::after{
             content: " ";
@@ -408,6 +425,8 @@ input{
             margin-top: 15px;
             margin-bottom: 10px;
             background: #21B4F2;
+            position: absolute;
+            bottom: 0;
             @media screen and (max-width: 768px ) {
               content: none;
             }
@@ -420,7 +439,7 @@ input{
       }      
     }
     .newsletter_section{
-      max-width: 400px;
+      max-width: 435px;
       width: 100%;
       display: flex;
       flex-wrap: wrap;
@@ -443,8 +462,8 @@ input{
       }
       h6{
         text-align: left;
-        font-family: Montserrat, sans-serif;
-        font-weight: 600;
+        font-family: 'Inter', sans-serif!important;
+        font-weight: 500;
         font-size: 25px;
         line-height: 30px;
         color: #32373B;
@@ -452,18 +471,22 @@ input{
         @media only screen and (max-width: 991px) {
           text-align: center;
           border: none;
+          font-size: 22px;
+          padding: 0;
         }
       }
       p{
         width: 100%;
         text-align: left;
-        font-family: Montserrat, sans-serif;
-        font-weight: 400;
+        font-family: 'Inter', sans-serif!important;
+        font-weight: 300;
         font-size: 14px;
         line-height: 21px;
         padding-bottom: 0;
+        padding-top: 0;
         &.sub_title{
           color: #4EBDED;
+          margin-bottom: 20px;
         }
         @media only screen and (max-width: 991px) {
           text-align: center;
@@ -474,12 +497,44 @@ input{
         position: relative;
         display: table;
         width: 100%;
+        @media only screen and (max-width: 991px) {
+          margin-bottom: 20px;
+        }
+        .firstName{
+          width: calc(30% - 5px);
+          margin-right: 5px;
+          float: left;
+          @media only screen and (max-width: 768px) {
+            width: 100%;
+            margin-right: 0;
+          }
+        }
+        .contact_email{
+          width: 70%;
+          padding-right: 95px;
+          @media only screen and (max-width: 768px) {
+            width: 100%;
+            padding-right: 10px;
+          }
+        }
         .sign_up{
           position: absolute;
-          right: 3px;
-          top: 3px;
+          right: 5px;
+          top: 5px;
           min-height: 32px;
-          height: 38px;
+          height: 39px;
+          width: auto;
+          font-family: 'Inter', sans-serif!important;
+          font-weight: 300;
+          text-transform: capitalize;
+          font-size: 14px;
+          padding: 0 5px;
+          @media only screen and (max-width: 768px) {
+            position: initial;
+            margin-bottom: 15px;
+            width: 100%;
+            height: 45px;
+          }
         }
       }
       .social_icons{
@@ -491,6 +546,8 @@ input{
         padding-top: 0;
         @media only screen and (max-width: 991px) {
           margin: auto;
+          max-width: initial;
+          justify-content: space-around;
         }
         li{
           a{
@@ -554,6 +611,11 @@ input{
 
 .footer a, .footer a:visited {
   color: #32373B;
+  opacity: 0.65;
+  @media screen and (max-width:768px) {
+    opacity: 1;
+    font-family: Montserrat, sans-serif;
+  }
 }
 
 .left-banner-wrap {
@@ -642,7 +704,7 @@ input{
 }
 
 .caption-content p {
-  font-family: Montserrat, sans-serif;
+  font-family: 'Inter', sans-serif!important;
   font-weight: 400;
   font-size: 20px;
   line-height: 30px;
@@ -676,22 +738,45 @@ input{
 }
 
 .caption-content .caption-content-wrap h1 {
-  font-family: 'Great Vibes';
-  font-weight: 400;
-  font-size: 70px;
-  line-height: 67px;
-  letter-spacing: normal;
-  @media only screen and (max-width: 1150px) {
-    font-size: 40px;
+  font-family: 'Bebas Neue';
+  font-size: 65px;
+  line-height: 70px;
+  letter-spacing: 1.5px;
+  color: #47474c;
+  font-weight: bold;
+  padding: 0 20px;
+  position: relative;
+  display: table;
+  z-index: 2;
+  &::after{
+    content: " ";
+    position: absolute;
+    width: 100%;
+    height: 32px;
+    left: 0;
+    bottom: -2px;
+    background: var(--bg-color);
+    z-index: -1;
+    @media only screen and (max-width: 798px) {
+      bottom: -7px;
+    }
   }
-  @media only screen and (max-width: 991px) {
-    font-size: 30px;
-    line-height: 35px;
+  @media only screen and (max-width: 1120px) {
+    font-size: 50px;
+    line-height: 55px;
+  }
+  @media only screen and (max-width: 900px) {
+    font-size: 40px;
+    line-height: 40px;
+    &::after{
+      height: 30px;
+    }
   }
   @media only screen and (max-width: 798px) {
     font-size: 56px;
     line-height: 54px;
     color: #3C4144;
+    margin-bottom: 30px;
   }
 }
 
@@ -706,6 +791,7 @@ input{
   color: #FFF;
   width: 200px;
   height: 46px;
+  text-transform: capitalize;
 }
 
 .authorization-content-section {
@@ -717,7 +803,6 @@ input{
 
 .authorization-content-text {
   width: 860px;
-  font-family: Montserrat, sans-serif;
   font-weight: 400;
   font-size: 20px;
   text-align: center;
@@ -834,8 +919,8 @@ input{
 }
 
 .product-details .title {
-  font-family: Montserrat, sans-serif;
- 
+  font-family: 'Inter', sans-serif!important;
+  font-size: 20px;
 }
 
 .product-slider .thumbnail .price {
@@ -844,7 +929,17 @@ input{
   font-size: 16px;
   margin-top: 10px;
 }
-
+.stamped-badge{
+  display: flex;
+  align-items: center;
+  
+  .stamped-badge-caption{
+    color: #32373B;
+    font-family: 'Inter', sans-serif!important;
+    font-size: 14px;
+    font-weight: 400;
+  }
+}
 .product-slider .stamped-badge-caption[data-reviews][data-label][data-version="2"]>span {
   display: none !important;
 }
@@ -936,21 +1031,39 @@ input{
 }
 
 .faceboox-signup-left-content .title .head-title1 {
+  font-family: 'Bebas Neue';
   font-size: 50px;
-  line-height: 63px;
-  font-family: 'Great Vibes';
-  font-weight: 400;
-  max-width: 380px;
+  line-height: 55px;
+  letter-spacing: 1.5px;
+  color: #47474c;
+  font-weight: bold;
+  padding: 0 20px;
+  position: relative;
   display: table;
-  margin: auto;
+  z-index: 2;
+  &::after{
+    content: " ";
+    position: absolute;
+    width: 100%;
+    height: 35px;
+    left: 0;
+    bottom: -10px;
+    background: var(--bg-color);
+    z-index: -1;
+    @media only screen and (max-width: 768px) {
+      height: 25px;
+      bottom: 0px;
+    }
+  }
   @media only screen and (max-width: 1080px) {
     font-size: 36px;
     line-height: 46px;
   }
   @media only screen and (max-width: 768px) {
-    font-size: 46px;
+    font-size: 43px;
     letter-spacing: normal;
-    line-height: 60px;
+    line-height: 50px;
+    padding: 0;
   }
 }
 
@@ -1343,7 +1456,7 @@ div.container {
 
 .logo-bar-section .logo-content {
   text-align: left;
-  font-family: Montserrat, sans-serif;
+  font-family: 'Inter', sans-serif!important;
   font-weight: 400;
   font-size: 26px;
   line-height: 36px;
@@ -1417,8 +1530,40 @@ div.container {
               width: 30px;
               height: 2px;
               background-color: #21B4F2;
-              display: table;
+              display: none;
               margin: 20px auto 0;
+            }
+            a{
+              font-family: 'Bebas Neue';
+              font-size: 50px;
+              line-height: 55px;
+              letter-spacing: 1.5px;
+              color: #47474c;
+              font-weight: bold;
+              padding: 0 20px;
+              position: relative;
+              display: table;
+              z-index: 2;
+              @media screen and (max-width: 768px) {
+                font-size: 40px;
+                line-height: 45px;
+                padding: 0;
+                max-width: 272px;
+              }
+              &::after{
+                content: " ";
+                position: absolute;
+                width: 100%;
+                height: 30px;
+                left: 0;
+                bottom: -5px;
+                background: var(--bg-color);
+                z-index: -1;
+                @media screen and (max-width: 768px) {
+                  height: 25px;
+                  bottom: -1px;
+                }
+              }
             }
           }
           &:first-child{
@@ -1674,30 +1819,62 @@ div.container {
   .join-stencil-title {
     width: 100%;
     background-size: 100% 100%;
-    margin: 0 auto;
-    font-family: 'Great Vibes';
-    font-weight: 400;
-    font-size: 50px;
-    line-height: 62px;
+    margin: 0 -25px;
     text-align: left;
     padding-bottom: 38px;
+    a{
+      font-family: 'Bebas Neue';
+      font-size: 45px;
+      line-height: 55px;
+      letter-spacing: 1.5px;
+      color: #47474c;
+      font-weight: bold;
+      padding: 0 20px;
+      position: relative;
+      display: table;
+      z-index: 2;
+      @media screen and (max-width:1165px) {
+        font-size: 40px;
+      }
+      @media screen and (max-width:1070px) {
+        font-size: 36px;
+      }
+
+      @media screen and (max-width:1023px) {
+        text-align: center;
+        line-height: 46px;
+        padding-bottom: 10px;
+        font-size: 40px;
+        margin-top: 30px;
+        padding: 0;
+      }
+      @media screen and (max-width:768px) {
+        max-width: 285px;
+        display: table;
+        margin: auto;
+      }
+      &::after{
+        content: " ";
+        position: absolute;
+        width: 100%;
+        height: 30px;
+        left: 0;
+        bottom: -5px;
+        background: var(--bg-color);
+        z-index: -1;
+        @media screen and (max-width: 768px) {
+          height: 25px;
+          bottom: -2px;
+        }
+      }
+    }
     @media screen and (max-width:768px) {
       text-align: center;
       line-height: 56px;
       padding-bottom: 10px;
       font-size: 46px;
+      margin: 0;
       margin-top: 30px;
-    }
-    &::after{
-      content: " ";
-      width: 50px;
-      height: 2px;
-      background-color: #4EBDED;
-      display: table;
-      margin-top: 20px;
-      @media screen and (max-width:768px) {
-        margin: 20px auto;
-      }
     }
   }
   .featured-link--half{
@@ -1781,6 +1958,9 @@ div.container {
         }
     }
     .content{
+      @media only screen and (max-width: 480px) {
+        padding: 0;
+      }
       #stamped-reviews-widget{
         
         .stamped-visual-gallery-feed{
@@ -1807,12 +1987,12 @@ div.container {
             justify-content: center;
             width: 120px;
             flex-direction: row-reverse;
-            opacity: 0.1;
+            opacity: 0.5;
             @media only screen and (max-width: 768px) {
-              opacity: 0.1;
+              opacity: 0.5;
             }
             &:hover{
-              opacity: 0.5;
+              opacity: 0.7;
             }
             &::before{
               content: " ";
@@ -1859,7 +2039,13 @@ div.container {
   @media only screen and (max-width: 798px) {
     margin-top: 30px;
     margin-bottom: 50px;
+    .stencil-action-main-title{
+      max-width: 253px;
+      width: auto;
+      display: table;
+    }
   }
+  
 }
 
 .inspiration-section .inspiration-left-block {
@@ -1994,10 +2180,30 @@ div.container {
 .home-logo-right-menu .icon-cart:before {
   content: unset;
 }
-
-.menu a, .menu a:visited, .menu a:active, #header span.menu_title, .menu a span, select.currencies, .mini_cart span {
-  letter-spacing: 1.2px;
+.menu a, .menu a:visited, .menu a:active, #header span.menu_title, .menu a span, .mini_cart span {
+  letter-spacing: normal;
   line-height: 18px;
+  font-family: 'Inter', sans-serif!important;
+  font-weight: 500;
+  font-size: 14px;
+  color: #32373B;
+  .icon-down-arrow{
+    &::before{
+      font-size: 6px;
+      color: black;
+      font-weight: 900;
+      margin-left: 5px;
+    }
+  }
+}
+select.currencies {
+  letter-spacing: normal;
+  line-height: 18px;
+  font-family: 'Inter', sans-serif!important;
+  font-weight: 400;
+  font-size: 14px;
+  background-position: 76.5% 55%;
+  background-size: 12px 8px;
 }
 
 #header{
@@ -2141,7 +2347,7 @@ div.container {
   padding-top: 0px !important;
   padding-bottom: 0px !important;
   @media only screen and (max-width: 798px) {
-    margin-top: -45px!important;
+    margin-top: 0px!important;
   }
 }
 
@@ -2175,17 +2381,20 @@ div.container {
 }
 .thumbnail .price, .thumbnail .title {
   font-size: 16px;
-  font-weight: 400;
+  font-weight: 500;
   letter-spacing: normal;
   line-height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-top: 10px;
+  flex-wrap: wrap;
   .price_val{
     display: flex;
     align-items: center;
-    width: 100%;
+    justify-content: flex-end;
+    width: auto;
+    
     @media only screen and (max-width: 768px) {
       width: auto;
       margin-bottom: 10px;
@@ -2197,8 +2406,14 @@ div.container {
   }
   .stamped-product-reviews-badge{
     display: block;
-    width: 100%;
-    min-width: 120px;
+    width: auto;
+    margin-left: 10px;
+    .stamped-badge{
+      .stamped-starrating{
+        white-space: nowrap;
+        line-height: 16px;
+      }
+    }
   }
   @media only screen and (max-width: 768px) {
     font-size: 17px;
@@ -2263,13 +2478,13 @@ div.container {
     padding: 0 10px;
     top: -50px;
     width: auto;
-    opacity: 0.1!important;
+    opacity: 0.5!important;
     @media only screen and (max-width: 768px) {
       left: 0px;
       right: auto;
     }
     &:hover{
-      opacity: 0.5!important;
+      opacity: 0.7!important;
     }
     &::before{
       width: 25px;
@@ -2373,6 +2588,9 @@ div.container {
   height: 80px;
   top: calc(50% - 40px);
   transition: all 0.1s;
+  @media screen and (max-width: 768px) {
+    top: unset;
+  }
 }
 
 .stencil-collection-content a:hover span img {
@@ -2494,7 +2712,7 @@ a, a:visited, a span {
 
 .customer-love-section #stamped-reviews-widget[data-widget-type="carousel"] .stamped-style-color-link {
   color: #32373b !important;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 26px;
   line-height: 32px;
   letter-spacing: normal;
@@ -2514,7 +2732,7 @@ a, a:visited, a span {
 }
 
 .customer-love-section #stamped-reviews-widget[data-widget-type="carousel"] {
-  font-family: Montserrat, sans-serif;
+  font-family: 'Inter', sans-serif!important;
 }
 
 .customer-love-section #stamped-reviews-widget[data-widget-type="carousel"] .stamped-carousel-buttons {
@@ -2522,7 +2740,7 @@ a, a:visited, a span {
 }
 
 .customer-love-section #stamped-reviews-widget[data-widget-type="carousel"] .stamped-carousel-scroll .stamped-reviews-message-block {
-  font-family: Montserrat, sans-serif;
+  font-family: 'Inter', sans-serif!important;
   font-weight: 400;
   font-size: 18px;
   line-height: 32px;
@@ -2646,7 +2864,12 @@ header {
   svg{
     overflow: visible!important;
     use, path{
-      stroke-width: 1px;
+      stroke-width: 2.5px;
+      stroke: #32373B;
+      @media screen and (max-width: 768px) {
+        stroke-width: 1.3px;
+        
+      }
     }
   }
 }
@@ -2687,8 +2910,8 @@ header {
 }
 
 #header .top_bar .icon-search.search-submit {
-  width: 34px;
-  height: 34px;
+  width: 39px;
+  height: 39px;
   font-size: 14px;
   color: #FFF;
   background-color: #21B4F2;
@@ -2798,6 +3021,9 @@ header {
   @media only screen and (max-width: 798px) {
     margin-top: 50px;  
   }
+  .stencil-collection-title-wrap{
+    margin-bottom: 30px;
+  }
 }
 
 .logo-bar-section .logo-bar__item .logo-bar__link svg {
@@ -2878,7 +3104,7 @@ header {
 }
 
 .thumbnail .price span.money, .thumbnail .price span.sold_out {
-  margin-right: 5px;
+  margin-left: 15px;
 }
 
 .stamped-carousel-stars-wrapper .stamped-fa-star:before {
@@ -2994,6 +3220,12 @@ header {
 
 #stamped-reviews-widget.mobile-visible .stamped-reviews-title {
   font-size: 20px;
+  a{
+    @media screen and (max-width: 768px){
+      margin-top: 10px;
+      display: table;
+    }
+  }
 }
 
 #stamped-reviews-widget[data-widget-type="full-page"][data-product-image="false"].mobile-visible .stamped-ratings-wrapper .stamped-reviews-message {
@@ -3007,8 +3239,8 @@ header {
 
 .mobile-visible .stamped-ratings-wrapper.stamped-review-card {
   background-color: #FFF;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding: 30px 20px!important;
+
 }
 
 .all-review-img-wrap .mobile-visible {
@@ -3025,6 +3257,7 @@ header {
   @media screen and (max-width: 768px) {
     margin-top: 10px;
     text-align: left;
+    padding-right: 0;
   }
 }
 
@@ -3049,7 +3282,7 @@ header {
   color: #FFF;
   font-size: 13px;
   line-height: 16px;
-  font-family: 'Inter', sans-serif!important;
+  font-family: 'Inter', sans-serif;
   letter-spacing: normal;
   padding: 5px;
 }
@@ -3074,6 +3307,7 @@ header {
 .current_was_price {
   display: flex;
   font-family: Montserrat, sans-serif;
+  flex-wrap: wrap;
   .sale {
     margin-right: 14px;
   }
@@ -3122,6 +3356,7 @@ header {
   line-height: 31px;
   color: #3C4144;
   font-weight: 400;
+  margin-left: 0;
   @media only screen and (max-width: 798px) {
     font-size: 23px;
     line-height: 33 px;
@@ -3198,21 +3433,41 @@ header {
   width: auto;
   margin: 0 3px;
 }
-
+#stamped-button-submit{
+  margin: 0!important;
+  min-height: 42px!important;
+}
 .product_section {
   display: flex;
   @media only screen and (max-width: 798px) {
     flex-wrap: wrap;
   }
-  .htusb-ui-section_0.htusb-ui-prod-static_0{
+  #htusb_container_html_prod_generic_pricing{
+    order: 3;
+  }
+  .htusb-ui-section_0{
     font-size: 15px;
     line-height: 1;
-    border-top: 1px solid #E9EAEB;
     padding: 20px 0 0;
-    p{
-      margin: 0;
-      margin-bottom: 10px;
+    margin-top: 0;
+    padding-top: 0;
+    border: none;
+    .htusb-ui-inline{
+      text-transform: lowercase;
+      font-family: 'Inter', sans-serif;
+      &.htusb-ui-prod-deadline__countdown, &.htusb-ui-inline.htusb-ui-prod-deadline__delivery-date{
+        font-weight: 500!important;
+      }
+      b{
+        font-weight: 500;
+      }
+      p{
+        margin: 0;
+        margin-bottom: 5px;
+        font-size: 14px;
+      }
     }
+    
   }
 }
 
@@ -3326,6 +3581,7 @@ header {
   align-items: center;
   margin-bottom: 40px;
   flex-wrap: wrap;
+  order: 5;
   @media only screen and (max-width: 798px) {
     .free_shipping_desc {
       width: 100%;
@@ -3350,6 +3606,7 @@ header {
   display: flex;
   align-items: center;
   margin-right: 10px;
+  margin-bottom: 10px;
   svg, .shipping_guarantee_desc {
     margin-right: 10px;
   }
@@ -3357,18 +3614,21 @@ header {
 
 .product_section {
   .description.bottom{
+    order: 6;
+    width: 100%;
+    li, p{
+      list-style: none;
+      font-size: 15px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      b, strong{
+        font-family: 'Inter', sans-serif;
+        font-weight: 600px;
+      }
+    }
     .toggle-content{
       padding: 0 20px 20px;
-      li{
-        list-style: none;
-        font-size: 15px;
-        font-family: 'Inter', sans-serif!important;
-        font-weight: 400;
-        b, strong{
-          font-family: 'Inter', sans-serif!important;
-          font-weight: 600px;
-        }
-      }
+      
     }
   }
 }
@@ -3442,7 +3702,7 @@ header {
   padding: 0 20px;
   z-index: 5;
   @media only screen and (max-width: 798px) {
-    font-size: 34px;
+    font-size: 38px;
     padding: 0 10px;
   }
   &.bg-true{
@@ -3456,8 +3716,8 @@ header {
       background:  var(--bg-color);
       z-index: -1;
       @media only screen and (max-width: 798px) {
-        bottom: 0;
-        height: calc(100% - 20px);
+        bottom: -7px;
+        height: 25px;
       }
     }
   }
@@ -3497,13 +3757,11 @@ header {
   margin: 21px auto;
   opacity: 0;
   visibility: hidden;
+  display: none;
 }
 
 .stencil-action-image {
-  width: 64px;
-  @media only screen and (max-width: 798px) {
-    width: 52px;
-  }
+  width: auto;
 }
 
 .quality-material-block {
@@ -3537,6 +3795,7 @@ header {
   justify-content: space-between;
   width: 64%;
   margin: 0 auto;
+  margin-top: 40px;
   @media only screen and (max-width: 1239px) {
     width: 80%;
   }
@@ -3576,6 +3835,15 @@ header {
 .last-for-years-container {
   text-align: center;
   margin-top: 95px;
+  margin-bottom: 100px;
+  @media only screen and (max-width: 768px) {
+    margin-top: 0px;
+  }
+  .stencil-action-main-title{
+    @media only screen and (max-width: 768px) {
+      max-width: 250px;
+    }
+  }
 }
 
 .stencil-action-content {
@@ -3605,7 +3873,9 @@ header {
   .sale_banner_product {
     background: #21b4f2;
     width: 71px;
-    height: 33px;
+    height: 30px;
+    line-height: 30px;
+    font-weight: 500;
     padding: unset;
   }
 }
@@ -3616,6 +3886,10 @@ header {
 
 .slider-gallery .gallery-cell .product-details {
   margin-top: 25px;
+  padding: 0 20px;
+  @media screen and (max-width: 768px) {
+    padding: 0;
+  }
 }
 
 .from-our-community-container {
@@ -3624,7 +3898,6 @@ header {
   background-size: cover;
   padding-top: 87px;
   padding-bottom: 140px;
-  margin-top: 90px;
   margin-bottom: 90px;
   background-repeat: no-repeat;
   @media only screen and (max-width: 992px) {
@@ -3684,10 +3957,10 @@ header {
         @media only screen and (max-width: 768px) {
           top: auto;
           bottom: 0;
-          opacity: 0.3;
+          opacity: 0.5;
         }
         &:hover{
-          opacity: 0.5;
+          opacity: 0.7;
         }
         &::before{
           content: " ";
@@ -3777,9 +4050,11 @@ div[data-widget-style*=standard] .stamped-summary-actions {
 div[data-widget-style*=standard] .stamped-tab-container {
   text-align: center;
 }
-
+.stamped-questions-filter{
+  display: none!important;
+}
 .stamped-reviews-filter[data-show-filters=part], .stamped-reviews-filter[data-show-filters=true] {
-  display: none;
+  display: none!important;
 }
 
 .shopify-section.newsletter-section {
@@ -3942,7 +4217,8 @@ div[data-widget-style*=standard] .stamped-tab-container {
 // }
 
 .featured-link--half .description, .become-ambassador-section .description {
-  font-family: Montserrat, sans-serif;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
 }
 // font-family: Montserrat, sans-serif;
 // font-family: 'Libre Baskerville', serif;
@@ -3963,6 +4239,7 @@ div[data-widget-style*=standard] .stamped-tab-container {
     }
   }
 }
+
 .product-template{
   @media screen and (max-width: 768px) {
     margin-top: 40px;
@@ -3974,13 +4251,24 @@ div[data-widget-style*=standard] .stamped-tab-container {
       }
 
       .product-details-block{
+        display: flex;
+        flex-wrap: wrap;
+        .preorder_banner_product{
+          margin-right: 10px;
+        }
         .stamped-product-reviews-badge {
+          display: flex!important;
+          align-items: center;
+          margin-bottom: 10px;
           .stamped-badge{
             width: 100%;
             display: flex;
             align-items: center;
             .stamped-badge-caption[data-reviews][data-label][data-version="2"]{
               display: flex;
+              &[data-reviews="0"]{
+                display: none;
+              }
               &::before{
                 margin-right: 5px;
               }
@@ -4013,13 +4301,20 @@ div[data-widget-style*=standard] .stamped-tab-container {
         }
         .modal_price{
           border-bottom: 1px solid #E9EAEB;
+          width: 100%;
         }
         .afterpay-paragraph{
           margin-top: 0;
+          position: relative;
           @media screen and (max-width: 768px) {
             margin-bottom: 20px;
           }
+          .afterpay-link{
+            position: absolute;
+            top: 2px;
+          }
         }
+        
         .purchase-details{
           span.js-change-quantity{
             background: transparent;
@@ -4084,6 +4379,7 @@ div[data-widget-style*=standard] .stamped-tab-container {
       .stamped-tab-container{
         .stamped-tabs{
           li{
+            outline: none!important;
             font-size: 16px;
             font-family: Montserrat, sans-serif;
             padding: 0 10px;
@@ -4187,9 +4483,9 @@ div[data-widget-style*=standard] .stamped-tab-container {
                 width: 100%;
               }
               .stamped-review-header-title{
-                font-size: 24px;
-                font-family: Montserrat, sans-serif;
-                font-weight: 600;
+                font-size: 22px;
+                font-family: 'Inter', sans-serif;
+                font-weight: 600; 
                 line-height: 29px;
                 color: #32373B;
                 grid-column: 2 / 15;
@@ -4273,7 +4569,12 @@ div[data-widget-style*=standard] .stamped-tab-container {
       height: 2px;
       background-color: #21B4F2;
       margin: 20px auto;
-      display: table;
+      display: none;
+    }
+    .stencil-action-main-title {
+      @media screen and (max-width: 768px) {
+        max-width: 226px;
+      }
     }
   }
   .related-products--grid{

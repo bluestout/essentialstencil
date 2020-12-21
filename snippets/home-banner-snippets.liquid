@@ -40,7 +40,7 @@
       </div>
       <div class="caption-content caption-background-{{ caption_background }} caption-transparency-{{ caption_background_transparency }} align-{{ text_align }}">
         <div class="caption-content-wrap">
-          <h1>
+          <h1 style="--bg-color: {{section.settings.title_bg}}">
             {{ title }}
           </h1>
           {{ subtitle }}
@@ -92,7 +92,7 @@
   </div>
   <div class="mobile-visible caption-content caption-background-{{ caption_background }} caption-transparency-{{ caption_background_transparency }} align-{{ text_align }}">
     <div class="caption-content-wrap">
-      <h1>
+      <h1 style="--bg-color: {{section.settings.title_bg}}">
         {{ title }}
       </h1>
       {{ subtitle }}

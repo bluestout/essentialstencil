@@ -28,33 +28,21 @@
       <div class="small-divider"></div>
       <div class="last-for-years-content">
         <div class="quality-material-block">
-          <img  src="{{ material_image | img_url: '1500x' }}"
-            alt="{{ material_image.alt }}"
-            style="max-width: 714px;"
-            class="stencil-action-image"
-          />
+          {{material_image}}
           <div class="title-wrap">
             <div class="title">{{material_title}}</div>
             <div class="contents">{{material_content}}</div>
           </div>
         </div>
         <div class="quality-material-block">
-          <img  src="{{ reusable_image | img_url: '1500x' }}"
-            alt="{{ reusable_image.alt }}"
-            style="max-width: 714px;"
-            class="stencil-action-image"
-          />
+          {{reusable_image}}
           <div class="title-wrap">
             <div class="title">{{reusable_title}}</div>
             <div class="contents">{{reusable_content}}</div>
           </div>
         </div>
         <div class="quality-material-block">
-          <img  src="{{ gorgeous_image | img_url: '1500x' }}"
-            alt="{{ gorgeous_image.alt }}"
-            style="max-width: 714px;"
-            class="stencil-action-image"
-          />
+          {{gorgeous_image}}
           <div class="title-wrap">
             <div class="title">{{gorgeous_title}}</div>
             <div class="contents">{{gorgeous_content}}</div>
