@@ -2,28 +2,42 @@
 ** Cart page - default view **
 - Template section
 {% endcomment %}
-
 <a name="pagecontent" id="pagecontent"></a>
-<div class="saso-cart-offers"></div>
-<div class="section clearfix">
-  <div class="sixteen columns">
-    <h1>{{ 'cart.general.title' | t }}</h1>
-    <div class="feature_divider"></div>
-  </div>
-</div>
-
-{% if cart.item_count == 0 %}
-  <div class="sixteen columns">
-    <div class="section clearfix">
-      <div class="six columns offset-by-five">
-        <p class="quote">{{ 'cart.general.continue_browsing_html' | t }}</p>
-
-        <a href="{% if cart.items.first.product.collections != blank %}{{ cart.items.first.product.collections.last.url }}{% else %}/collections/all{% endif %}" class="action_button continue-button add_to_cart">{{ 'cart.general.continue_shopping_link_html' | t }}</a>
+<div class="content">
+  <div class="saso-cart-offers"></div>
+  <div class="section clearfix">
+    <div class="sixteen columns hide medium-down--show">
+      <div class="progress-bar">
+        {% assign left_price = settings.limit_price | minus: cart.total_price %}
+        {% assign progress = cart.total_price | times: 100 | divided_by: settings.limit_price %}
+        <div class="progress" style="width: {{progress}}%;">
+         
+        </div>
+        <span>You are {{ left_price | money }} away from Free Shipping</span>
       </div>
-      <br class="clear" />
+    </div>
+    <div class="sixteen columns">
+      {% if cart.item_count > 0 %}
+        <div class="featured-links">
+          <a href="{% if cart.items.first.product.collections != blank %}{{ cart.items.first.product.collections.last.url }}{% else %}/collections/all{% endif %}" class="secondary_button">{{ 'cart.general.continue_shopping_link_html' | t }}</a>
+        </div>
+      {% endif %}
+      <h1 class="center">{{ 'cart.general.title' | t }}</h1>
     </div>
   </div>
-{% else %}
+
+  {% if cart.item_count == 0 %}
+    <div class="one=-whole columns">
+      <div class="section clearfix">
+        <div class="six columns offset-by-five">
+          <p class="quote">{{ 'cart.general.continue_browsing_html' | t }}</p>
+
+          <a href="{% if cart.items.first.product.collections != blank %}{{ cart.items.first.product.collections.last.url }}{% else %}/collections/all{% endif %}" class="action_button continue-button add_to_cart">{{ 'cart.general.continue_shopping_link_html' | t }}</a>
+        </div>
+        <br class="clear" />
+      </div>
+    </div>
+  {% else %}
 
   <form action="/cart" method="post" id="cart_form">
     <div class="section clearfix">
@@ -54,13 +68,13 @@
             <div class="seven columns omega cart_content_info">
               <h3>
                 <a href="{{ item.url }}">{{ item.product.title }}
-<!-- **BEGIN** Hextom USB Integration // Cart Include - DO NOT MODIFY -->
-    {% render 'hextom_usb_cart', item: item %}
-    <!-- **END** Hextom USB Integration // Cart Include - DO NOT MODIFY -->
+                  <!-- **BEGIN** Hextom USB Integration // Cart Include - DO NOT MODIFY -->
+                  {% render 'hextom_usb_cart', item: item %}
+                  <!-- **END** Hextom USB Integration // Cart Include - DO NOT MODIFY -->
 
-<span class="saso-cart-item-discount-notes" data-key="{{item.key}}"></span>
-<span class="saso-cart-item-upsell-notes" data-key="{{item.key}}"></span>                                
-                                </a>
+                  <span class="saso-cart-item-discount-notes" data-key="{{item.key}}"></span>
+                  <span class="saso-cart-item-upsell-notes" data-key="{{item.key}}"></span>                                
+                </a>
               </h3>
 
               {% unless item.product.has_only_default_variant or item.variant.title contains "Title" %}
@@ -91,9 +105,7 @@
 
               <p class="modal_price">
                 {% if item.price > 0 %}
-                  <span class="">
-<span class="saso-cart-item-price" data-key="{{item.key}}">{{ item.price | money }}</span>
-</span>
+                  <span class="saso-cart-item-price" data-key="{{item.key}}">{{ item.price | money }}</span>
                 {% else %}
                   {{ settings.free_price_text }}
                 {% endif %}
@@ -105,45 +117,47 @@
 
               <div class="product-quantity-box left">
                 <span class="ss-icon product-minus js-change-quantity" data-func="minus"><span class="icon-minus"></span></span>
-                <input type="number" min="0" size="2" class="quantity" name="updates[]" id="updates_{{ item.id }}" value="{{ item.quantity }}" data-line-id="{{ forloop.index }}" {% if settings.limit_quantity and item.variant.inventory_management != blank and item.variant.inventory_quantity > 0 and item.variant.inventory_policy == "deny" %}max="{{ item.variant.inventory_quantity }}"{% endif %} />
+                <input type="text" min="1" size="2" class="quantity text"  id="updates_{{ item.id }}"  value="{{ item.quantity }} Pcs" data-line-id="{{ forloop.index }}" {% if settings.limit_quantity and item.variant.inventory_management != blank and item.variant.inventory_quantity > 0 and item.variant.inventory_policy == "deny" %}max="{{ item.variant.inventory_quantity }}"{% endif %}/>
+                <input type="number" min="0" size="2" class="quantity num hide"  id="updates_{{ item.id }}"  name="updates[]" value="{{ item.quantity }}" data-line-id="{{ forloop.index }}" {% if settings.limit_quantity and item.variant.inventory_management != blank and item.variant.inventory_quantity > 0 and item.variant.inventory_policy == "deny" %}max="{{ item.variant.inventory_quantity }}"{% endif %}/>
                 <span class="ss-icon product-plus js-change-quantity" data-func="plus"><span class="icon-plus"></span></span>
               </div>
+              <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&amp;quantity=0" class="cart__remove-btn" data-line-id="{{ forloop.index }}" data-remove-item="cart-template">{{ 'cart.general.remove' | t }}</a>  
             </div>
           </div>
         {% endfor %}
       </div>
 
-      <div class="five columns offset-by-one">
+      <div class="five columns offset-by-one purchase-content">
         <div class="section clearfix">
           <div class="subtotal">
+            <div class="progress-bar medium-down--hide">
+              {% assign left_price = settings.limit_price | minus: cart.total_price %}
+              {% assign progress = cart.total_price | times: 100 | divided_by: settings.limit_price %}
+              <div class="progress" style="width: {{progress}}%;">
+               
+              </div>
+              <span>You are {{ left_price | money }} away from Free Shipping</span>
+            </div>
             <p class="cart_subtotal js-cart_subtotal">
               <span class="right">
-                <span class="">
-<span class="saso-cart-original-total">{{ cart.total_price | money }}</span>
-<span class="saso-cart-total"></span>
-</span>
+                <span class="saso-cart-original-total">{{ cart.total_price | money }}</span>
+                <span class="saso-cart-total"></span>
               </span>
               <span>{{ 'cart.general.subtotal' | t }}</span>
             </p>
-
-            {% if section.settings.display_savings %}
-              <p class="cart_savings sale">
-                {% if total_saving > 0 %}
-                  <span class="right">
-                    <span class="">{{ total_saving | money }}</span>
-                  </span>
-                  <span>{{ 'layout.general.savings' | t }}</span>
-                {% endif %}
-              </p>
-            {% endif %}
-
-            {% if settings.show_multiple_currencies %}
-              <p>
-                <small>
-                  {{ 'cart.general.orders_processed_in_currency_html' | t: currency: shop.currency }}
-                </small>
-              </p>
-            {% endif %}
+            {%- comment -%}
+              {% if section.settings.display_savings %}
+                <p class="cart_savings sale">
+                  {% if total_saving > 0 %}
+                    <span class="right">
+                      <span class="">{{ total_saving | money }}</span>
+                    </span>
+                    <span>{{ 'layout.general.savings' | t }}</span>
+                  {% endif %}
+                </p>
+              {% endif %}
+            {%- endcomment -%}
+            
 
             {% if section.settings.display_special_instructions %}
               <label for="note">{{ 'cart.general.note' | t: shop_name: shop.name }}:</label>
@@ -162,11 +176,6 @@
               </p>
             {% endif %}
 
-            {% if section.settings.cart_message != blank %}
-              <div>
-                {{ section.settings.cart_message }}
-              </div>
-            {% endif %}
 
             <p>
               <input type="submit" class="action_button add_to_cart" id="checkout" name="checkout" value="{{ 'cart.general.checkout' | t }}" />
@@ -177,12 +186,20 @@
                 {{ content_for_additional_checkout_buttons }}
               </div>
             {% endif %}
-
-            {% if cart.item_count > 0 %}
-              <div class="featured-links">
-                <a href="{% if cart.items.first.product.collections != blank %}{{ cart.items.first.product.collections.last.url }}{% else %}/collections/all{% endif %}" class="secondary_button">{{ 'cart.general.continue_shopping_link_html' | t }}</a>
+            {% if section.settings.cart_message != blank %}
+              <div>
+                {{ section.settings.cart_message }}
               </div>
             {% endif %}
+            {% if settings.show_multiple_currencies %}
+              <p class="currency-message">
+                <small>
+                  {{ 'cart.general.orders_processed_in_currency_html' | t: currency: shop.currency }}
+                </small>
+              </p>
+            {% endif %}
+            
+            
           </div>
         </div>
       </div>
@@ -191,6 +208,8 @@
 
   {% include 'cart-shipping-calculator' %}
 {% endif %}
+</div>
+
 
 {% schema %}
 
@@ -215,7 +234,7 @@
       "default": true
     },
     {
-      "type": "richtext",
+      "type": "html",
       "id": "cart_message",
       "label": "Cart message"
     }

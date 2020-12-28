@@ -39,6 +39,106 @@ Shopify.AjaxifyCart = (function($) {
   
   // We need some feedback when adding an item to the cart.
   // Here it is.  
+  function refreshCart(cart) {
+    $(".cart_count").empty();
+    $cartBtn = $(".cart_count");
+    var value = $cartBtn.text() || '0';
+    var cart_items_html = "";
+    var cart_action_html = "";
+    var cart_savings_html = "";
+    var $cart = $(".cart_content form");
+    var discounted_price_total = 0;
+    var total_savings = 0;
+
+    $cartBtn.text(value.replace(/[0-9]+/,cart.item_count));
+
+    var limit = $('.progress-bar').data('limit');
+    var left_price = limit - cart.total_price;
+    var progress = cart.total_price * 100 / limit;
+    var progress_bar_html = `<div class="progress" style="width: ${progress}%;"></div>
+        <span>You are ${ Shopify.formatMoney(left_price, $('body').data('money-format'))} away from Free Shipping</span>`;
+    $('.progress-bar').html(progress_bar_html);
+    if (cart.item_count == 0) {
+      $('.js-empty-cart__message').removeClass('hidden');
+      $('.js-cart_content__form').addClass('hidden');
+    } else {
+      $('.js-empty-cart__message').addClass('hidden');
+      $('.js-cart_content__form').removeClass('hidden');
+      if (cart.items.length > 3) {
+        $('.cart_content').addClass('overflow-items')
+      }
+      $.each(cart.items, function(index, item) {
+        var line_id = index + 1;
+        cart_items_html += '<li class="cart_item clearfix">' +
+          '<a href="' + item.url +'">';
+        if (item.image) {
+          cart_items_html += '<div class="cart_image">' +
+              '<img src="' + item.image.replace(/(\.[^.]*)$/, "_compact$1").replace('http:', '') + '" alt="' + htmlEncode(item.title) + '" />' +
+            '</div>';
+        }
+
+        cart_items_html += '<div class="cart_item__title"><div class="item_title">' + item.title;
+
+        if(item.properties) {
+          $.each(item.properties, function(title, value) {
+            if (value) {
+              cart_items_html += '<div class="line-item">' + title +': ' + value + '</div>';
+            }
+          });
+        }
+        cart_items_html += '</div></a>';
+
+        cart_items_html += '<div class="left product-quantity-box">' +
+            '<span class="ss-icon product-minus js-change-quantity" data-func="minus"><span class="icon-minus"></span></span>' +
+            '<input type="text" min="1" size="2" class="quantity text"  id="updates_' + item.id + '"  value="' + item.quantity +' Pcs" data-line-id="' + line_id +'" />'+
+            '<input type="number" min="0" class="quantity num hide" name="updates[]" id="updates_' + item.id + '" value="' + item.quantity +'" data-line-id="' + line_id +'" />' +
+            '<span class="ss-icon product-plus js-change-quantity" data-func="plus"><span class="icon-plus"></span></span>' +
+          '</div>' +
+        '</div>';
+
+        cart_items_html += '<strong class="right price">';
+
+        {% if settings.display_savings %}
+          $.ajax({
+            dataType: "json",
+            async: false,
+            cache: false,
+            url: "/products/" + item.handle + ".js",
+            success: function(data) {
+              var variant_id = item.variant_id;
+              var variant = $.grep(data.variants, function(v) {
+                return v.id == variant_id;
+              });
+
+              if(variant[0] && variant[0].compare_at_price > item.price) {
+                cart_items_html += ' <span class="money was_price">' + Shopify.formatMoney(variant[0].compare_at_price, $('body').data('money-format')) + '</span> ';
+                discounted_price_total += item.price * item.quantity;
+                total_savings += variant[0].compare_at_price * item.quantity;
+              }
+            }
+          });
+        {% endif %}
+
+        cart_items_html += '<span class="money">' + Shopify.formatMoney(item.price, $('body').data('money-format')) + '</span></strong>' + '</div>';
+
+      });
+
+      cart_action_html += '<span class="right"><span class="money">' + Shopify.formatMoney(cart.total_price, $('body').data('money-format')) + '</span></span>' +
+          '<span>{{ 'layout.general.subtotal' | t }}</span>';
+
+      if(total_savings > 0 ) {
+        cart_savings_html = '<span class="right"><span class="money">' + Shopify.formatMoney(total_savings - discounted_price_total, $('body').data('money-format')) + '</span></span>' +
+            '<span>{{ 'layout.general.savings' | t }}</span>';
+      } else {
+        cart_savings_html = "";
+      }
+    }
+
+    $('.js-cart_items').html(cart_items_html);
+    $('.js-cart_subtotal').html(cart_action_html);
+    $('.js-cart_savings').html(cart_savings_html);
+
+  }
   var _showFeedback = function(success, html, $addToCartForm) {
     $('.ajaxified-cart-feedback').remove();
     var feedback = '<p class="ajaxified-cart-feedback ' + success + '">' + html + '</p>';
@@ -86,6 +186,7 @@ Shopify.AjaxifyCart = (function($) {
           type: 'post',
           data: $addToCartForm.serialize(),
           success: function(itemData) {
+            
             if ($('#upsell').is(':checked')) {
               $.ajax({
                 url: _config.shopifyAjaxAddURL,
@@ -96,7 +197,7 @@ Shopify.AjaxifyCart = (function($) {
                   id: $('#upsell').val()
                 },
                 success: function(itemData) {
-
+                  
                 }
               });
             }
@@ -110,6 +211,7 @@ Shopify.AjaxifyCart = (function($) {
             }, _config.howLongTillBtnReturnsToNormal);
             // Update cart count and show cart link.
             $.getJSON(_config.shopifyAjaxCartURL, function(cart) {
+              refreshCart(cart);
               if (_config.cartCountSelector && $(_config.cartCountSelector).length) {
                 var value = $(_config.cartCountSelector).html() || '0';
                 $(_config.cartCountSelector).html(value.replace(/[0-9]+/,cart.item_count)).removeClass('hidden-count');

@@ -1223,14 +1223,13 @@ var header = {
     var closeMiniCart = function() {
       $('body').removeClass('is-active').removeClass('blocked-scroll');
       $('.dropdown_link').toggleClass('active_link');
-      $('.cart_container').removeClass('active_link');
+      $('.cart_content').removeClass('active_link');
     };
 
     var openMiniCart = function($cart_container) {
     	$('body').addClass('blocked-scroll');
       $('.mobile_nav div').removeClass('open');
-      $('.dropdown_link').removeClass('active_link');
-      $cart_container.addClass('active_link');
+      $('.cart_content').addClass('active_link');
     };
 
     if ($('.promo_banner').length){
@@ -1262,19 +1261,7 @@ var header = {
     });
 
     //Click anywhere outside of dropdown to close
-    $('html').on('click', function(event) {
-      if (!$(event.target).closest('.cart_container').length && $('.cart_content').is(':visible')) {
-
-        closeMiniCart();
-      }
-
-      if (!$(event.target).closest('.dropdown_container').length && $('.dropdown').is(':visible')) {
-
-        closeDropdown();
-      }
-
-    });
-
+    
     //Only apply on larger screen sizes
     if ($(window).width() > 798) {
       if ($('.header').hasClass('header-fixed--true')){
@@ -1342,8 +1329,10 @@ var header = {
       e.preventDefault();
       $('.sticky_nav .home-logo-bar .search_container').toggleClass('active');
     })
-    $('#header .cart_container').append($('.cart_content').clone());
-
+    // $('#header .cart_container').append($('.cart_content').clone());
+    $('.cart_content .close').on('click', function(e){
+      closeMiniCart();
+    })
     if ( is_touch_device() || $(window).width() <= 798 ) {
 
       $('.dropdown_link').attr('data-no-instant', true);
@@ -1400,6 +1389,7 @@ var header = {
 
       //Toggle mini-cart with menu icon
       $(".mini_cart").on("click", function(e) {
+        e.preventDefault();
         var $cart_container = $(this).parent();
         if($cart_container.hasClass('active_link')) {
           closeMiniCart();
@@ -1420,25 +1410,34 @@ var header = {
 
     } else {
 
+      $(".mini_cart").on("click", function(e) {
+        e.preventDefault();
+        var $cart_container = $(this).parent();
+        if($cart_container.hasClass('active_link')) {
+          closeMiniCart();
+          $('body').removeClass('blocked-scroll');
+        } else {
+          openMiniCart($cart_container);
+          $('body').addClass('blocked-scroll');
+        }
+
+        if (is_touch_device() || $(window).width() <= 798) {
+          e.preventDefault();
+        }
+      });
+
+     
+
       $(".nav a, .logo a").not(".cart_content a").on("mouseenter", function() {
         if(!$(this).hasClass("active_link")) {
           $('.dropdown_container').hide();
-          $('.active_link').removeClass('active_link');
           $('.is-absolute').parent().addClass('feature_image');
         }
       });
 
-      $('.main_nav, .top_bar, .cart_container').on("mouseleave", function() {
-        if ( $(window).width() > 798) {
-          $('.dropdown_container').hide();
-        }
-        $('.active_link').removeClass('active_link');
-        $('.is-absolute').parent().addClass('feature_image');
-      });
-
       $('.dropdown_link, .dropdown_link--vertical').attr('data-click-count', 0);
 
-      $('.dropdown_link').on('mouseover touchstart', function(e) {
+      $('.dropdown_link').on('touchstart', function(e) {
         if ( $(window).width() > 798) {
           $('.dropdown_container').hide();
         }
@@ -3111,6 +3110,9 @@ $(function() {
   }
 
   function refreshCart(cart) {
+    if (cart.items.length > 3) {
+      $('.cart_content').addClass('overflow-items')
+    }
     $(".cart_count").empty();
     $cartBtn = $(".cart_count");
     var value = $cartBtn.text() || '0';
@@ -3122,6 +3124,13 @@ $(function() {
     var total_savings = 0;
 
     $cartBtn.text(value.replace(/[0-9]+/,cart.item_count));
+    
+    var limit = $('.progress-bar').data('limit');
+    var left_price = limit - cart.total_price;
+    var progress = cart.total_price * 100 / limit;
+    var progress_bar_html = `<div class="progress" style="width: ${progress}%;"></div>
+        <span>You are ${ Shopify.formatMoney(left_price, $('body').data('money-format'))} away from Free Shipping</span>`;
+    $('.progress-bar').html(progress_bar_html);
 
     if (cart.item_count == 0) {
       $('.js-empty-cart__message').removeClass('hidden');
@@ -3153,7 +3162,8 @@ $(function() {
 
         cart_items_html += '<div class="left product-quantity-box">' +
             '<span class="ss-icon product-minus js-change-quantity" data-func="minus"><span class="icon-minus"></span></span>' +
-            '<input type="number" min="0" class="quantity" name="updates[]" id="updates_' + item.id + '" value="' + item.quantity +'" data-line-id="' + line_id +'" />' +
+            '<input type="text" min="1" size="2" class="quantity text"  id="updates_' + item.id + '"  value="' + item.quantity +' Pcs" data-line-id="' + line_id +'" />'+
+            '<input type="number" min="0" class="quantity num hide" name="updates[]" id="updates_' + item.id + '" value="' + item.quantity +'" data-line-id="' + line_id +'" />' +
             '<span class="ss-icon product-plus js-change-quantity" data-func="plus"><span class="icon-plus"></span></span>' +
           '</div>' +
         '</div>';
@@ -3865,8 +3875,6 @@ $(document)
     }
 });
 var fsb_adjusted = false;
-
-
 
 $( "#fsb_placeholder" ).on( "fsb_fully_loaded", function(event, p1) {
   var fsb_height = $("#fsb_bar").outerHeight();

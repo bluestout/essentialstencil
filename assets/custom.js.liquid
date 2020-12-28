@@ -117,6 +117,21 @@ $(function() {
     }
   });
   
+  var position = $('.purchase-content').offset();
+  var window_height = $(window).height();
+  if (window_height < position.top) {
+    $('.purchase-content').addClass('fixed-pannel');
+  }
+  $(document).on('scroll', function (e) {
+    e.preventDefault();
+    var window_top = $(document).scrollTop();
+    var left = position.top - window_height;
+    if (window_top > left) {
+      $('.purchase-content').removeClass('fixed-pannel');
+    } else {
+      $('.purchase-content').addClass('fixed-pannel');
+    }
+  })
   $( ".tab-reusable svg").click(function() {
     if($( ".tab-reusable").hasClass("tab-open")) {
       $( ".tab-reusable").addClass("tab-close");

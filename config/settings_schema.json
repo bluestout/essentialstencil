@@ -1554,6 +1554,12 @@
         "default": "ajax"
       },
       {
+        "type": "text",
+        "id": "limit_price",
+        "label": "Free shipping price",
+        "default": "500000"
+      },
+      {
         "type": "page",
         "id": "tos_page",
         "label": "\"Agree to terms\" page"

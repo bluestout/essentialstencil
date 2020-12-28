@@ -341,7 +341,7 @@
   },
   "cart": {
     "general": {
-      "title": "Shopping Cart",
+      "title": "Your Cart",
       "products": "Products",
       "remove": "Remove",
       "price": "Price",
@@ -361,7 +361,7 @@
       "or": "or",
       "subtotal": "Subtotal",
       "update": "Update Subtotal",
-      "checkout": "Checkout"
+      "checkout": "Proceed to checkout"
     },
     "shipping_calculator": {
       "estimated_shipping": "estimated shipping",
