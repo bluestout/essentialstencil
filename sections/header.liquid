@@ -488,7 +488,12 @@
         <div class="progress" style="width: {{progress}}%;">
           
         </div>
-        <span>You are {{ left_price | money }} away from Free Shipping</span>
+        {% if left_price > 0 %}
+          <span>You are {{ left_price | money }} away from Free Shipping</span>
+        {% else %}
+          <span>✓ Congratulations! You've earned a FREE SHIPPING!</span>
+        {% endif %}
+        
       </div>
       <ul class="cart_items js-cart_items clearfix">
         {% assign total_saving = 0 %}
@@ -532,7 +537,7 @@
                   <input type="number" min="1" size="2" class="quantity num hide"  id="updates_{{ item.id }}"  name="updates[]" value="{{ item.quantity }}" data-line-id="{{ forloop.index }}"/>
                   <span class="ss-icon product-plus js-change-quantity" data-func="plus"><span class="icon-plus"></span></span>
                 </div>
-                <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&amp;quantity=0" class="cart__remove-btn" data-line-id="{{ forloop.index }}" data-remove-item="cart-template">{{ 'cart.general.remove' | t }}</a>
+                <a class="cart__remove-btn" data-line-id="{{ forloop.index }}" data-remove-item="cart-template">{{ 'cart.general.remove' | t }}</a>
             </div>
 
             <strong class="right price">

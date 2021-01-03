@@ -14,29 +14,32 @@ input{
   letter-spacing: 1.6px;
 }
 
-.mini_cart{
-  .count{
-    padding: 0;
-    border-radius: 50%;
-    background: #50BCEA;
-    color: white;
-    position: absolute;
-    right: 7px;
-    top: 5px;
-    font-size: 12px;
-    width: 20px;
-    height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-}
+
 
 .main_nav_wrapper{
   padding-top: 15px;
   &.sticky-header{
     @media screen and (max-width: 1024px) {
       display: none!important;
+    }
+    .cart_container{
+      a.mini_cart{
+        span.count{
+          padding: 0;
+          border-radius: 50%;
+          background: #50BCEA;
+          color: white;
+          position: absolute;
+          right: 7px;
+          top: -2px;
+          font-size: 12px;
+          width: 20px;
+          height: 20px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
     }
   }
   &.sticky_nav--stick{
@@ -155,6 +158,7 @@ input{
           a{
             display: flex;
             align-items: center;
+            
           }
         }
       }
@@ -272,6 +276,9 @@ input{
     justify-content: space-between;
     align-items: center;
     padding: 20px;
+    @media screen and (max-width: 330px){
+      padding: 20px 5px;
+    }
     p{
       font-size: 14px;
       line-height: 16px;
@@ -315,11 +322,15 @@ input{
       margin: 0 20px 20px;
       padding-left: 20px;
       background: rgba(63,63,68,0.05);
-      font-size: 14px;
+      font-size: 12px;
       position: relative;
+      overflow: hidden;
       @media screen and (max-width: 768px){
           font-size: 12px;
           padding-left: 10px;
+      }
+      @media screen and (max-width: 330px){
+        margin: 0 5px 20px;
       }
       .progress{
         position: absolute;
@@ -327,7 +338,6 @@ input{
         background: #50BCEA;
         left: 0;
         opacity: 0.4;
-        
       }
     }
     .cart_items {
@@ -337,6 +347,9 @@ input{
         height: calc(100vh - 345px);
         max-height: initial;
         overflow: auto;
+      }
+      @media screen and (max-width: 330px){
+        padding: 15px 5px;
       }
       .cart_item {
         position: relative;
@@ -382,6 +395,7 @@ input{
           .cart__remove-btn{
             opacity: 0.3;
             line-height: 16px;
+            cursor: pointer;
           }
         }
         .price{
@@ -407,7 +421,12 @@ input{
       margin: 20px;
       margin-bottom: 0;
     }
-    
+    ul{
+      @media screen and (max-width: 330px){
+        padding-left: 5px;
+        padding-right: 5px;
+      }
+    }
     .cart_subtotal, .cart_savings { 
       margin: 0;
       span{
@@ -3073,7 +3092,7 @@ a, a:visited, a span {
   }
   .top_bar .top_bar--right {
     a{
-      margin-right: 10px;
+
     }
     .icon-search {
       display: none;
@@ -3094,6 +3113,31 @@ header {
       @media screen and (max-width: 768px) {
         stroke-width: 1.3px;
         
+      }
+    }
+  }
+  .cart_container{
+    a.mini_cart{
+      span.count{
+        padding: 0;
+        border-radius: 50%;
+        background: #50BCEA;
+        color: white!important;
+        position: absolute!important;
+        right: 7px;
+        top: 5px;
+        font-size: 12px;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 20px;
+        padding-left: 0!important;
+        @media screen and (max-width: 768px) {
+          right: -5px;
+          top: 0;
+        }
       }
     }
   }
@@ -5027,7 +5071,7 @@ div[data-widget-style*=standard] .stamped-tab-container {
     margin: auto;
     .progress-bar{
       padding: 5px 10px;
-      font-size: 14px;
+      font-size: 12px;
       position: relative;
       background: rgba(63,63,68,0.05);
       overflow: hidden;
@@ -5261,11 +5305,10 @@ div[data-widget-style*=standard] .stamped-tab-container {
             ul{
               flex-wrap: wrap!important;
               flex-direction: row!important;
-              column-gap: 10px;
               margin-right: -10px!important;
               li{
                 margin-top: 0!important;
-                margin-right: 0 !important;
+                margin-right: 10px !important;
                 width: calc(50% - 10px);
               }
             }

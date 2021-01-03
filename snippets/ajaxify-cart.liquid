@@ -51,12 +51,17 @@ Shopify.AjaxifyCart = (function($) {
     var total_savings = 0;
 
     $cartBtn.text(value.replace(/[0-9]+/,cart.item_count));
-
+    $('.mini_cart .count').text(cart.item_count);
     var limit = $('.progress-bar').data('limit');
     var left_price = limit - cart.total_price;
     var progress = cart.total_price * 100 / limit;
-    var progress_bar_html = `<div class="progress" style="width: ${progress}%;"></div>
+    if (left_price > 0) {
+      var progress_bar_html = `<div class="progress" style="width: ${progress}%;"></div>
         <span>You are ${ Shopify.formatMoney(left_price, $('body').data('money-format'))} away from Free Shipping</span>`;
+    } else {
+      var progress_bar_html = `<div class="progress" style="width: ${progress}%;"></div>
+        <span>✓ Congratulations! You've earned a FREE SHIPPING!</span>`;
+    }
     $('.progress-bar').html(progress_bar_html);
     if (cart.item_count == 0) {
       $('.js-empty-cart__message').removeClass('hidden');
@@ -93,7 +98,7 @@ Shopify.AjaxifyCart = (function($) {
             '<input type="text" min="1" size="2" class="quantity text"  id="updates_' + item.id + '"  value="' + item.quantity +' Pcs" data-line-id="' + line_id +'" />'+
             '<input type="number" min="0" class="quantity num hide" name="updates[]" id="updates_' + item.id + '" value="' + item.quantity +'" data-line-id="' + line_id +'" />' +
             '<span class="ss-icon product-plus js-change-quantity" data-func="plus"><span class="icon-plus"></span></span>' +
-          '</div>' +
+          '</div>' +'<a class="cart__remove-btn" data-line-id="' + line_id + '" data-remove-item="cart-template">Remove</a>'+
         '</div>';
 
         cart_items_html += '<strong class="right price">';

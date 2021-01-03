@@ -13,7 +13,11 @@
         <div class="progress" style="width: {{progress}}%;">
          
         </div>
-        <span>You are {{ left_price | money }} away from Free Shipping</span>
+        {% if left_price > 0 %}
+          <span>You are {{ left_price | money }} away from Free Shipping</span>
+        {% else %}
+          <span>✓ Congratulations! You've earned a FREE SHIPPING!</span>
+        {% endif %}
       </div>
     </div>
     <div class="sixteen columns">

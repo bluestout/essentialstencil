@@ -3114,6 +3114,7 @@ $(function() {
       $('.cart_content').addClass('overflow-items')
     }
     $(".cart_count").empty();
+    $('.mini_cart .count').text(cart.item_count);
     $cartBtn = $(".cart_count");
     var value = $cartBtn.text() || '0';
     var cart_items_html = "";
@@ -3128,8 +3129,14 @@ $(function() {
     var limit = $('.progress-bar').data('limit');
     var left_price = limit - cart.total_price;
     var progress = cart.total_price * 100 / limit;
-    var progress_bar_html = `<div class="progress" style="width: ${progress}%;"></div>
+    if (left_price > 0) {
+      var progress_bar_html = `<div class="progress" style="width: ${progress}%;"></div>
         <span>You are ${ Shopify.formatMoney(left_price, $('body').data('money-format'))} away from Free Shipping</span>`;
+    } else {
+      var progress_bar_html = `<div class="progress" style="width: ${progress}%;"></div>
+        <span>✓ Congratulations! You've earned a FREE SHIPPING!</span>`;
+    }
+    
     $('.progress-bar').html(progress_bar_html);
 
     if (cart.item_count == 0) {
@@ -3165,7 +3172,7 @@ $(function() {
             '<input type="text" min="1" size="2" class="quantity text"  id="updates_' + item.id + '"  value="' + item.quantity +' Pcs" data-line-id="' + line_id +'" />'+
             '<input type="number" min="0" class="quantity num hide" name="updates[]" id="updates_' + item.id + '" value="' + item.quantity +'" data-line-id="' + line_id +'" />' +
             '<span class="ss-icon product-plus js-change-quantity" data-func="plus"><span class="icon-plus"></span></span>' +
-          '</div>' +
+          '</div>'  +'<a class="cart__remove-btn" data-line-id="' + line_id + '" data-remove-item="cart-template">Remove</a>'+
         '</div>';
 
         cart_items_html += '<strong class="right price">';
@@ -3214,7 +3221,11 @@ $(function() {
       convertCurrencies();
     {% endif %}
   }
-
+  $('body').on('click', '.cart__remove-btn', function (e) {
+    e.preventDefault();
+    var id = $(this).data('line-id'); 
+    ajaxUpdateCart(id, 0, $(this).parents('#cart_form'));
+  })
   $('body').on("change", "#cart_form input.quantity", function() {
     ajaxUpdateCart($(this).data('line-id'), $(this).val(), $(this).parents('#cart_form'));
   });
