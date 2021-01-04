@@ -489,7 +489,7 @@
           
         </div>
         {% if left_price > 0 %}
-          <span>You are {{ left_price | money }} away from Free Shipping</span>
+          <span>You are <strong>{{ left_price | money }}</strong> away from Free Shipping</span>
         {% else %}
           <span>✓ Congratulations! You've earned a FREE SHIPPING!</span>
         {% endif %}

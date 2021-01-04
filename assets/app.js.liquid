@@ -3131,7 +3131,7 @@ $(function() {
     var progress = cart.total_price * 100 / limit;
     if (left_price > 0) {
       var progress_bar_html = `<div class="progress" style="width: ${progress}%;"></div>
-        <span>You are ${ Shopify.formatMoney(left_price, $('body').data('money-format'))} away from Free Shipping</span>`;
+        <span>You are <strong>${ Shopify.formatMoney(left_price, $('body').data('money-format'))}</strong> away from Free Shipping</span>`;
     } else {
       var progress_bar_html = `<div class="progress" style="width: ${progress}%;"></div>
         <span>✓ Congratulations! You've earned a FREE SHIPPING!</span>`;

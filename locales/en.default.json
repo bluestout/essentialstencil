@@ -361,7 +361,7 @@
       "or": "or",
       "subtotal": "Subtotal",
       "update": "Update Subtotal",
-      "checkout": "Proceed to checkout"
+      "checkout": "Checkout"
     },
     "shipping_calculator": {
       "estimated_shipping": "estimated shipping",

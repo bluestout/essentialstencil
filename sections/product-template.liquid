@@ -65,10 +65,11 @@
                 <span itemprop="sku">{{ variant.sku }}</span>
               </p>
             {% endif %}
+            {% if variant.price < variant.compare_at_price and variant.available %}
+              <span class="sale-badge">Sale</span>
+            {% endif %}
             {% if settings.enable_shopify_product_badges and settings.enable_shopify_review_comments %}
-          
             <span class="stamped-product-reviews-badge stamped-main-badge" data-id="{{ product.id }}" data-product-sku="{{ product.handle }}" style="display: inline-block;">{{ product.metafields.stamped.badge }}</span>
-            
             {% endif %}
             <h1 class="product_name" itemprop="name">{{ product.title }}</h1>
             
@@ -111,8 +112,7 @@
                   {% if section.settings.display_savings %}
                     <span class="sale savings">
                       {% if variant.price < variant.compare_at_price and variant.available %}
-                        <!-- {{ 'products.product.savings' | t }}  {{ variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price }}% (<span class="money">{{ variant.compare_at_price | minus: variant.price | money }}</span>) -->
-                        <span class="sale-save">Sale - Save {{ variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price }}% (<span class="money">{{ variant.compare_at_price | minus: variant.price | money }}</span>)</span>
+                        <span class="sale-save">Save {{ variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price }}% (<span class="money">{{ variant.compare_at_price | minus: variant.price | money }}</span>)</span>
                       {% endif %}
                     </span>
                   {% endif %}
@@ -144,6 +144,8 @@
               </div>
             {% endif %}
             
+            
+
             {% if section.settings.product_description_position == "top" %}
               {% if product.description != blank %}
               <div class="description" itemprop="description">
@@ -215,6 +217,18 @@
               </div>
             </div>
             
+            {% if section.settings.video != blank %}
+              <div class="video-block">
+                <a class="video_btn">
+                  <img src="{{section.settings.video_bg | img_url: 'original' }}">
+                </a>
+                <div class="video_modal">
+                  <a class="close"></a>
+                  <iframe src="{{section.settings.video | replace_first: '/watch?v=', '/embed/' }}" width="560" height="315" frameborder="0" allowfullscreen></iframe>
+                </div>
+              </div>
+            {% endif %}
+
             {% if section.settings.product_description_position == "bottom" %}
               <div class="description bottom" itemprop="description">
                 
@@ -648,6 +662,19 @@
       "id": "toggle",
       "label": "Toggle sidebar content",
       "default": false
+    },
+    {
+      "type": "video_url",
+      "id": "video",
+      "accept": [
+        "youtube"
+      ],
+      "label": "video"
+    },
+    {
+      "type": "image_picker",
+      "id": "video_bg",
+      "label": "Video background"
     }
   ],
   "blocks": [
