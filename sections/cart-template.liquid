@@ -153,19 +153,6 @@
               </span>
               <span>{{ 'cart.general.subtotal' | t }}</span>
             </p>
-            {%- comment -%}
-              {% if section.settings.display_savings %}
-                <p class="cart_savings sale">
-                  {% if total_saving > 0 %}
-                    <span class="right">
-                      <span class="">{{ total_saving | money }}</span>
-                    </span>
-                    <span>{{ 'layout.general.savings' | t }}</span>
-                  {% endif %}
-                </p>
-              {% endif %}
-            {%- endcomment -%}
-            
 
             {% if section.settings.display_special_instructions %}
               <label for="note">{{ 'cart.general.note' | t: shop_name: shop.name }}:</label>

@@ -322,15 +322,16 @@ input{
       margin: 0 20px 20px;
       padding-left: 20px;
       background: rgba(63,63,68,0.05);
-      font-size: 12px;
+      font-size: 11px;
       position: relative;
       overflow: hidden;
       @media screen and (max-width: 768px){
-          font-size: 12px;
+          font-size: 11px;
           padding-left: 10px;
       }
       @media screen and (max-width: 330px){
         margin: 0 5px 20px;
+        font-size: 10px;
       }
       .progress{
         position: absolute;
@@ -344,7 +345,7 @@ input{
       max-height: 390px;
       overflow: auto;
       @media screen and (max-width:768px){
-        height: calc(100vh - 345px);
+        height: calc(100vh - 325px);
         max-height: initial;
         overflow: auto;
       }
@@ -374,6 +375,9 @@ input{
           }
           .product-quantity-box{
             margin: 10px 0 5px;
+            @media screen and (max-width:768px) {
+              width: 110px;
+            }
             .js-change-quantity{
               background: transparent;
               span{
@@ -390,6 +394,7 @@ input{
               border-left: none;
               border-right: none;
               color: #3C4144;
+              z-index: -1;
             }
           }
           .cart__remove-btn{
@@ -5127,7 +5132,12 @@ div[data-widget-style*=standard] .stamped-tab-container {
       @media screen and (max-width: 768px){
         margin-bottom: 10px;
         font-size: 12px;
-       }
+      }
+
+      @media screen and (max-width: 320px){
+        font-size: 10px;
+      }
+
       .progress{
         background: #50BCEA;
         opacity: 0.4;
@@ -5170,8 +5180,7 @@ div[data-widget-style*=standard] .stamped-tab-container {
           text-transform: none;
           opacity: 0.5;
           letter-spacing: normal;
-          z-index: 10000;
-          z-index: 10000;
+          z-index: 1000;
           font-size: 14px;
           color: #32373B;
           font-family: 'Inter', sans-serif;
@@ -5179,6 +5188,7 @@ div[data-widget-style*=standard] .stamped-tab-container {
             position: initial;
             margin-bottom: 20px;
             margin-top: 0;
+            margin-left: 5px;
            }
           &::before{
             content: " ";
@@ -5214,9 +5224,12 @@ div[data-widget-style*=standard] .stamped-tab-container {
         display: flex;
         padding-bottom: 20px;
         @media screen and (max-width: 768px) {
-          
           border-bottom: 1px solid #EEEEEF;
           margin-bottom: 30px;
+          &:last-child{
+            border-bottom: 0;
+            margin-bottom: 0;
+          }
         }
         .three {
           max-width: 220px;
@@ -5303,7 +5316,13 @@ div[data-widget-style*=standard] .stamped-tab-container {
           padding-left: 40px;
           @media screen and (max-width: 768px){
             min-width: initial;
-            width: 100%;
+            width: 100%!important;
+            padding-left: 0;
+          }
+          .section{
+            @media screen and (max-width: 768px){
+              padding: 0 10px;
+            }
           }
         }
         .ten{
@@ -5312,6 +5331,7 @@ div[data-widget-style*=standard] .stamped-tab-container {
           @media screen and (max-width: 768px){
             max-width: initial;
             width: 100%;
+            padding: 0 10px;
           }
         }
       }
@@ -5426,4 +5446,8 @@ div[data-widget-style*=standard] .stamped-tab-container {
       }
     }
   }
+}
+
+#reamaze-widget{
+  z-index: 21474647!important;
 }
