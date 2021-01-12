@@ -580,7 +580,7 @@
               {{ settings.cart_message }}
             </div>
           {% endif %}
-          <input type="submit" class="action_button" value="{% if settings.go_to_checkout %}{{ 'cart.general.checkout' | t }}{% else %}{{ 'layout.general.go_to_cart' | t }}{% endif %}" />
+          <input type="submit" class="action_button" value="{% if settings.go_to_checkout %}{{ 'cart.general.mini_checkout' | t }}{% else %}{{ 'layout.general.go_to_cart' | t }}{% endif %}" />
           <a class="button hide medium-down--show" href="/collections/all">Continue Shopping</a>
         </li>
         <li class="bottom">
