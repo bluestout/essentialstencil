@@ -3906,6 +3906,7 @@ header {
   align-items: center;
   flex-wrap: wrap;
   order: 5;
+  position: relative;
   @media only screen and (max-width: 798px) {
     .free_shipping_desc {
       width: 100%;
@@ -3913,6 +3914,24 @@ header {
     }
     .guarantee_desc {
       width: 100%;
+    }
+  }
+  .popup{
+    position: absolute;
+    max-width: 300px;
+    width: 100%;
+    bottom: 120%;
+    display: none;
+    &.active{
+      display: block;
+    }
+    .popup-content{
+      background: white;
+      border: 1px solid #e9eaeb;
+      padding: 10px;
+      font-size: 14px;
+      border-radius: 5px;
+      box-shadow: -8px -2px 20px -7px rgba(63,63,68,0.15);
     }
   }
 }
@@ -3931,6 +3950,7 @@ header {
   align-items: center;
   margin-right: 10px;
   margin-bottom: 10px;
+  cursor: pointer;
   svg, .shipping_guarantee_desc {
     margin-right: 10px;
   }

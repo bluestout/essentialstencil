@@ -192,7 +192,16 @@ $(function() {
       $("#tab3").addClass("active");
     }
   });
-
+  $('.popup_btn').on('click', function (e) {
+    e.preventDefault();
+    var $popup = $(this).parent().find('.popup');
+    if ($popup.hasClass('active')) {
+      $popup.removeClass('active');
+    } else{
+      $('.popup').removeClass('active');
+      $popup.addClass('active');
+    }
+  })
   $('.product-details-block .video-block .video_btn').on('click', function (e) {
     e.preventDefault();
     $(this).parent().find('.video_modal').addClass('active');
